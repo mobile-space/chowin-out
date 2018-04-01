@@ -18,6 +18,6 @@
 # WireFrames 
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="Screenshot_20180401-153359.jpg" width="270" />
+  <img src="project-plan-files/first-basic-sketch.jpg" width="270" />
 
 </div>
