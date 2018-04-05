@@ -3,6 +3,9 @@
 https://expo.io/@jkhusanov/chowin-out
 ## Milestone #1
 
+## Screenshots of UI Prototype 
+![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/Screenshots/screenshot.gif)
+
 ### Todo
 
 - [x] Wireframes
