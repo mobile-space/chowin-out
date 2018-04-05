@@ -6,6 +6,21 @@ https://expo.io/@jkhusanov/chowin-out
 ## Screenshots of UI Prototype 
 ![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/Screenshots/screenshot.gif)
 
+
+<div style={{display: flex; flex-direction: row}}>
+  <img src="Screenshots/Splash.png" width="270" />
+  <img src="Screenshots/into.png" width="270" />
+  <img src="Screenshots/intro2.png" width="270" />
+</div>
+
+<div style={{display: flex; flex-direction: row}}>
+  <img src="Screenshots/feed.png" width="270"  />
+  <img src="Screenshots/PostDetail.png" width="270" />
+  <img src="Screenshots/createpost.png" width="270" />
+</div>
+
+
+
 ### Todo
 
 - [x] Wireframes
