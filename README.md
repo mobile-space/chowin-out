@@ -9,13 +9,13 @@ https://expo.io/@jkhusanov/chowin-out
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="Screenshots/Splash.png" width="270" />
-  <img src="Screenshots/into.png" width="270" />
+  <img src="Screenshots/intro.png" width="270" />
   <img src="Screenshots/intro2.png" width="270" />
 </div>
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="Screenshots/feed.png" width="270"  />
-  <img src="Screenshots/PostDetail.png" width="270" />
+  <img src="Screenshots/main.png" width="270"  />
+  <img src="Screenshots/Resturant.png" width="270" />
   <img src="Screenshots/createpost.png" width="270" />
 </div>
 
