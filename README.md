@@ -1,18 +1,23 @@
 # Chowin.. out
 
-## Todo
+## Milestone #1
 
-- [x] Wireframes 
-- [ ] Empty UI screens
-- [ ] Navigation
-- [ ] Redux for screens and navigation 
-- [ ] API for each screen
-- [ ] Sketch layout and design
-  - [ ] Create a logo
-  - [ ] Explain overall sketch
+### Todo
+
+- [x] Wireframes
+  - [ ] :star: **Bonus:** Sketch layout and design
+  - [ ] :star: **Bonus:** Create a logo
+- [ ] Functionality
+  - [ ] Put app functionality here 
+  - [ ] Connecting to the API
+- [ ] API’s used
+  - [ ] List APIs for each screen
+- [x] Setup ReactNavigation with placeholder screens* - Publish to Expo
+  - [x] Empty Screens
+  - [x] Navigation
+  - [ ] :star: **Bonus:** Redux for screens and navigation 
 - [ ] Start building prototype
   - [ ] Get feedback
-- [ ] Connecting to the API
 
 
 # WireFrames 
