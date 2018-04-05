@@ -16,7 +16,7 @@ https://expo.io/@jkhusanov/chowin-out
 <div style={{display: flex; flex-direction: row}}>
   <img src="Screenshots/main.png" width="270"  />
   <img src="Screenshots/Resturant.png" width="270" />
-  <img src="Screenshots/createpost.png" width="270" />
+  <img src="Screenshots/recipie.png" width="270" />
 </div>
 
 
