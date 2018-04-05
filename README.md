@@ -24,8 +24,8 @@ https://expo.io/@jkhusanov/chowin-out
 ### Todo
 
 - [x] Wireframes
-  - [ ] :star: **Bonus:** Sketch layout and design
-  - [ ] :star: **Bonus:** Create a logo
+  - [x] :star: **Bonus:** Sketch layout and design
+  - [x] :star: **Bonus:** Create a logo
 - [ ] Functionality
   - [ ] Put app functionality here 
   - [ ] Connecting to the API
