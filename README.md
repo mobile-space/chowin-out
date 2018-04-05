@@ -1,5 +1,6 @@
 # Chowin.. out
-
+**Demo Expo**:
+https://expo.io/@jkhusanov/chowin-out
 ## Milestone #1
 
 ### Todo
@@ -12,7 +13,7 @@
   - [ ] Connecting to the API
 - [ ] API’s used
   - [ ] List APIs for each screen
-- [x] Setup ReactNavigation with placeholder screens* - Publish to Expo
+- [x] Setup ReactNavigation with placeholder screens - Publish to Expo
   - [x] Empty Screens
   - [x] Navigation
   - [ ] :star: **Bonus:** Redux for screens and navigation 
