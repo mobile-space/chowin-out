@@ -7,11 +7,9 @@ const IntroStack = StackNavigator({
   Intro: {
     screen: IntroScreen,
   },
-  FoodNavigator: {
-    screen: FoodNavigator,
-  },
-}, {
-  // headerMode: 'none'
-}
+},
+  {
+    // headerMode: 'none'
+  }
 );
 export default IntroStack;

@@ -14,7 +14,7 @@ export default class RestaurantScreen extends React.Component {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
-        <SafeAreaView style={{ backgroundColor: '#FAFAFA', }}>
+        <SafeAreaView style={{ backgroundColor: '#ff9966', }}>
           <Header
             leftComponent={
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -24,7 +24,7 @@ export default class RestaurantScreen extends React.Component {
             centerComponent={{
               text: 'Restaurants',
               style: {
-                color: '#2F80ED', fontSize: 20,
+                color: 'white', fontSize: 20,
                 fontWeight: 'bold',
               }
             }}
@@ -33,7 +33,7 @@ export default class RestaurantScreen extends React.Component {
                 <Text style={styles.navBar}>Done</Text>
               </TouchableOpacity>
             }
-            outerContainerStyles={{ backgroundColor: '#FAFAFA' }}
+            outerContainerStyles={{ backgroundColor: '#ff9966' }}
           />
         </SafeAreaView>
         <View style={{alignSelf: 'center'}}><Text>This is RestaurantScreen</Text></View>
@@ -50,4 +50,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  navBar: {
+    color: 'white'
+  }
 });

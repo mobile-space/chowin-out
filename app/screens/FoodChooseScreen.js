@@ -3,24 +3,50 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView,
+  Button,
 } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Icon, Header } from 'react-native-elements';
 
 
 export default class FoodChooseScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Food',
-    headerTintColor: '#2F80ED',
-    headerTitleStyle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    }
-  });
   render() {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.mainContainer}>
+        <SafeAreaView style={{ backgroundColor: '#ff9966', }}>
+          <Header
+            leftComponent={
+              <TouchableOpacity onPress={() => navigate('IntroStack')}>
+                  <Icon
+                    name='md-arrow-back'
+                    type='ionicon'
+                    size={25}
+                    iconStyle={styles.navbarIcon}
+                  />
+              </TouchableOpacity>
+            }
+            centerComponent={{
+              text: 'Food',
+              style: {
+                color: 'white', fontSize: 20,
+                fontWeight: 'bold',
+              }
+            }}
+            rightComponent={
+              <TouchableOpacity>
+                <Icon
+                  name='search'
+                  type='feather'
+                  size={25}
+                  iconStyle={styles.navbarIcon}
+                />
+              </TouchableOpacity>
+            }
+            outerContainerStyles={{ backgroundColor: '#ff9966' }}
+          />
+        </SafeAreaView>
         <View style={{ alignSelf: 'center', }}>
           <Text>This is FoodChooseScreen</Text>
         </View>
@@ -57,6 +83,9 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  navbarIcon: {
+    color: 'white',
   },
   imageContainer: {
     flex: 2,

@@ -4,28 +4,33 @@ import {
   Text,
   View,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 
 export default class IntroScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'ChowinOut',
-    headerTintColor: '#2F80ED',
+    headerTintColor: 'white',
     headerTitleStyle: {
       fontSize: 20,
       fontWeight: 'bold',
     },
-    headerStyle: { backgroundColor: '#FAFAFA', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
+    headerStyle: { backgroundColor: '#ff9966', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
   });
   render() {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.mainContainer}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="#6a51ae"
+        />
         <View>
           <Text>This is IntroScreen</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => navigate('FoodNavigator')}
+            onPress={() => navigate('HomeTabs')}
           >
             <Text style={styles.buttonLabel}>Out</Text>
           </TouchableOpacity>
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonLabel :{
+  buttonLabel: {
     fontSize: 20,
   }
 });
