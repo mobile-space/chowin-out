@@ -5,7 +5,7 @@ https://expo.io/@jkhusanov/chowin-out
 
 ## Milestone #1
 
-## Screenshots of UI Prototype 
+### Screenshots of UI Prototype 
 ![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Screenshots/screenshot.gif)
 
 
@@ -48,7 +48,7 @@ https://expo.io/@jkhusanov/chowin-out
   - [ ] Get feedback
 
 
-# WireFrames 
+### WireFrames 
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/first-basic-sketch.jpg" width="270" />
