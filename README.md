@@ -30,11 +30,11 @@ https://expo.io/@jkhusanov/chowin-out
   - [x] :star: **Bonus:** Create a logo
 - [x] Functionality
   * App allows user to choose either **IN** - cook yourself or **OUT** option - go to restaurant 
-  * App offers popular random food
+  * App offers popular random food, can have search and filters
   * Based on what option the user has chosen in the first screen app shows either food recipe (IN) or restaurants list (OUT)
-  - [ ] Optional functionally
-    ..* Ordering food ingredients with Instacart
-    ..* Requesting Uber ride to the restaurant
+  - [ ] :star: **Bonus:** Optional functionally
+    * Ordering food ingredients with Instacart
+    * Requesting Uber ride to the restaurant
 - [x] API’s used
   * [Yummly API](https://developer.yummly.com/) for food information, images, recipes 
   * [EatStreet API](https://developers.eatstreet.com/) discover local restaurants and their food
