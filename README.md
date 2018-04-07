@@ -1,36 +1,45 @@
 # Chowin.. out
+
 **Demo Expo**:
 https://expo.io/@jkhusanov/chowin-out
+
 ## Milestone #1
 
 ## Screenshots of UI Prototype 
-![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/Screenshots/screenshot.gif)
+![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Screenshots/screenshot.gif)
 
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="Screenshots/Splash.png" width="270" />
-  <img src="Screenshots/intro.png" width="270" />
-  <img src="Screenshots/intro2.png" width="270" />
+  <img src="project-plan-files/Screenshots/Splash.png" width="270" />
+  <img src="project-plan-files/Screenshots/intro.png" width="270" />
+  <img src="project-plan-files/Screenshots/intro2.png" width="270" />
 </div>
 
 <div style={{display: flex; flex-direction: row}}>
-  <img src="Screenshots/main.png" width="270"  />
-  <img src="Screenshots/Resturant.png" width="270" />
-  <img src="Screenshots/recipie.png" width="270" />
+  <img src="project-plan-files/Screenshots/main.png" width="270"  />
+  <img src="project-plan-files/Screenshots/Resturant.png" width="270" />
+  <img src="project-plan-files/Screenshots/recipie.png" width="270" />
 </div>
 
 
 
-### Todo
+### TODO
 
 - [x] Wireframes
   - [x] :star: **Bonus:** Sketch layout and design
   - [x] :star: **Bonus:** Create a logo
-- [ ] Functionality
-  - [ ] Put app functionality here 
-  - [ ] Connecting to the API
-- [ ] API’s used
-  - [ ] List APIs for each screen
+- [x] Functionality
+  * App allows user to choose either **IN** - cook yourself or **OUT** option - go to restaurant 
+  * App offers popular random food
+  * Based on what option the user has chosen in the first screen app shows either food recipe (IN) or restaurants list (OUT)
+  - [ ] Optional functionally
+    * Ordering food ingredients with Instacart
+    * Requesting Uber ride to the restaurant
+- [x] API’s used
+  * [Yummly API](https://developer.yummly.com/) for food information, images, recipes 
+  * [EatStreet API](https://developers.eatstreet.com/) discover local restaurants and their food
+  * [Yelp API](https://www.yelp.com/developers) probably food and restaurants 
+  * [Uber API](https://developer.uber.com/) used to request a ride
 - [x] Setup ReactNavigation with placeholder screens - Publish to Expo
   - [x] Empty Screens
   - [x] Navigation
