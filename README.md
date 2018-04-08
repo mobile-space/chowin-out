@@ -54,3 +54,7 @@ https://expo.io/@jkhusanov/chowin-out
   <img src="project-plan-files/first-basic-sketch.jpg" width="270" />
 
 </div>
+
+### Overview of Api calls 
+
+![Screenshot](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Api%20calls%20and%20main_frame.jpg)
