@@ -11,6 +11,10 @@ import { Icon, Header } from 'react-native-elements';
 
 
 export default class FoodChooseScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+    title: 'Food',
+  };
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -18,10 +22,10 @@ export default class FoodChooseScreen extends React.Component {
         <SafeAreaView style={{ backgroundColor: '#ff9966', }}>
           <Header
             leftComponent={
-              <TouchableOpacity onPress={() => navigate('IntroStack')}>
+              <TouchableOpacity>
                   <Icon
-                    name='md-arrow-back'
-                    type='ionicon'
+                    name='filter-variant'
+                    type='material-community'
                     size={25}
                     iconStyle={styles.navbarIcon}
                   />

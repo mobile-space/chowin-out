@@ -7,9 +7,12 @@ const FoodChooseStack = StackNavigator({
   FoodChooseStack: {
     screen: FoodChooseScreen,
   },
+  Restaurant: {
+    screen: RestaurantScreen,
+  }
 },
   {
-    headerMode: 'none',
+    // headerMode: 'none',
   }
 );
 export default FoodChooseStack;

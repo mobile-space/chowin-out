@@ -6,15 +6,15 @@ const FoodNavigator = StackNavigator({
   FoodChooseStack: {
     screen: FoodChooseStack,
   },
-  Restaurant: {
-    screen: RestaurantScreen,
-  }
+
 
 }, {
     initialRouteName: 'FoodChooseStack',
-    mode: 'modal',
+    mode: 'card',
     headerMode: 'none',
-    
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
   }
 );
 

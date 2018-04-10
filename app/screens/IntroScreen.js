@@ -6,36 +6,31 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
+import { LinearGradient } from 'expo';
 
 export default class IntroScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'ChowinOut',
-    headerTintColor: 'white',
-    headerTitleStyle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-    headerStyle: { backgroundColor: '#ff9966', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
-  });
+  static navigationOptions = {
+    header: null,
+  };
   render() {
     const { navigate } = this.props.navigation
     return (
-      <View style={styles.mainContainer}>
+      <LinearGradient colors={['#ff9966', '#F2C94C']} style={styles.mainContainer}>
         <StatusBar
           barStyle="light-content"
           backgroundColor="#6a51ae"
         />
         <View>
-          <Text>This is IntroScreen</Text>
+          <Text>This is IntroScreen, here should be animations</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={() => navigate('HomeTabs')}
           >
-            <Text style={styles.buttonLabel}>Out</Text>
+            <Text style={styles.buttonLabel}>Start your food journey</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }
@@ -52,11 +47,12 @@ const styles = StyleSheet.create({
     borderColor: '#aaaaaa',
     borderRadius: 10,
     height: 50,
-    width: 80,
+    width: 200,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonLabel: {
     fontSize: 20,
+    color: 'white'
   }
 });

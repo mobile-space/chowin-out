@@ -6,6 +6,7 @@ import { SimpleLineIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vect
 
 import FoodNavigator from './FoodNavigator';
 import ProfileNavigator from './ProfileNavigator';
+import FoodChooseStack from './FoodStack';
 
 
 const HomeTabs = TabNavigator({

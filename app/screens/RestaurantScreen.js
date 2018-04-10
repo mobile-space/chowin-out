@@ -10,32 +10,19 @@ import { Button, Input, Header } from 'react-native-elements'
 
 
 export default class RestaurantScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Restaurant',
+    headerTintColor: 'white',
+    headerTitleStyle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    headerStyle: { backgroundColor: '#ff9966', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
+  });
   render() {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
-        <SafeAreaView style={{ backgroundColor: '#ff9966', }}>
-          <Header
-            leftComponent={
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Text style={styles.navBar}>Go Back</Text>
-              </TouchableOpacity>
-            }
-            centerComponent={{
-              text: 'Restaurants',
-              style: {
-                color: 'white', fontSize: 20,
-                fontWeight: 'bold',
-              }
-            }}
-            rightComponent={
-              <TouchableOpacity onPress={() => navigate("IntroStack")}>
-                <Text style={styles.navBar}>Done</Text>
-              </TouchableOpacity>
-            }
-            outerContainerStyles={{ backgroundColor: '#ff9966' }}
-          />
-        </SafeAreaView>
         <View style={{alignSelf: 'center'}}><Text>This is RestaurantScreen</Text></View>
         
       </View>
