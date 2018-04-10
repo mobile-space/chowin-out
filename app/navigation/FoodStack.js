@@ -12,7 +12,7 @@ const FoodChooseStack = StackNavigator({
   }
 },
   {
-    // headerMode: 'none',
+    initialRouteName: 'FoodChooseStack',
   }
 );
 export default FoodChooseStack;
