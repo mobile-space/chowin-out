@@ -56,7 +56,7 @@ export default class FoodChooseScreen extends React.Component {
         </View>
         <View style={styles.imageContainer}>
           <TouchableOpacity
-            onPress={() => navigate('Restaurant')}
+            onPress={() => navigate('RestaurantsList')}
           >
             <Icon
               name='food'
