@@ -4,7 +4,7 @@ import HomeTabs from './HomeTabs';
 
 export default StackNavigator ({
   IntroStack: {
-    screen: IntroStack,
+    screen: HomeTabs,
     navigationOptions: {
       gesturesEnabled: false,
     },
