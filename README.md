@@ -61,6 +61,6 @@ https://expo.io/@jkhusanov/chowin-out
 
 ### Week 1 
 - [x] display static image in a flatlist 
-- [ ]
+- [x] rough draft of profile screen
 
 
