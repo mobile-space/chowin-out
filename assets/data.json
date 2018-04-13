@@ -1,0 +1,33 @@
+{
+    "food": [
+      {
+        "id": "1",
+        "image": "https://i.imgur.com/HZCfIxr.jpg",
+        "name": "Salmon Burger",
+        "description": "Eat this delicious looking burger",
+        "isFavorited": false
+      },
+      {
+        "id": "2",
+        "image": "https://i.imgur.com/BM3FqMI.jpg",
+        "name": "Chicken Pasta",
+        "description": "Eat this grill rosted garlic chicken",
+        "isFavorited": false
+      },
+      {
+        "id": "3",
+        "image": "https://i.imgur.com/b9niFND.jpg",
+        "name": "Chicken Pizza",
+        "description": "Eat this grill rosted pizza",
+        "isFavorited": false
+      },
+      {
+        "id": "4",
+        "image": "https://i.imgur.com/HZCfIxr.jpg",
+        "name": "Hot Ramen",
+        "description": "Pure Japanese style ramen",
+        "isFavorited": false
+      }
+
+    ]
+  }
