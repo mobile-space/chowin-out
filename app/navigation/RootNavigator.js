@@ -1,6 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 import IntroStack from './IntroStack';
 import HomeTabs from './HomeTabs';
+import GeoLocation from '../components/GeoLocation';
 
 export default StackNavigator ({
   IntroStack: {
@@ -12,6 +13,9 @@ export default StackNavigator ({
   HomeTabs: {
     screen: HomeTabs,
   },
+  GeoLocation: {
+    screen: GeoLocation
+  }
 },
 {
   initialRouteName: "IntroStack",
