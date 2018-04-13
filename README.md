@@ -6,7 +6,7 @@ https://expo.io/@jkhusanov/chowin-out
 ## Milestone #1
 
 ### Screenshots of UI Prototype 
-![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Screenshots/screenshot.gif)
+![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/assets/onboardingScreen.gif)
 
 
 <div style={{display: flex; flex-direction: row}}>
