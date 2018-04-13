@@ -59,8 +59,9 @@ https://expo.io/@jkhusanov/chowin-out
 
 ![Screenshot](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Api%20calls%20and%20main_frame.jpg)
 
-### Week 1 
+### Week 1 (Prakash's weekly progress)
 - [x] display static image in a flatlist 
 - [x] rough draft of profile screen
+- [x] finshed onboarding screen 
 
 
