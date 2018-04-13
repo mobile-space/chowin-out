@@ -1,58 +1,78 @@
+import { Image } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
+import { Alert, StatusBar,StyleSheet } from 'react-native';
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
-import { LinearGradient } from 'expo';
+
+import Onboarding from 'react-native-onboarding-swiper'; // Version can be specified in package.json
+import DISCOVER from '../../assets/discover.png'
+import LOCATE from '../../assets/locate.png'
+import FAV from '../../assets/favorite.png'
+import RECIPIE from '../../assets/recipe.png'
+
+const Simple = ({navigation}) => (
+  <Onboarding
+
+     onSkip={() =>navigation.navigate('HomeTabs') }
+    pages={[
+      {
+        backgroundColor: 'black',
+        image: <Image 
+        source={DISCOVER}  />,
+        title: 'Discover new Food',
+        subtitle: 'We will help you find delicious food :)',
+      },
+      {
+        title: 'Locate Resturant',
+        backgroundColor: '#00796B',
+        image: <Image source={LOCATE} />,
+        subtitle: 'We will help you find the nearest resturant',
+      },
+
+      {
+        title: 'Get Recipe',
+        backgroundColor: '#8BC34A',
+        image: <Image source={RECIPIE} />,
+        subtitle: 'Learn new recipe and cook yourself',
+      },
+
+      {
+        title: 'Favorite It',
+        backgroundColor: '#D32F2F',
+        image: <Image source={FAV} />,
+        subtitle: 'Save food to your favorite',
+      },
+      {
+        title: "Ready to Eat ?",
+        image: <Image source={FAV} />,
+        subtitle: (
+          <Button
+            title={'Get Started'}
+            containerViewStyle={{ marginTop: 20 }}
+            backgroundColor={'white'}
+            borderRadius={5}
+            textStyle={{ color: '#003c8f' }}
+            onPress={() => navigation.navigate('HomeTabs')}
+
+          />
+        ),
+        backgroundColor: '#003c8f',
+        image: (
+          <Icon name="rocket" type="font-awesome" size={100} color="white" />
+        ),
+      },
+    ]}
+  />
+);
+
 
 export default class IntroScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
   render() {
-    const { navigate } = this.props.navigation
     return (
-      <LinearGradient colors={['#ff9966', '#F2C94C']} style={styles.mainContainer}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="#6a51ae"
-        />
-        <View>
-          <Text>This is IntroScreen, here should be animations</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => navigate('HomeTabs')}
-          >
-            <Text style={styles.buttonLabel}>Start your food journey</Text>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
+      <Simple navigation={this.props.navigation}/>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  buttonContainer: {
-    borderWidth: 1,
-    borderColor: '#aaaaaa',
-    borderRadius: 10,
-    height: 50,
-    width: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonLabel: {
-    fontSize: 20,
-    color: 'white'
-  }
-});
