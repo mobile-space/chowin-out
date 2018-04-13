@@ -1,5 +1,11 @@
 # Chowin.. out
 
+<p align="center">
+  <a href="https://github.com/mobile-space/chowin-out">
+    <img alt="daug" src="https://github.com/mobile-space/chowin-out/blob/master/assets/icon.png" width="250">
+  </a>
+</p>
+
 **Demo Expo**:
 https://expo.io/@jkhusanov/chowin-out
 
