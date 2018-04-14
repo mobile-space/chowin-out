@@ -64,5 +64,6 @@ https://expo.io/@jkhusanov/chowin-out
 - [x] display static image in a flatlist 
 - [x] rough draft of profile screen
 - [x] finshed onboarding screen 
+- [x] finished profile detail screen
 
 
