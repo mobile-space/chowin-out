@@ -17,13 +17,13 @@ export default class RestaurantScreen extends React.Component {
       fontSize: 20,
       fontWeight: 'bold',
     },
-    headerStyle: { backgroundColor: '#ff9966', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
+    headerStyle: { backgroundColor: '#c84343', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
   });
   render() {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
-        <SafeAreaView style={{ backgroundColor: '#ff9966', }}>
+        <SafeAreaView style={{ backgroundColor: '#c84343', }}>
           <Header
             leftComponent={
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -42,7 +42,7 @@ export default class RestaurantScreen extends React.Component {
                 <Text style={styles.navBar}>Done</Text>
               </TouchableOpacity>
             }
-            outerContainerStyles={{ backgroundColor: '#ff9966' }}
+            outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
         <View style={{ alignSelf: 'center' }}><Text>This is RestaurantScreen, here you will see restaurant details</Text></View>

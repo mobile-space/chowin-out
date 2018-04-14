@@ -19,7 +19,7 @@ export default class FoodChooseScreen extends React.Component {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.mainContainer}>
-        <SafeAreaView style={{ backgroundColor: '#ff9966', }}>
+        <SafeAreaView style={{ backgroundColor: '#c84343', }}>
           <Header
             leftComponent={
               <TouchableOpacity>
@@ -48,7 +48,7 @@ export default class FoodChooseScreen extends React.Component {
                 />
               </TouchableOpacity>
             }
-            outerContainerStyles={{ backgroundColor: '#ff9966' }}
+            outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
         <View style={{ alignSelf: 'center', }}>

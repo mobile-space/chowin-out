@@ -9,7 +9,7 @@ export default class FoodDetailsScreen extends React.Component {
       fontSize: 20,
       fontWeight: 'bold',
     },
-    headerStyle: { backgroundColor: '#ff9966', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
+    headerStyle: { backgroundColor: '#c84343', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
 
   });
   render() {

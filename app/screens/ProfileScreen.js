@@ -15,7 +15,7 @@ export default class ProfileScreen extends React.Component {
       fontSize: 20,
       fontWeight: 'bold',
     }, 
-    headerStyle: { backgroundColor: '#D32F2F', borderBottomWidth: 0.5, borderBottomColor: 'white', },
+    headerStyle: { backgroundColor: '#c84343', borderBottomWidth: 0.5, borderBottomColor: 'white', },
   });
 
   constructor(props) {

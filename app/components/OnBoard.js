@@ -14,7 +14,7 @@ const OnBoard = ({navigation}) => (
        onSkip={() =>navigation.navigate('HomeTabs') }
       pages={[
         {
-          backgroundColor: 'black',
+          backgroundColor: '#03A9F4',
           image: <Image 
           source={DISCOVER}  style={styles.logo}/>,
           title: 'Discover new Food',
