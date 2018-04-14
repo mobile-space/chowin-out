@@ -3,29 +3,41 @@
       {
         "id": "1",
         "image": "https://i.imgur.com/HZCfIxr.jpg",
-        "name": "Salmon Burger",
-        "description": "Eat this delicious looking burger",
+        "name": "Pancake",
+        "description": "Eat this delicious looking burger. Put it in a pan and watch it cook by itself ",
+        "ingredients": "10",
+        "time": "15 mins",
+        "calories": "100",
         "isFavorited": false
       },
       {
         "id": "2",
         "image": "https://i.imgur.com/BM3FqMI.jpg",
-        "name": "Chicken Pasta",
-        "description": "Eat this grill rosted garlic chicken",
+        "name": "Chicken Salad",
+        "description": "Eat this grill chicken salad. Put it in a pan and watch it cook by itself ",
+        "ingredients": "12",
+        "time": "25 mins",
+        "calories": "230",
         "isFavorited": false
       },
       {
         "id": "3",
         "image": "https://i.imgur.com/b9niFND.jpg",
-        "name": "Chicken Pizza",
-        "description": "Eat this grill rosted pizza",
+        "name": "Chicken Wrap",
+        "description": "Eat this Chicken wrap. Put it in a pan and watch it cook by itself ",
+        "ingredients": "9",
+        "time": "35 mins",
+        "calories": "600",
         "isFavorited": false
       },
       {
         "id": "4",
         "image": "https://i.imgur.com/HZCfIxr.jpg",
-        "name": "Hot Ramen",
-        "description": "Pure Japanese style ramen",
+        "name": "Double Pancake",
+        "description": "Pure Japanese style ramen. Put it in a pan and watch it cook by itself ",
+        "ingredients": "11",
+        "time": "45 mins",
+        "calories": "780",
         "isFavorited": false
       }
 
