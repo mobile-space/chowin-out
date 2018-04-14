@@ -10,7 +10,6 @@ https://expo.io/@jkhusanov/chowin-out
 ### Screenshots of UI Prototype 
 ![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/assets/onboardingScreen.gif)
 
-
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/Screenshots/Splash.png" width="270" />
   <img src="project-plan-files/Screenshots/intro.png" width="270" />
