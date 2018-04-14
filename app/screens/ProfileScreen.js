@@ -28,7 +28,7 @@ export default class ProfileScreen extends React.Component {
 
   componentWillMount() {
     DeviceEventEmitter.addListener('setFoodUpdated', ({ updatedFood }) => {
-      this.eventUpdated({ updatedFood });
+      this.foodUpdated({ updatedFood });
     });
   }
 
@@ -50,7 +50,7 @@ export default class ProfileScreen extends React.Component {
           food={updatedFood && updatedFood.id === food.id ? updatedFood : food}
           navigation={this.props.navigation}
           onFavoriteButtonPressEmit={() => {
-            DeviceEventEmitter.emit('setFoodUpdated');
+            DeviceEventEmitter.emit('setMyFoodUpdated');
           }}
         />
       );
@@ -84,8 +84,6 @@ const headerHeight = 60;
 const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
-
-
   },
   foodInfo: {
     alignContent: 'center',

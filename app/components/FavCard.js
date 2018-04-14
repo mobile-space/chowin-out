@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Platform, View, Image, Text, TouchableOpacity, AsyncStorage, DeviceEventEmitter } from 'react-native';
+import { StyleSheet, Dimensions, Platform, View, Image, Text, TouchableWithoutFeedback, TouchableOpacity,AsyncStorage, DeviceEventEmitter } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,6 +14,19 @@ class FavCard extends Component {
     };
   }
  
+  onFoodClick = () => {
+    const { navigation, food } = this.props;
+    const { navigate } = navigation;
+
+    if (food.transaction) {
+     
+        navigate('FoodDetails', { food });
+      
+    } else {
+      navigate('FoodDetails', { food });
+    }
+  }
+
   onFavoriteButtonPress = async () => {
     const { navigation, food } = this.props;
     const { navigate } = navigation;
@@ -30,13 +43,11 @@ class FavCard extends Component {
     
       return (
         <TouchableOpacity onPress={this.onFavoriteButtonPress}>
-          <View style={styles.circleButton}>
+        
             <Ionicons
-             name={this.state.isFavorited ? "ios-heart" : "ios-heart-outline"}
-             color={this.state.isFavorited ? 'red' : 'black'} size={30}/>
-            
-
-          </View>
+             name={this.state.isFavorited ? "ios-heart" : "md-heart-outline"}
+             color={this.state.isFavorited ? 'red' : 'white'} size={35}/>
+          
         </TouchableOpacity>
       );
     
@@ -44,17 +55,14 @@ class FavCard extends Component {
 
   render = () => {
     const { food } = this.props;
-    const {
-      image, name, description
-    } = food;
+    const { image, name, description } = food;
     const { navigate } = this.props.navigation
-
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity 
+        <TouchableWithoutFeedback
         style={styles.imageContainer}
-        onPress={() => navigate('FoodDetails')}
+        onPress={this.onFoodClick}
         
        >
           <View>
@@ -71,7 +79,7 @@ class FavCard extends Component {
               {this.renderFavoriteButton()}
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     
       </View>
     );
@@ -106,17 +114,7 @@ const styles = StyleSheet.create({
     bottom: Platform.OS === 'ios' ? -1 : 11,
     right: padding,
   },
-  circleButton: {
-    height: 48,
-    width: 48,
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: '#999',
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 12,
-  },
+  
   foodText: {
     flexDirection: 'row',
     marginTop: Platform.OS === 'ios' ? 32 : 16,
