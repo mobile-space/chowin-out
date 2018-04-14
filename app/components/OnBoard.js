@@ -1,4 +1,4 @@
-import { Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { Alert, StatusBar } from 'react-native';
 import React from 'react';
@@ -16,7 +16,7 @@ const OnBoard = ({navigation}) => (
         {
           backgroundColor: 'black',
           image: <Image 
-          source={DISCOVER}  />,
+          source={DISCOVER}  style={styles.logo}/>,
           title: 'Discover new Food',
           subtitle: 'We will help you find delicious food :)',
         },
@@ -25,7 +25,7 @@ const OnBoard = ({navigation}) => (
          
           title: 'Locate Resturant',
           backgroundColor: '#00796B',
-          image: <Image source={LOCATE} />,
+          image: <Image source={LOCATE} style={styles.logo}/>,
           subtitle: 'We will help you find the nearest resturant',
         
         }
@@ -35,14 +35,14 @@ const OnBoard = ({navigation}) => (
         {
           title: 'Get Recipe',
           backgroundColor: '#8BC34A',
-          image: <Image source={RECIPIE} />,
+          image: <Image source={RECIPIE}  style={styles.logo}/>,
           subtitle: 'Learn new recipe and cook yourself',
         },
   
         {
           title: 'Favorite It',
           backgroundColor: '#D32F2F',
-          image: <Image source={FAV} />,
+          image: <Image source={FAV} style={styles.logo}/>,
           subtitle: 'Save food to your favorite',
         },
         {
@@ -67,5 +67,12 @@ const OnBoard = ({navigation}) => (
       ]}
     />
   );
+  const styles = StyleSheet.create({
+    logo: {
+      resizeMode: 'contain',
+      width: 250,
+      height: 250,
+    },
+  });
 
   export default OnBoard;
