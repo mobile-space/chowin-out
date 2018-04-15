@@ -11,6 +11,7 @@ https://expo.io/@jkhusanov/chowin-out
 ![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/assets/onboardingScreen.gif)
 
 
+
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/Screenshots/Splash.png" width="270" />
   <img src="project-plan-files/Screenshots/intro.png" width="270" />
@@ -64,6 +65,11 @@ https://expo.io/@jkhusanov/chowin-out
 ### Week 1 (Prakash's weekly progress)
 - [x] display static image in a flatlist 
 - [x] rough draft of profile screen
-- [x] finshed onboarding screen 
+- [x] finished onboarding screen 
 
+### Week 1 (Jakhongir's weekly progress)
 
+- [x] display static image in a snap-carousel
+- [ ] polish the food display screen
+- [ ] restaurants list screen 
+- [ ] restaurant screen 

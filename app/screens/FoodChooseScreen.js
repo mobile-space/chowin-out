@@ -6,15 +6,38 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Button,
+  Image
 } from 'react-native';
 import { Icon, Header } from 'react-native-elements';
+import Carousel from 'react-native-snap-carousel';
 
+import { ENTRIES1 } from '../utils/food';
 
 export default class FoodChooseScreen extends React.Component {
   static navigationOptions = {
     header: null,
     title: 'Food',
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      updatedFood: null,
+    };
+  }
+  _renderItem({ item, index }) {
+    return (
+      <View style={styles.slide}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() =>
+            this.props.navigation.navigate('RestaurantsList', { foodName: item.title })
+          }
+        >
+          <Image style={styles.images} source={{ uri: item.illustration }} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -23,12 +46,12 @@ export default class FoodChooseScreen extends React.Component {
           <Header
             leftComponent={
               <TouchableOpacity>
-                  <Icon
-                    name='filter-variant'
-                    type='material-community'
-                    size={25}
-                    iconStyle={styles.navbarIcon}
-                  />
+                <Icon
+                  name='filter-variant'
+                  type='material-community'
+                  size={25}
+                  iconStyle={styles.navbarIcon}
+                />
               </TouchableOpacity>
             }
             centerComponent={{
@@ -51,32 +74,14 @@ export default class FoodChooseScreen extends React.Component {
             outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
-        <View style={{ alignSelf: 'center', }}>
-          <Text>This is FoodChooseScreen</Text>
-        </View>
         <View style={styles.imageContainer}>
-          <TouchableOpacity
-            onPress={() => navigate('RestaurantsList')}
-          >
-            <Icon
-              name='food'
-              type='material-community'
-              size={60}
-              iconStyle={styles.photoPostIcon}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <View>
-            <TouchableOpacity>
-              <Text>Left</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity>
-              <Text>Right</Text>
-            </TouchableOpacity>
-          </View>
+          <Carousel
+            ref={(c) => { this._carousel = c; }}
+            data={ENTRIES1}
+            renderItem={this._renderItem.bind(this)}
+            sliderWidth={400}
+            itemWidth={200}
+          />
         </View>
       </View>
     );
@@ -92,8 +97,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   imageContainer: {
-    flex: 2,
-    justifyContent: 'center'
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   photoPostIcon: {
     color: 'pink',
@@ -102,5 +108,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  images: {
+    width: "100%",
+    height: 250,
+    resizeMode: 'cover',
   }
 });
