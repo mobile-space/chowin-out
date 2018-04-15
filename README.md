@@ -10,8 +10,6 @@ https://expo.io/@jkhusanov/chowin-out
 ### Screenshots of UI Prototype 
 ![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/assets/onboardingScreen.gif)
 
-
-
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/Screenshots/Splash.png" width="270" />
   <img src="project-plan-files/Screenshots/intro.png" width="270" />
@@ -65,7 +63,8 @@ https://expo.io/@jkhusanov/chowin-out
 ### Week 1 (Prakash's weekly progress)
 - [x] display static image in a flatlist 
 - [x] rough draft of profile screen
-- [x] finished onboarding screen 
+- [x] finshed onboarding screen 
+- [x] finished profile detail screen
 
 ### Week 1 (Jakhongir's weekly progress)
 

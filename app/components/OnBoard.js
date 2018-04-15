@@ -8,10 +8,12 @@ import DISCOVER from '../../assets/discover.png'
 import LOCATE from '../../assets/locate.png'
 import FAV from '../../assets/favorite.png'
 import RECIPIE from '../../assets/recipe.png'
+import GIF from '../../assets/food.gif'
 
 const OnBoard = ({navigation}) => (
     <Onboarding
        onSkip={() =>navigation.navigate('HomeTabs') }
+       onDone={() =>navigation.navigate('HomeTabs') }
       pages={[
         {
           backgroundColor: '#03A9F4',
@@ -47,21 +49,20 @@ const OnBoard = ({navigation}) => (
         },
         {
           title: "Ready to Eat ?",
-          image: <Image source={FAV} />,
           subtitle: (
             <Button
               title={'Get Started'}
               containerViewStyle={{ marginTop: 20 }}
-              backgroundColor={'white'}
+              backgroundColor={'#c84343'}
               borderRadius={5}
-              textStyle={{ color: '#003c8f' }}
+              textStyle={{ color: 'white' }}
               onPress={() => navigation.navigate('HomeTabs')}
   
             />
           ),
-          backgroundColor: '#003c8f',
+          backgroundColor: 'white',
           image: (
-            <Icon name="rocket" type="font-awesome" size={100} color="white" />
+            <Image source={GIF} style={styles.logo}/>
           ),
         },
       ]}
