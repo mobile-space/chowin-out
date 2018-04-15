@@ -69,6 +69,27 @@ https://expo.io/@jkhusanov/chowin-out
 ### Week 1 (Jakhongir's weekly progress)
 
 - [x] display static image in a snap-carousel
-- [ ] polish the food display screen
-- [ ] restaurants list screen 
-- [ ] restaurant screen 
+
+### Week 1 (Moni's weekly progress)
+- [x] EatStreet API calls
+
+### Week 1 (Nick's weekly progress)
+- [x] Geolocation and connected with IntroScreen and FoodScreen
+
+## Week 2 General TODO
+
+- [ ] Polish the food display screen (Jahon)
+- [ ] Restaurants list screen (Jahon)
+- [ ] Restaurant screen (Jahon)
+
+- [ ] Activity indicator for screens (Jahon) (Prakash)
+- [ ] Polish food detail screen (Prakash)
+- [ ] Async storage for intro, load once (Prakash)
+- [ ] New icon (Prakash)
+
+- [ ] Context API (Moni)
+- [ ] EatStreet and Yummly API (Moni)
+
+
+- [ ] Geolocation talk to EatStreet API (Nick)
+- [ ] Yelp API getting restaurants from EatStreet API (Nick)
