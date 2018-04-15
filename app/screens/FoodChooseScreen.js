@@ -16,7 +16,6 @@ import { ENTRIES1 } from '../utils/food';
 export default class FoodChooseScreen extends React.Component {
   static navigationOptions = {
     header: null,
-    title: 'Food',
   };
   constructor(props) {
     super(props);
