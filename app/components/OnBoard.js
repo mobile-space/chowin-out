@@ -10,10 +10,12 @@ import FAV from '../../assets/favorite.png'
 import RECIPIE from '../../assets/recipe.png'
 import GIF from '../../assets/food.gif'
 
+import {GeoLocation} from '../components/GeoLocation';
+
 const OnBoard = ({navigation}) => (
     <Onboarding
-       onSkip={() =>navigation.navigate('HomeTabs') }
-       onDone={() =>navigation.navigate('HomeTabs') }
+      onSkip={() =>navigation.navigate('HomeTabs') }
+      onDone={() =>navigation.navigate('HomeTabs') }
       pages={[
         {
           backgroundColor: '#03A9F4',
@@ -24,16 +26,13 @@ const OnBoard = ({navigation}) => (
         },
         
         {
-         
           title: 'Locate Resturant',
           backgroundColor: '#00796B',
           image: <Image source={LOCATE} style={styles.logo}/>,
           subtitle: 'We will help you find the nearest resturant',
         
         }
-      
         ,
-  
         {
           title: 'Get Recipe',
           backgroundColor: '#8BC34A',
