@@ -6,23 +6,35 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Button,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
-import { Icon, Header } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
-
+import { 
+  Icon, 
+  Header, 
+  Button
+} from 'react-native-elements';
+import { LinearGradient } from 'expo';
 import { ENTRIES1 } from '../utils/food';
 
 export default class FoodChooseScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null,
+      isLoading: true,
+      updatedFood: null,
+    }
+  }
+
   static navigationOptions = {
     header: null,
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      updatedFood: null,
-    };
-  }
+
   _renderItem({ item, index }) {
     return (
       <View style={styles.slide}>
@@ -37,8 +49,53 @@ export default class FoodChooseScreen extends React.Component {
       </View>
     );
   }
-  render() {
-    const { navigate } = this.props.navigation
+
+  componentWillMount() {
+    this.getCurrentLocation();
+  }
+
+  getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+
+        this.setState({ isLoading: false });
+        console.log(`isLoading: ${this.state.isLoading}`);
+        console.log(`The latitude is ${this.state.latitude}`);
+        console.log(`The longitude is ${this.state.longitude}`);
+
+      },
+      (error) => this.setState({ 
+        error: error.message, 
+        isLoading: true
+      }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
+
+  loadingView = () => {
+    return (
+      <LinearGradient colors={['#ff9966', '#F2C94C']} style={styles.loadingView}>
+        <View style={styles.activityIndicatorAndButtonContainer}>
+          <ActivityIndicator size="large" />
+          <View style={styles.getLocationbuttonContainer}>
+            <Button
+              raised
+              icon={{name: 'my-location'}}
+              title='Get Location' 
+              onPress={this.getCurrentLocation}
+            />
+          </View>
+        </View>
+      </LinearGradient>
+    )
+  }
+
+  contentView = () => {
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -85,6 +142,18 @@ export default class FoodChooseScreen extends React.Component {
       </View>
     );
   }
+
+  render() {
+    const { navigate } = this.props.navigation;
+    const { isLoading } = this.state;
+    console.log( isLoading );
+
+    return (
+      <View style={styles.mainContainer}>
+        { isLoading ? this.loadingView() : this.contentView()}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -92,25 +161,46 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  
   navbarIcon: {
     color: 'white',
   },
+
   imageContainer: {
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
   },
+
   photoPostIcon: {
     color: 'pink',
   },
+
   buttonContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
+
   images: {
     width: "100%",
     height: 250,
     resizeMode: 'cover',
-  }
+  }, 
+
+  loadingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  activityIndicatorAndButtoncontainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  getLocationbuttonContainer: {
+    marginTop: 200,
+  },
 });
