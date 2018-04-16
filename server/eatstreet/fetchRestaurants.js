@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
+import MyContext from '../config/context';
+import CurrentGeoLocation from '../../app/components/GeoLocation'
 
 export default class FetchRestaurants extends Component {
 
@@ -15,7 +15,8 @@ export default class FetchRestaurants extends Component {
       latitude: '37.785834',
       longitude: '-122.406417',
       streetAddress: 'san francisco',
-      pickupRadius: '5'
+      pickupRadius: '5',
+      restaurantsList: []
     }
   }
 
@@ -33,8 +34,7 @@ export default class FetchRestaurants extends Component {
       const responseJSON = await response.json();
       if (response.status === 200) {
         const { restaurants } = responseJSON
-        console.log("Restaurants length:", restaurants.length)
-        console.log("Restaurants", restaurants)
+        this.setState({ restaurantsList: restaurants })
 
         // console.log(responseJSON)
       } else {
@@ -46,28 +46,17 @@ export default class FetchRestaurants extends Component {
     }
   }
 
+  componentDidMount() {
+    this._fetchRestaurants()
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Button
-          title='SEARCH'
-          buttonStyle={{
-            paddingHorizontal: 5
-          }}
-          onPress={() => this._fetchRestaurants()}
-        />
-      </View>
+      <MyContext.Provider value={{ restaurantsList: this.state.restaurantsList }}>
+        {this.props.children}
+      </MyContext.Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
 
 

@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { Button, Input, Header } from 'react-native-elements'
 
+import MyContext from '../../server/config/context'
+import EatStreetRestaurantsList from '../../server/eatstreet/fetchRestaurants'
 
 export default class RestaurantsListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -25,8 +27,17 @@ export default class RestaurantsListScreen extends React.Component {
       <View style={styles.container}>
         <View style={{ alignSelf: 'center' }}><Text>This is RestaurantsScreen, here will be list of restaurants that offer clicked food</Text></View>
         <TouchableOpacity onPress={() => navigate('Restaurant')}>
-          <Text style={{color: 'red'}}>Restaurant click</Text>
+          <Text style={{ color: 'red' }}>Restaurant click</Text>
         </TouchableOpacity>
+
+        <EatStreetRestaurantsList>
+          <MyContext.Consumer>
+            { (resList) => (
+              console.log("RESTAURANT LIST FROM CONTEXT CONSUMER:", resList)
+            )}
+          </MyContext.Consumer>
+        </EatStreetRestaurantsList>
+        
       </View>
     );
   }
