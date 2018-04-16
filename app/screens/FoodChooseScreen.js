@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform,
 } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import { 
-  Icon, 
-  Header, 
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+import {
+  Icon,
+  Header,
   Button
 } from 'react-native-elements';
 import { LinearGradient } from 'expo';
@@ -44,6 +45,11 @@ export default class FoodChooseScreen extends React.Component {
           }
         >
           <Image style={styles.images} source={{ uri: item.illustration }} />
+          <View style={styles.foodInfo}>
+            <Text style={styles.foodName} numberOfLines={2}>
+              {item.title}
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
     );
@@ -68,8 +74,8 @@ export default class FoodChooseScreen extends React.Component {
         console.log(`The longitude is ${this.state.longitude}`);
 
       },
-      (error) => this.setState({ 
-        error: error.message, 
+      (error) => this.setState({
+        error: error.message,
         isLoading: true
       }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -84,8 +90,8 @@ export default class FoodChooseScreen extends React.Component {
           <View style={styles.getLocationbuttonContainer}>
             <Button
               raised
-              icon={{name: 'my-location'}}
-              title='Get Location' 
+              icon={{ name: 'my-location' }}
+              title='Get Location'
               onPress={this.getCurrentLocation}
             />
           </View>
@@ -129,15 +135,19 @@ export default class FoodChooseScreen extends React.Component {
             outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
+        <LinearGradient colors={['#536976', '#292E49']} style={styles.mainContainer}>
         <View style={styles.imageContainer}>
           <Carousel
             ref={(c) => { this._carousel = c; }}
             data={ENTRIES1}
             renderItem={this._renderItem.bind(this)}
             sliderWidth={400}
-            itemWidth={200}
+            itemWidth={275}
+            style={styles.carouselContainer}
           />
         </View>
+        </LinearGradient>
+
       </View>
     );
   }
@@ -145,11 +155,11 @@ export default class FoodChooseScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const { isLoading } = this.state;
-    console.log( isLoading );
+    console.log(isLoading);
 
     return (
       <View style={styles.mainContainer}>
-        { isLoading ? this.loadingView() : this.contentView()}
+        {isLoading ? this.loadingView() : this.contentView()}
       </View>
     );
   }
@@ -160,7 +170,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  
+
   navbarIcon: {
     color: 'white',
   },
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
   },
 
   photoPostIcon: {
@@ -183,9 +193,9 @@ const styles = StyleSheet.create({
 
   images: {
     width: "100%",
-    height: 250,
+    height: 350,
     resizeMode: 'cover',
-  }, 
+  },
 
   loadingView: {
     flex: 1,
@@ -202,4 +212,19 @@ const styles = StyleSheet.create({
   getLocationbuttonContainer: {
     marginTop: 200,
   },
+  foodInfo: {
+    // marginRight: '55%',
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? -1 : 1,
+  },
+  foodName: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    // alignContent: 'center',
+  }
 });
