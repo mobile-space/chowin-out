@@ -8,6 +8,7 @@ import {
   Image,
   ActivityIndicator,
   Platform,
+  Dimensions,
 } from 'react-native';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import {
@@ -17,6 +18,19 @@ import {
 } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import { ENTRIES1 } from '../utils/food';
+
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp (percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+const slideHeight = viewportHeight * 0.36;
+const slideWidth = wp(75);
+const itemHorizontalMargin = wp(2);
+
+const sliderWidth = viewportWidth;
+const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export default class FoodChooseScreen extends React.Component {
   constructor(props) {
@@ -141,8 +155,8 @@ export default class FoodChooseScreen extends React.Component {
             ref={(c) => { this._carousel = c; }}
             data={ENTRIES1}
             renderItem={this._renderItem.bind(this)}
-            sliderWidth={400}
-            itemWidth={275}
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
             style={styles.carouselContainer}
           />
         </View>
@@ -193,7 +207,7 @@ const styles = StyleSheet.create({
 
   images: {
     width: "100%",
-    height: 350,
+    height: '90%',
     resizeMode: 'cover',
   },
 
@@ -214,17 +228,18 @@ const styles = StyleSheet.create({
   },
   foodInfo: {
     // marginRight: '55%',
-    position: 'absolute',
+    position: 'relative',
     bottom: Platform.OS === 'ios' ? -1 : 1,
   },
   foodName: {
     fontSize: 20,
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
+
   },
   slide: {
     flex: 1,
     justifyContent: 'center',
-    // alignContent: 'center',
   }
 });
