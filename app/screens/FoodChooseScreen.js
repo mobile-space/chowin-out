@@ -15,6 +15,7 @@ import { Icon, Header, Button } from 'react-native-elements';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import FavSlide from '../components/FavSlide';
 
 import { ENTRIES1 } from '../utils/food';
 
@@ -44,10 +45,10 @@ export default class FoodChooseScreen extends React.Component {
       error: null,
       isLoading: true,
       updatedFood: null,
-      isFavorited: false,
     }
   }
   componentWillMount() {
+    this.getCurrentLocation();
     DeviceEventEmitter.addListener('setFoodUpdated', ({ updatedFood }) => {
       this.foodUpdated({ updatedFood });
     });
@@ -57,59 +58,17 @@ export default class FoodChooseScreen extends React.Component {
     this.setState({ updatedFood });
     this.forceUpdate();
   }
-
-  onFavoriteButtonPress = async () => {
-    const { isFavorited } = this.state;
-    const { onFavoriteButtonPressEmit } = this.props;
-
-    // DeviceEventEmitter.emit('setMyFoodUpdated');
-    this.setState({ isFavorited: !isFavorited });
-
-  }
-
-  renderFavoriteButton = () => {
-    const { food } = this.props;
-
-    return (
-      <TouchableOpacity onPress={this.onFavoriteButtonPress}>
-        <Ionicons
-          name={this.state.isFavorited ? "ios-heart" : "md-heart-outline"}
-          color={this.state.isFavorited ? 'red' : 'white'} size={35}
-          
-        />
-      </TouchableOpacity>
-    );
-
-  }
-
-  _renderItem({ item, index }) {
+  _renderItem ({ item, index }) {
     const { updatedFood } = this.state;
     return (
-      <View style={styles.slide}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() =>
-            this.props.navigation.navigate('RestaurantsList', { foodName: item.title })
-          }
-        >
-          <Image style={styles.images} source={{ uri: item.illustration }} />
-          <View style={styles.foodInteraction}> 
-          <View style={styles.foodInfo}>
-            <Text style={styles.foodName} numberOfLines={2}>
-              {item.title}
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-              {this.renderFavoriteButton()}
-          </View>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <FavSlide
+      item={updatedFood && updatedFood.id === item.id ? updatedFood : item}
+      navigation={this.props.navigation}
+      onFavoriteButtonPressEmit={() => {
+        DeviceEventEmitter.emit('setMyFoodUpdated');
+      }}
+      />
     );
-  }
-
-  componentWillMount() {
-    this.getCurrentLocation();
   }
 
   getCurrentLocation = () => {
@@ -234,16 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  photoPostIcon: {
-    color: 'pink',
-  },
-  images: {
-    width: "100%",
-    height: '90%',
-    resizeMode: 'cover',
-  },
-
   loadingView: {
     flex: 1,
     justifyContent: 'center',
@@ -266,40 +215,5 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     borderWidth: 0,
     borderRadius: 5
-  },
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  foodInteraction: {
-    flex: 1,
-    // flexDirection: 'row',
-    justifyContent: 'space-between',
-    // position: 'absolute'
-  },
-  foodInfo: {
-    // marginRight: '55%',
-    // position: 'relative',
-    // bottom: Platform.OS === 'ios' ? -1 : 1,
-    // alignSelf: 'center',
-  },
-  foodName: {
-    fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-
-  },
-  buttonContainer: {
-    // flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 45,
-    height: 56,
-    paddingRight: 0,
-    position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 55 : 30,
-    right: 0,
-
   },
 });
