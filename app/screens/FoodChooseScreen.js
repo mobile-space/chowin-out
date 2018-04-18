@@ -44,29 +44,19 @@ export default class FoodChooseScreen extends React.Component {
       longitude: null,
       error: null,
       isLoading: true,
-      updatedFood: null,
     }
   }
   componentWillMount() {
     this.getCurrentLocation();
-    DeviceEventEmitter.addListener('setFoodUpdated', ({ updatedFood }) => {
-      this.foodUpdated({ updatedFood });
-    });
+
   }
 
-  foodUpdated = ({ updatedFood }) => {
-    this.setState({ updatedFood });
-    this.forceUpdate();
-  }
   _renderItem ({ item, index }) {
     const { updatedFood } = this.state;
     return (
       <FavSlide
-      item={updatedFood && updatedFood.id === item.id ? updatedFood : item}
+      item={item}
       navigation={this.props.navigation}
-      onFavoriteButtonPressEmit={() => {
-        DeviceEventEmitter.emit('setMyFoodUpdated');
-      }}
       />
     );
   }

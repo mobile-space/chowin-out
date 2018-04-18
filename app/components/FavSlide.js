@@ -37,7 +37,6 @@ export default class FavSlide extends React.Component{
 
   renderFavoriteButton = () => {
     const { item } = this.props;
-    const { updatedFood } = this.state;
 
     return (
       <TouchableOpacity onPress={this.onFavoriteButtonPress}>
