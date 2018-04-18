@@ -24,11 +24,10 @@ export default class FetchRestaurants extends Component {
 
     this.setState({ isLoading: true })
     try {
-      const response = await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, {
+      const response = await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, 
+      {
         method: 'GET',
-        headers: {
-          'X-Access-Token': `${API_KEY}`,
-        }
+        headers: {'X-Access-Token': `${API_KEY}`, }
       });
       const responseJSON = await response.json();
       if (response.status === 200) {

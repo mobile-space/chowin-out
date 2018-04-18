@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Platform, View, Image, Text, TouchableWithoutFeedback, TouchableOpacity,AsyncStorage, DeviceEventEmitter } from 'react-native';
-
+import { StyleSheet, Dimensions, Platform, View, Text, ActivityIndicator,TouchableWithoutFeedback, TouchableOpacity,AsyncStorage, DeviceEventEmitter } from 'react-native';
+import Image from 'react-native-image-progress';
 import { Ionicons } from '@expo/vector-icons';
+
+// import Progress from 'react-native-progress';
+
+import ProgressBar from 'react-native-progress/Bar';
 
 class FavCard extends Component {
   constructor(props) {
@@ -11,6 +15,9 @@ class FavCard extends Component {
 
     this.state = {
       isFavorited: food.isFavorited,
+      isLoading: true,
+
+     
     };
   }
  
@@ -27,16 +34,7 @@ class FavCard extends Component {
     }
   }
 
-  onFavoriteButtonPress = async () => {
-    const { navigation, food } = this.props;
-    const { navigate } = navigation;
-
-      const { isFavorited } = this.state;
-      const { onFavoriteButtonPressEmit } = this.props;
-
-      this.setState({ isFavorited: !isFavorited });
-    
-  }
+ 
 
   renderFavoriteButton = () => {
     const { food } = this.props;
@@ -52,6 +50,15 @@ class FavCard extends Component {
       );
     
   }
+
+  loadingView() {
+    return (
+      <View style={styles.loadingView}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
+
 
   render = () => {
     const { food } = this.props;
@@ -69,15 +76,24 @@ class FavCard extends Component {
             <Image
               style={styles.image}
               source={{ uri: image }}
+              indicator={ProgressBar} 
+              indicatorProps={{
+                size: 98,
+                borderWidth: 1,
+                color: 'rgba(0,255,0,0.3)',
+                unfilledColor: 'rgba(200, 200, 200, 0.2)'
+              }}
+              style={{
+                width: '100%', 
+                height: 240, 
+                
+              }}
             />
            <View style={styles.foodInfo}>
               <Text style={styles.foodName}>{name}</Text>
-              {/* <Text style={styles.eventDescription}>{description}</Text> */}
             </View>
 
-            <View style={styles.buttonContainer}>
-              {this.renderFavoriteButton()}
-            </View>
+           
           </View>
         </TouchableWithoutFeedback>
     
