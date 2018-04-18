@@ -33,7 +33,7 @@ export default class RestaurantsListScreen extends React.Component {
         <EatStreetRestaurantsList>
           <MyContext.Consumer>
             { (resList) => (
-              console.log("RESTAURANT LIST FROM CONTEXT CONSUMER:", resList)
+              console.log("RESTAURANT MENU LISTS FROM CONTEXT CONSUMER:", resList )
             )}
           </MyContext.Consumer>
         </EatStreetRestaurantsList>

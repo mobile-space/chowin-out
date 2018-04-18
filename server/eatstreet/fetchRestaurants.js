@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MyContext from '../config/context';
-import CurrentGeoLocation from '../../app/components/GeoLocation'
+import CurrentGeoLocationFoodScreen from '../../app/screens/FoodChooseScreen'
 
 export default class FetchRestaurants extends Component {
 
@@ -9,6 +9,7 @@ export default class FetchRestaurants extends Component {
     this.state = {
       API_URL: 'https://api.eatstreet.com',
       RES_SEARCH_URL: '/publicapi/v1/restaurant/search',
+      RES_URL: '/publicapi/v1/restaurant/',
       API_KEY: 'ba2d3e545f0d2bd1',
       method: 'both',
       search: 'vegan',
@@ -16,43 +17,73 @@ export default class FetchRestaurants extends Component {
       longitude: '-122.406417',
       streetAddress: 'san francisco',
       pickupRadius: '5',
-      restaurantsList: []
+      restaurantsList: null,
+      menuItemsList: null
     }
   }
 
-  async _fetchRestaurants() {
+  _fetchRestaurants = async () => {
     const { API_KEY, RES_SEARCH_URL, API_URL, method, search, streetAddress, longitude, latitude, pickupRadius } = this.state
 
     this.setState({ isLoading: true })
-    try {
-      const response = await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, {
+
+    await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, {
+      method: 'GET',
+      headers: {
+        'X-Access-Token': `${API_KEY}`,
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const { restaurants } = { ...data }
+        let restApiKeyList = []
+        for (let { apiKey: restApiKey } of restaurants) {
+          restApiKeyList.push(restApiKey)
+        }
+        console.log('RES-JSON-restApiKeyList:', restApiKeyList)
+
+        this.setState({ restaurantsList: restApiKeyList })
+      })
+      .catch(error => {
+        console.log("Server is down " + error);
+      })
+  }
+
+  _fetchMenuItems = () => {
+    const { API_KEY, RES_URL, API_URL, restaurantsList, menuItemsList } = this.state
+
+    this.setState({ isLoading: true })
+
+    let restMenuItemsList = []
+    for (let resApiKey of restaurantsList) {
+      fetch(`${API_URL}${RES_URL}${resApiKey}/menu`, {
         method: 'GET',
         headers: {
           'X-Access-Token': `${API_KEY}`,
         }
-      });
-      const responseJSON = await response.json();
-      if (response.status === 200) {
-        const { restaurants } = responseJSON
-        this.setState({ restaurantsList: restaurants })
-
-        // console.log(responseJSON)
-      } else {
-        const error = responseJSON.details
-        // console.log("Server request failed " + error);
-      }
-    } catch (error) {
-      console.log("Server is down " + error);
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          console.log('data', data)
+          restMenuItemsList.push(data)
+          this.setState({ menuItemsList: restMenuItemsList })
+        })
+        .catch(error => {
+          console.log("Server request failed " + error);
+        })
     }
   }
 
-  componentDidMount() {
-    this._fetchRestaurants()
+  async componentDidMount() {
+    await this._fetchRestaurants()
+    await this._fetchMenuItems()
   }
 
   render() {
     return (
-      <MyContext.Provider value={{ restaurantsList: this.state.restaurantsList }}>
+      <MyContext.Provider value={{ menuItemsList: this.state.menuItemsList }}>
         {this.props.children}
       </MyContext.Provider>
     );
