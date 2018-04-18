@@ -7,25 +7,25 @@ export const ENTRIES1 = [
     },
     {
         id: '2',
-        title: 'Earlier this morning salad',
+        title: 'Vegan Salad',
         subtitle: 'Lorem ipsum dolor sit amet',
         illustration: 'https://i.imgur.com/BM3FqMI.jpg'
     },
     {
         id: '3',
-        title: 'White Pocket Sunset wraps',
+        title: 'Chicken Wraps',
         subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
         illustration: 'https://i.imgur.com/b9niFND.jpg'
     },
     {
         id: '4',
-        title: 'Acrocorinth, Greece',
+        title: 'Sweet Pancakes',
         subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
         illustration: 'https://i.imgur.com/HZCfIxr.jpg'
     },
     {
         id: '5',
-        title: 'The lone tree',
+        title: 'Mac and cheese',
         subtitle: 'Lorem ipsum dolor sit amet',
         illustration: 'https://i.imgur.com/JmxbY1h.jpg'
     },
