@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
+  Image,
 } from 'react-native';
-import { Button, Input, Header } from 'react-native-elements'
+import { Rating } from 'react-native-elements'
 import { ENTRIES1 } from '../utils/food';
 
 
@@ -38,6 +39,7 @@ export default class RestaurantsListScreen extends React.Component {
       radius: '9000',
       restaurants: null,
       isLoading: false,
+      locationUS: true,
     };
   }
   componentDidMount() {
@@ -60,15 +62,11 @@ export default class RestaurantsListScreen extends React.Component {
       if (response.status === 200) {
         responseJSON = await response.json();
         console.log(responseJSON)
-        // const { businesses, total } = responseJSON
-        // console.log("Restaurants length:", total)
-        // console.log("Restaurants", businesses)
 
         this.setState({
           isLoading: false,
           restaurants: responseJSON.businesses,
         })
-        // console.log('should be', this.state.restaurants)
 
       } else {
         responseJSON = await response.json();
@@ -82,23 +80,67 @@ export default class RestaurantsListScreen extends React.Component {
       Alert.alert('Unable to get the feed. Please try again later')
     }
   }
+
+  _renderDistance(distance) {
+    const { locationUS } = this.state
+    if (locationUS)
+      return (
+        <Text style={styles.distanceLabel}>{(distance * 0.000621371192).toPrecision(2)} mi</Text>
+      )
+    else {
+      <Text style={styles.distanceLabel}>{distance.toPrecision(3)}meters</Text>
+    }
+  }
   _renderRestaurants(restaurant) {
-    // const { user, liked, } = this.state;
     const { navigate } = this.props.navigation
 
     return (
-      <View style = {styles.restaurantsRowContainer} key={restaurant}>
-        <TouchableOpacity onPress={() => navigate('Restaurant')}>
-          <View>
+      <View style={styles.restaurantsRowContainer} key={restaurant}>
+        <TouchableOpacity onPress={() => navigate('Restaurant', { restaurantID: restaurant.id })}>
+          <View style={styles.nameContainer}>
             <Text style={styles.nameLabel}>{restaurant.name}</Text>
+            <View styles={styles.distanceContainer}>
+                  {this._renderDistance(restaurant["distance"])}
+            </View>
           </View>
+          <View style={styles.restaurantInfoContainer}>
+            <View style={styles.restaurantImageContainer}>
+              <Image
+                style={styles.restaurantImage}
+                source={{ uri: restaurant.image_url }}
+              />
+            </View>
+            <View style={styles.restaurantDetailsContainer}>
+              <View style={styles.ratingContainer}>
+                <Rating
+                  type="custom"
+                  ratingColor='#FD9427'
+
+                  startingValue={restaurant.rating}
+                  fractions={1}
+                  // onFinishRating={restaurant.rating}              
+                  imageSize={20}
+                  style={{ paddingVertical: 10 }}
+                />
+                <Text style={styles.ratingLabel}>{restaurant.review_count} Reviews</Text>
+
+              </View>
+              <View style={styles.locationInfoContainer}>
+                <View style={styles.locationContainer}>
+                  <Text style={styles.locationLabel}>{restaurant.location.display_address}</Text>
+                </View>
+
+              </View>
+            </View>
+          </View>
+
         </TouchableOpacity>
       </View>
     )
   }
   contentView() {
     const { isLoading, restaurants, } = this.state
-    console.log("Loading restaurants, so good", restaurants)
+    // console.log("Loading restaurants, so good", restaurants)
     return (
       <View style={styles.flatListContainer}>
 
@@ -107,8 +149,8 @@ export default class RestaurantsListScreen extends React.Component {
           extraData={this.state}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => this._renderRestaurants(item)}
-          // onRefresh={() => this.getFeed()}
-          // refreshing={isLoading}
+        // onRefresh={() => this.getFeed()}
+        // refreshing={isLoading}
         />
       </View>
     )
@@ -117,18 +159,7 @@ export default class RestaurantsListScreen extends React.Component {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity onPress={() => navigate('Restaurant')}>
-
-          <Text style={{ color: 'red' }}>Restaurant click</Text>
-        </TouchableOpacity> */}
         {this.contentView()}
-        {/* <Button
-          title='SEARCH'
-          buttonStyle={{
-            paddingHorizontal: 5
-          }}
-          onPress={() => this._fetchRestaurants()}
-        /> */}
       </View>
     );
   }
@@ -144,21 +175,72 @@ const styles = StyleSheet.create({
   navBar: {
     color: 'white'
   },
-
+  nameContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
   flatListContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'pink',
     alignContent: 'center',
   },
   restaurantsRowContainer: {
+    flex: 1,
+    // flexDirection: 'row',
     backgroundColor: 'white',
+    // justifyContent: 'space-around',
+    // alignContent: 'center',
+    // alignItems: 'center',
+    borderBottomColor: '#aaa',
+    borderBottomWidth: 0.5,
+
+  },
+  restaurantImageContainer: {
+    height: 70,
+    width: 70,
+    backgroundColor: 'white'
+  },
+  restaurantImage: {
+    height: 70,
+    width: 70,
+  },
+  restaurantInfoContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  restaurantDetailsContainer: {
+    flex: 1,
+    flexDirection: 'column',
   },
   nameLabel: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#003366',
     marginLeft: 10,
     fontWeight: 'bold'
   },
+  locationInfoContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  ratingContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+
+  },
+  ratingLabel: {
+    textAlign: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  }
 
 });
