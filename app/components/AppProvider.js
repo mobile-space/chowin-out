@@ -12,6 +12,7 @@ export default class AppProvider extends React.Component {
       error: null,
       isLoading: true,
       updatedFood: null,
+      menuList: null
     }
   }
   
@@ -26,7 +27,7 @@ export default class AppProvider extends React.Component {
           setError: (error) => { this.setState({ error }) },
           setIsLoading: (isLoading) => { this.setState({ isLoading }) },
           setUpdatedFood: (updatedFood) => { this.setState({ updatedFood }) },
-
+          setMenuList: (menuList) => {this.setState({menuList})}
         }}
       >
         {this.props.children}
