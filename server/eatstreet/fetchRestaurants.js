@@ -46,7 +46,7 @@ export default class RestaurantsListScreen extends React.Component {
     const { API_KEY, RES_SEARCH_URL, API_URL, method, search, streetAddress, longitude, latitude, pickupRadius } = this.state
 
     this.setState({ isLoading: true })
-
+    
     await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, {
       method: 'GET',
       headers: {
