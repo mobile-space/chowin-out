@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import RootNavigator from './app/navigation/RootNavigator';
-
-
+import AppProvider, { AppContext } from './app/components/AppProvider';
 
 export default class App extends React.Component {
   render() {
     return (
-      <RootNavigator/>
-
+      <AppProvider>
+        <RootNavigator />
+      </AppProvider>
     );
   }
 }
