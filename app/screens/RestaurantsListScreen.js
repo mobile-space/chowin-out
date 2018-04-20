@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Button, Input, Header } from 'react-native-elements'
 
-import MyContext from '../../server/config/context'
+import { AppContext } from '../../app/components/AppProvider'
 import EatStreetRestaurantsList from '../../server/eatstreet/fetchRestaurants'
 
 export default class RestaurantsListScreen extends React.Component {
@@ -30,13 +30,11 @@ export default class RestaurantsListScreen extends React.Component {
           <Text style={{ color: 'red' }}>Restaurant click</Text>
         </TouchableOpacity>
 
-        <EatStreetRestaurantsList>
-          <MyContext.Consumer>
-            { (resList) => (
-              console.log("RESTAURANT MENU LISTS FROM CONTEXT CONSUMER:", resList )
+          <AppContext.Consumer>
+            { (context) => (
+              console.log("RESTAURANT MENU LISTS FROM CONTEXT CONSUMER:", context.state.menuList )
             )}
-          </MyContext.Consumer>
-        </EatStreetRestaurantsList>
+          </AppContext.Consumer>
         
       </View>
     );

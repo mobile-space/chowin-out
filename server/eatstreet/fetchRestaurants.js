@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyContext from '../config/context';
+import { AppContext } from '../../app/components/AppProvider'
 import CurrentGeoLocationFoodScreen from '../../app/screens/FoodChooseScreen'
 
 export default class FetchRestaurants extends Component {
@@ -80,12 +80,14 @@ export default class FetchRestaurants extends Component {
     await this._fetchRestaurants()
     await this._fetchMenuItems()
   }
-
+  
   render() {
     return (
-      <MyContext.Provider value={{ menuItemsList: this.state.menuItemsList }}>
-        {this.props.children}
-      </MyContext.Provider>
+      <AppContext.Consumer>
+        {context => {
+          context.setMenuList(this.state.menuItemsList)
+        }}
+      </AppContext.Consumer>
     );
   }
 }
