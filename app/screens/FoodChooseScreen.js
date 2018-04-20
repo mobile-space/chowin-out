@@ -23,13 +23,13 @@ export default class FoodChooseScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      latitude: null,
-      longitude: null,
-      error: null,
-      isLoading: true,
-      updatedFood: null,
-    }
+    // this.state = {
+    //   latitude: null,
+    //   longitude: null,
+    //   error: null,
+    //   isLoading: true,
+    //   updatedFood: null,
+    // }
   }
 
   static navigationOptions = {
@@ -57,19 +57,23 @@ export default class FoodChooseScreen extends React.Component {
   }
 
   // componentWillMount() {
-  //   // this.getCurrentLocation();
+  //    this.getCurrentLocation();
   // }
 
-  getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {        
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        });
+  getCurrentLocation(context) {
+    console.log(context)
+    console.log('contexxt above')
 
-        this.setState({ isLoading: false });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        context.setIsLoading(false)
+        // this.setState({
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        //   error: null,
+        // });
+
+        // this.setState({ isLoading: false });
         // console.log(`isLoading: ${this.state.isLoading}`);
         // console.log(`The latitude is ${this.state.latitude}`);
         // console.log(`The longitude is ${this.state.longitude}`);
@@ -82,42 +86,7 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  // testPress = () => {
-      // <MyContent>
-      //   <Context.Consumer>
-      //     {
-          
-      //       (context) => (
-      //         <React.Fragment>
-      //           {context.setName("BOB")}
-      //         </React.Fragment>
-      //       )
-          
-      //     }
-      //   </Context.Consumer>
-      // </MyContent>
-  // }
-
-  testTwoPress = () => {
-    // console.log('pressed');
-    // <AppProvider>
-    //     <AppContext.Consumer>
-    //       {
-          
-    //         // (context) => (
-    //         //   <React.Fragment>
-    //         //     {console.log(context.name)}
-    //         //   </React.Fragment>
-    //         // )
-
-    //         (context) =>  {console.log(context)}
-          
-    //       }
-    //     </AppContext.Consumer>
-    //   </AppProvider>
-  }
-
-  loadingView = () => {
+  loadingView = (context) => {
     return (
       <LinearGradient colors={['#ff9966', '#F2C94C']} style={styles.loadingView}>
         <View style={styles.activityIndicatorAndButtonContainer}>
@@ -127,30 +96,11 @@ export default class FoodChooseScreen extends React.Component {
               raised
               icon={{ name: 'my-location' }}
               title='Get Location'
-              onPress={this.getCurrentLocation.bind(this)}
-              // onPress={() => this.testPress}
+              onPress={this.getCurrentLocation.bind(this, context)}
+              // onPress={console.log('current location pressed')}
             />
-
-            {/* <Button
-              raised
-              icon={{ name: 'my-location' }}
-              title='Get Location'
-              onPress={this.testTwoPress()}
-            /> */}
-
-
           </View>
         </View>
-
-        {/* <AppContext.Consumer>
-          {
-            (context) => {
-              console.log('here')
-              console.log(context)
-            }
-          }
-        </AppContext.Consumer> */}
-
       </LinearGradient>
     )
   }
@@ -207,39 +157,27 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  updateName() {
-    <AppContext.Consumer>
-        { 
-          ({setName}) => {
-            setName('moni')
-          }
-        }
-      </AppContext.Consumer>
-  }
-
   render() {
     const { navigate } = this.props.navigation;
-    const { isLoading } = this.state;
-    // console.log(isLoading);
-
-    console.log(this.props)
 
     return (
       <AppContext.Consumer>
-        {context => 
-          <View
-            style={{
-              flex: 1, justifyContent: 'center', alignItems: 'center'
-            }}>
-            <Text 
-              style={{marginBottom: 20}}>
-              {context.state.name}
-            </Text>
-            <Button 
-              title="Change name"
-              onPress={() => context.setName('moni')}
-            />
-          </View>
+        {
+          // context => 
+          // <View
+          //   style={{
+          //     flex: 1, justifyContent: 'center', alignItems: 'center'
+          //   }}>
+          //   <Text 
+          //     style={{marginBottom: 20}}>
+          //     {context.state.name}
+          //   </Text>
+          //   <Button 
+          //     title="Change name"
+          //     onPress={() => context.setName('moni')}
+          //   />
+          // </View>
+          (context) => context.state.isLoading ? this.loadingView(context) : this.contentView()
         }
       </AppContext.Consumer>
     )
