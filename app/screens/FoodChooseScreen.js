@@ -40,6 +40,10 @@ export default class FoodChooseScreen extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      loadedOnce: false
+    }
   }
 
   _renderItem ({ item, index }) {
@@ -60,6 +64,7 @@ export default class FoodChooseScreen extends React.Component {
           context.setIsLoading(false);
           context.setError(null);
         }
+        this.setState({ loadedOnce: true });
       },
       (error) => {
         context.setIsLoading(true);
@@ -143,11 +148,22 @@ export default class FoodChooseScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { loadedOnce } = this.state;
 
     return (
       <AppContext.Consumer>
         {
-          (context) => context.state.isLoading ? this.loadingView(context) : this.contentView(context)
+          (context) => {
+            if(!loadedOnce){
+              this.getCurrentLocation(context);
+            }
+
+            if(context.state.isLoading){
+              return this.loadingView(context) 
+            }else {
+              return this.contentView(context)
+            }
+          }
         }
       </AppContext.Consumer>
     )

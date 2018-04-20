@@ -6,12 +6,10 @@ export default class AppProvider extends React.Component {
     super(props)
 
     this.state = {
-      name: 'Nick',
       latitude: null,
       longitude: null,
       error: null,
       isLoading: true,
-      updatedFood: null,
       menuList: null
     }
   }
@@ -21,12 +19,10 @@ export default class AppProvider extends React.Component {
       <AppContext.Provider
         value={{
           state: this.state,
-          setName: (name) => { this.setState({ name }) },
           setLatitude: (latitude) => { this.setState({ latitude }) },
           setLongitude: (longitude) => { this.setState({ longitude }) },
           setError: (error) => { this.setState({ error }) },
           setIsLoading: (isLoading) => { this.setState({ isLoading }) },
-          setUpdatedFood: (updatedFood) => { this.setState({ updatedFood }) },
           setMenuList: (menuList) => {this.setState({menuList})}
         }}
       >
