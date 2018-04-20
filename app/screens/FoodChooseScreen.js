@@ -22,14 +22,6 @@ import AppProvider, { AppContext } from '../components/AppProvider';
 export default class FoodChooseScreen extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //   latitude: null,
-    //   longitude: null,
-    //   error: null,
-    //   isLoading: true,
-    //   updatedFood: null,
-    // }
   }
 
   static navigationOptions = {
@@ -57,31 +49,23 @@ export default class FoodChooseScreen extends React.Component {
   }
 
   // componentWillMount() {
-  //    this.getCurrentLocation();
+  //   this.getCurrentLocation();
   // }
 
   getCurrentLocation(context) {
-    console.log(context)
-    console.log('contexxt above')
-
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        context.setIsLoading(false)
-        // this.setState({
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        //   error: null,
-        // });
-
-        // this.setState({ isLoading: false });
-        // console.log(`isLoading: ${this.state.isLoading}`);
-        // console.log(`The latitude is ${this.state.latitude}`);
-        // console.log(`The longitude is ${this.state.longitude}`);
+      (position) => {        
+        if(position.coords.latitude && position.coords.longitude){
+          context.setLatitude(position.coords.latitude);
+          context.setLongitude(position.coords.longitude);
+          context.setIsLoading(false);
+          context.setError(null);
+        }
       },
-      (error) => this.setState({
-        error: error.message,
-        isLoading: true
-      }),
+      (error) => {
+        context.setIsLoading(true);
+        context.setError(error.message);
+      },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
@@ -105,7 +89,7 @@ export default class FoodChooseScreen extends React.Component {
     )
   }
 
-  contentView = () => {    
+  contentView = (context) => {    
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -177,7 +161,7 @@ export default class FoodChooseScreen extends React.Component {
           //     onPress={() => context.setName('moni')}
           //   />
           // </View>
-          (context) => context.state.isLoading ? this.loadingView(context) : this.contentView()
+          (context) => context.state.isLoading ? this.loadingView(context) : this.contentView(context)
         }
       </AppContext.Consumer>
     )
