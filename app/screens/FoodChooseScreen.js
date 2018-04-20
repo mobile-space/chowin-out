@@ -48,10 +48,6 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  // componentWillMount() {
-  //   this.getCurrentLocation();
-  // }
-
   getCurrentLocation(context) {
     navigator.geolocation.getCurrentPosition(
       (position) => {        
@@ -147,20 +143,6 @@ export default class FoodChooseScreen extends React.Component {
     return (
       <AppContext.Consumer>
         {
-          // context => 
-          // <View
-          //   style={{
-          //     flex: 1, justifyContent: 'center', alignItems: 'center'
-          //   }}>
-          //   <Text 
-          //     style={{marginBottom: 20}}>
-          //     {context.state.name}
-          //   </Text>
-          //   <Button 
-          //     title="Change name"
-          //     onPress={() => context.setName('moni')}
-          //   />
-          // </View>
           (context) => context.state.isLoading ? this.loadingView(context) : this.contentView(context)
         }
       </AppContext.Consumer>
