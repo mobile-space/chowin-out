@@ -37,27 +37,19 @@ export default class FoodChooseScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
-    this.getCurrentLocation();
-
-  }
 
   _renderItem ({ item, index }) {
-    const { updatedFood } = this.state;
     return (
       <FavSlide
-      item={item}
-      navigation={this.props.navigation}
+        item={item}
+        navigation={this.props.navigation}
       />
     );
   }
-
-  // componentWillMount() {
-  //   this.getCurrentLocation();
-  // }
 
   getCurrentLocation(context) {
     navigator.geolocation.getCurrentPosition(
@@ -88,7 +80,6 @@ export default class FoodChooseScreen extends React.Component {
               icon={{ name: 'my-location' }}
               title='Get Location'
               buttonStyle={styles.getLocationButton}
-
               onPress={this.getCurrentLocation.bind(this, context)}
               // onPress={console.log('current location pressed')}
             />
@@ -156,20 +147,6 @@ export default class FoodChooseScreen extends React.Component {
     return (
       <AppContext.Consumer>
         {
-          // context => 
-          // <View
-          //   style={{
-          //     flex: 1, justifyContent: 'center', alignItems: 'center'
-          //   }}>
-          //   <Text 
-          //     style={{marginBottom: 20}}>
-          //     {context.state.name}
-          //   </Text>
-          //   <Button 
-          //     title="Change name"
-          //     onPress={() => context.setName('moni')}
-          //   />
-          // </View>
           (context) => context.state.isLoading ? this.loadingView(context) : this.contentView(context)
         }
       </AppContext.Consumer>
