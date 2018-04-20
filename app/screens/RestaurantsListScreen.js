@@ -242,5 +242,4 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
   }
-
 });
