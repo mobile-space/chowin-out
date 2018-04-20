@@ -18,6 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 import FavSlide from '../components/FavSlide';
 
 import { ENTRIES1 } from '../utils/food';
+import AppProvider, { AppContext } from '../components/AppProvider';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -39,12 +40,13 @@ export default class FoodChooseScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      latitude: null,
-      longitude: null,
-      error: null,
-      isLoading: true,
-    }
+    // this.state = {
+    //   latitude: null,
+    //   longitude: null,
+    //   error: null,
+    //   isLoading: true,
+    //   updatedFood: null,
+    // }
   }
   componentWillMount() {
     this.getCurrentLocation();
@@ -61,20 +63,27 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  getCurrentLocation = () => {
+  // componentWillMount() {
+  //    this.getCurrentLocation();
+  // }
+
+  getCurrentLocation(context) {
+    console.log(context)
+    console.log('contexxt above')
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        });
+        context.setIsLoading(false)
+        // this.setState({
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        //   error: null,
+        // });
 
-        this.setState({ isLoading: false });
-        console.log(`isLoading: ${this.state.isLoading}`);
-        console.log(`The latitude is ${this.state.latitude}`);
-        console.log(`The longitude is ${this.state.longitude}`);
-
+        // this.setState({ isLoading: false });
+        // console.log(`isLoading: ${this.state.isLoading}`);
+        // console.log(`The latitude is ${this.state.latitude}`);
+        // console.log(`The longitude is ${this.state.longitude}`);
       },
       (error) => this.setState({
         error: error.message,
@@ -84,7 +93,7 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  loadingView = () => {
+  loadingView = (context) => {
     return (
       <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
         <View style={styles.activityIndicatorAndButtonContainer}>
@@ -94,8 +103,10 @@ export default class FoodChooseScreen extends React.Component {
               raised
               icon={{ name: 'my-location' }}
               title='Get Location'
-              onPress={this.getCurrentLocation}
               buttonStyle={styles.getLocationButton}
+
+              onPress={this.getCurrentLocation.bind(this, context)}
+              // onPress={console.log('current location pressed')}
             />
           </View>
         </View>
@@ -103,7 +114,7 @@ export default class FoodChooseScreen extends React.Component {
     )
   }
 
-  contentView = () => {
+  contentView = () => {    
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -157,14 +168,28 @@ export default class FoodChooseScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { isLoading } = this.state;
-    console.log(isLoading);
 
     return (
-      <View style={styles.mainContainer}>
-        {isLoading ? this.loadingView() : this.contentView()}
-      </View>
-    );
+      <AppContext.Consumer>
+        {
+          // context => 
+          // <View
+          //   style={{
+          //     flex: 1, justifyContent: 'center', alignItems: 'center'
+          //   }}>
+          //   <Text 
+          //     style={{marginBottom: 20}}>
+          //     {context.state.name}
+          //   </Text>
+          //   <Button 
+          //     title="Change name"
+          //     onPress={() => context.setName('moni')}
+          //   />
+          // </View>
+          (context) => context.state.isLoading ? this.loadingView(context) : this.contentView()
+        }
+      </AppContext.Consumer>
+    )
   }
 }
 
