@@ -43,11 +43,10 @@ export default class FoodChooseScreen extends React.Component {
   }
 
   _renderItem ({ item, index }) {
-    const { updatedFood } = this.state;
     return (
       <FavSlide
-      item={item}
-      navigation={this.props.navigation}
+        item={item}
+        navigation={this.props.navigation}
       />
     );
   }
