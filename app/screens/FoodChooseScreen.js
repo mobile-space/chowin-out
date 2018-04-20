@@ -17,6 +17,7 @@ import {
 } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import { ENTRIES1 } from '../utils/food';
+import AppProvider, { AppContext } from '../components/AppProvider';
 
 export default class FoodChooseScreen extends React.Component {
   constructor(props) {
@@ -55,13 +56,13 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  componentWillMount() {
-    this.getCurrentLocation();
-  }
+  // componentWillMount() {
+  //   // this.getCurrentLocation();
+  // }
 
-  getCurrentLocation = () => {
+  getCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      (position) => {        
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -69,10 +70,9 @@ export default class FoodChooseScreen extends React.Component {
         });
 
         this.setState({ isLoading: false });
-        console.log(`isLoading: ${this.state.isLoading}`);
-        console.log(`The latitude is ${this.state.latitude}`);
-        console.log(`The longitude is ${this.state.longitude}`);
-
+        // console.log(`isLoading: ${this.state.isLoading}`);
+        // console.log(`The latitude is ${this.state.latitude}`);
+        // console.log(`The longitude is ${this.state.longitude}`);
       },
       (error) => this.setState({
         error: error.message,
@@ -80,6 +80,41 @@ export default class FoodChooseScreen extends React.Component {
       }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+  }
+
+  // testPress = () => {
+      // <MyContent>
+      //   <Context.Consumer>
+      //     {
+          
+      //       (context) => (
+      //         <React.Fragment>
+      //           {context.setName("BOB")}
+      //         </React.Fragment>
+      //       )
+          
+      //     }
+      //   </Context.Consumer>
+      // </MyContent>
+  // }
+
+  testTwoPress = () => {
+    // console.log('pressed');
+    // <AppProvider>
+    //     <AppContext.Consumer>
+    //       {
+          
+    //         // (context) => (
+    //         //   <React.Fragment>
+    //         //     {console.log(context.name)}
+    //         //   </React.Fragment>
+    //         // )
+
+    //         (context) =>  {console.log(context)}
+          
+    //       }
+    //     </AppContext.Consumer>
+    //   </AppProvider>
   }
 
   loadingView = () => {
@@ -92,15 +127,35 @@ export default class FoodChooseScreen extends React.Component {
               raised
               icon={{ name: 'my-location' }}
               title='Get Location'
-              onPress={this.getCurrentLocation}
+              onPress={this.getCurrentLocation.bind(this)}
+              // onPress={() => this.testPress}
             />
+
+            {/* <Button
+              raised
+              icon={{ name: 'my-location' }}
+              title='Get Location'
+              onPress={this.testTwoPress()}
+            /> */}
+
+
           </View>
         </View>
+
+        {/* <AppContext.Consumer>
+          {
+            (context) => {
+              console.log('here')
+              console.log(context)
+            }
+          }
+        </AppContext.Consumer> */}
+
       </LinearGradient>
     )
   }
 
-  contentView = () => {
+  contentView = () => {    
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -152,16 +207,42 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
+  updateName() {
+    <AppContext.Consumer>
+        { 
+          ({setName}) => {
+            setName('moni')
+          }
+        }
+      </AppContext.Consumer>
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     const { isLoading } = this.state;
-    console.log(isLoading);
+    // console.log(isLoading);
+
+    console.log(this.props)
 
     return (
-      <View style={styles.mainContainer}>
-        {isLoading ? this.loadingView() : this.contentView()}
-      </View>
-    );
+      <AppContext.Consumer>
+        {context => 
+          <View
+            style={{
+              flex: 1, justifyContent: 'center', alignItems: 'center'
+            }}>
+            <Text 
+              style={{marginBottom: 20}}>
+              {context.state.name}
+            </Text>
+            <Button 
+              title="Change name"
+              onPress={() => context.setName('moni')}
+            />
+          </View>
+        }
+      </AppContext.Consumer>
+    )
   }
 }
 
