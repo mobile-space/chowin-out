@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Rating } from 'react-native-elements'
 import { ENTRIES1 } from '../utils/food';
+import AppProvider, { AppContext } from '../components/AppProvider';
 
 
 
@@ -33,25 +34,24 @@ export default class RestaurantsListScreen extends React.Component {
       RES_SEARCH_URL: '/v3/businesses/search',
       API_KEY: 'slBJejlSuGFSOUx8vRNNN2hdBtC18Gy1zEpPR6hBrw2W4FzA6PxAdkRPvlXn46vXCWZi2z2MQph46PYaVKnDKp8MdYAWQeht42ZBzSpdEUSsaZ6gS9L4XL-hbnrKWnYx',
       term: foodName || null,
-      latitude: '37.785834',
-      longitude: '-122.406417',
-      location: 'san francisco, ca',
       radius: '9000',
       restaurants: null,
       isLoading: false,
       locationUS: true,
+      loadedOnce: false,
+
     };
   }
-  componentDidMount() {
-    //When the component is loaded
-    this._fetchRestaurants()
-  }
-  async _fetchRestaurants() {
-    const { API_KEY, RES_SEARCH_URL, API_URL, term, location, longitude, latitude, radius, } = this.state
+  // componentDidMount() {
+  //   //When the component is loaded
+  //   this._fetchRestaurants()
+  // }
+  async _fetchRestaurants(context) {
+    const { API_KEY, RES_SEARCH_URL, API_URL, term, radius, } = this.state
 
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true, loadedOnce: true, })
     try {
-      let response = await fetch(`${API_URL}${RES_SEARCH_URL}?term=${term}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`, {
+      let response = await fetch(`${API_URL}${RES_SEARCH_URL}?term=${term}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=${radius}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${API_KEY}`,
@@ -100,7 +100,7 @@ export default class RestaurantsListScreen extends React.Component {
           <View style={styles.nameContainer}>
             <Text style={styles.nameLabel}>{restaurant.name}</Text>
             <View styles={styles.distanceContainer}>
-                  {this._renderDistance(restaurant["distance"])}
+              {this._renderDistance(restaurant["distance"])}
             </View>
           </View>
           <View style={styles.restaurantInfoContainer}>
@@ -157,10 +157,24 @@ export default class RestaurantsListScreen extends React.Component {
   }
   render() {
     const { navigate } = this.props.navigation
+    const { loadedOnce } = this.state;
+
     return (
-      <View style={styles.container}>
-        {this.contentView()}
-      </View>
+      <AppContext.Consumer>
+        {
+          (context) => {
+            if(!loadedOnce){
+              this._fetchRestaurants(context)
+            }
+            return (            
+            <View style={styles.container}>
+              {this.contentView()}
+            </View>
+            )
+
+          }
+        }
+      </AppContext.Consumer>
     );
   }
 }
