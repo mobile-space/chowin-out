@@ -23,17 +23,35 @@ export default class FavSlide extends React.Component{
     const { item } = props;
 
     this.state = {
-      isFavorited: false,
+      isFavorited: item.isFavorited,
     };
   }
   onFavoriteButtonPress = async () => {
     const { isFavorited } = this.state;
     const { onFavoriteButtonPressEmit } = this.props;
 
-    // DeviceEventEmitter.emit('setMyFoodUpdated');
+    const { item } = this.props;
+
+
+    try {
+      item.isFavorited = !isFavorited;
+      if (!isFavorited) {
+        await AsyncStorage.setItem(item.illustration, JSON.stringify(item));
+      } else {
+        await AsyncStorage.removeItem(item.illustration);
+      }
+      onFavoriteButtonPressEmit();
+    } catch (error) {
+      // Error saving data
+    }
+    DeviceEventEmitter.emit('setMyFoodUpdated');
+    
     this.setState({ isFavorited: !isFavorited });
+    console.log( "FavSlide: " + item.illustration)
 
   }
+
+
 
   renderFavoriteButton = () => {
     const { item } = this.props;

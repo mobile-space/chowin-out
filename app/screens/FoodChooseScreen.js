@@ -42,17 +42,31 @@ export default class FoodChooseScreen extends React.Component {
     super(props);
 
     this.state = {
-      loadedOnce: false
+      loadedOnce: false,
+      foods: ENTRIES1,
+      updatedFood: null,
     }
   }
 
-  _renderItem ({ item, index }) {
+
+  componentWillMount() {
+    DeviceEventEmitter.addListener('setFoodUpdated', ({ updatedFood }) => {
+      this.eventUpdated({ updatedFood });
+    });
+  }
+
+  _renderItem ({ item: food, index }) {
+    const { updatedFood } = this.state;
     return (
       <FavSlide
-        item={item}
+        item={updatedFood && updatedFood.illustration === food.illustration ? updatedFood : food}
         navigation={this.props.navigation}
+        onFavoriteButtonPressEmit={() => {
+            DeviceEventEmitter.emit('setMyFoodUpdated');
+          }}
       />
     );
+
   }
 
   getCurrentLocation(context) {
@@ -133,7 +147,7 @@ export default class FoodChooseScreen extends React.Component {
           <View style={styles.imageContainer}>
             <Carousel
               ref={(c) => { this._carousel = c; }}
-              data={ENTRIES1}
+              data={this.state.foods}
               renderItem={this._renderItem.bind(this)}
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
@@ -145,6 +159,8 @@ export default class FoodChooseScreen extends React.Component {
       </View>
     );
   }
+
+  
 
   render() {
     const { navigate } = this.props.navigation;
