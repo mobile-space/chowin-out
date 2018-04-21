@@ -51,7 +51,7 @@ export default class FavSlide extends React.Component{
   }
   renderImage(item) {
     var urlImage = item.replace(/=s90-c/i, "=s1080")
-    console.log(urlImage)
+    // console.log(urlImage)
     return (
       <Image style={styles.images} source={ {uri: urlImage}} />
     )
@@ -66,7 +66,7 @@ export default class FavSlide extends React.Component{
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            this.props.navigation.navigate('RestaurantsList', { foodName: item.title })
+            this.props.navigation.navigate('RestaurantsList', { foodName: item.recipeName })
           }
         >
           {this.renderImage(item.imageUrlsBySize[90])}
@@ -74,7 +74,7 @@ export default class FavSlide extends React.Component{
           <View style={styles.foodInteraction}> 
           <View style={styles.foodInfo}>
             <Text style={styles.foodName} numberOfLines={2}>
-              {item.title}
+              {item.recipeName}
             </Text>
           </View>
           <View style={styles.buttonContainer}>

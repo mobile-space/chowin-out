@@ -59,7 +59,7 @@ export default class FoodChooseScreen extends React.Component {
   componentDidMount() {
     //When the component is loaded
     this._getYummlyImages()
-    
+
   }
   async _getYummlyImages() {
     const { search, picture } = this.state;
@@ -86,8 +86,8 @@ export default class FoodChooseScreen extends React.Component {
           imagesLoaded: false,
           foodImages: responseJSON.matches,
         })
-        console.log(imagesLoaded)
-        console.log("not loaded food",foodImages)
+        // console.log(imagesLoaded)
+        // console.log("not loaded food",foodImages)
       } else {
         responseJSON = await response.json();
         const error = responseJSON.message
@@ -125,6 +125,7 @@ export default class FoodChooseScreen extends React.Component {
           context.setError(null);
         }
         this.setState({ loadedOnce: true });
+        // this._getYummlyImages()
       },
       (error) => {
         context.setIsLoading(true);
@@ -153,11 +154,20 @@ export default class FoodChooseScreen extends React.Component {
       </LinearGradient>
     )
   }
+  loadingImages = () => {
+    return (
+      <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
+        <View style={styles.activityIndicatorAndButtonContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      </LinearGradient>
+    )
+  }
 
   contentView = () => {
     const { foodImages, imagesLoaded } = this.state
-    console.log("loaded food",foodImages)
-    console.log("LOOP is working")
+    // console.log("loaded food",foodImages)
+    // console.log("LOOP is working")
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -194,16 +204,17 @@ export default class FoodChooseScreen extends React.Component {
         </SafeAreaView>
         <LinearGradient colors={['#536976', '#292E49']} style={styles.mainContainer}>
           <View style={styles.imageContainer}>
-          {foodImages=== null ?
-            this.loadingView() :  <Carousel
-            ref={(c) => { this._carousel = c; }}
-            data={ foodImages }
-            // data = {ENTRIES1}
-            renderItem={this._renderItem.bind(this)}
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            style={styles.carouselContainer}
-        />}
+            {foodImages === null ?
+              this.loadingImages() :
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                data={foodImages}
+                // data = {ENTRIES1}
+                renderItem={this._renderItem.bind(this)}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                style={styles.carouselContainer}
+              />}
           </View>
         </LinearGradient>
 
@@ -213,29 +224,29 @@ export default class FoodChooseScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { loadedOnce, foodImages, imagesLoaded } = this.state;
-    console.log(imagesLoaded)
+    const { loadedOnce, foodImages } = this.state;
     return (
       // <AppContext.Consumer>
       //   {
       //     (context) => {
-      //       // if (!loadedOnce) {
-      //       //   this.getCurrentLocation(context);
-      //       // }
+      //       if (!loadedOnce) {
+      //         this.getCurrentLocation(context);
+      //       }
 
-      //       // if (context.state.isLoading) {
-      //       //   return this.loadingView(context)
+      //       if (context.state.isLoading) {
+      //         return this.loadingView(context)
 
-      //       // } else {
-              
-      //       // }
+      //       } else {
+      //         return this.contentView()
+
+      //       }
       //     }
       //   }
       // </AppContext.Consumer>
-      <View style={styles.mainContainer}>
-      {/* { imagesLoaded === false ? this.loadingView() : this.contentView() } */}
-      {this.contentView()}
-    </View>
+        <View style={styles.mainContainer}>
+        { loadedOnce  ? this.loadingView() : this.contentView() }
+        {/* {this.contentView()} */}
+      </View>
 
     )
   }
