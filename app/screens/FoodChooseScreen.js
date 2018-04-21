@@ -51,7 +51,7 @@ export default class FoodChooseScreen extends React.Component {
       APP_ID: 'eb4e23c7',
       RES_SEARCH_URL1: '&_app_key=',
       API_KEY: '851038fb4920d6b523e47c79320c858e',
-      search: '&q=chicken',
+      search: '&q=Roasted Root Vegetables with Tomatoes and Kale',
       picture: '&requirePictures=true'
 
     };
