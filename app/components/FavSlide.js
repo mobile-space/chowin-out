@@ -49,6 +49,13 @@ export default class FavSlide extends React.Component{
     );
 
   }
+  renderImage(item) {
+    var urlImage = item.replace(/=s90/i, "=s1080")
+    console.log(urlImage)
+    return (
+      <Image style={styles.images} source={ {uri: urlImage}} />
+    )
+  }
   render = () => {
     const { item } = this.props;
     const { image, name, description } = item;
@@ -62,7 +69,8 @@ export default class FavSlide extends React.Component{
             this.props.navigation.navigate('RestaurantsList', { foodName: item.title })
           }
         >
-          <Image style={styles.images} source={{ uri: item.illustration }} />
+          {this.renderImage(item.smallImageUrls[0])}
+          
           <View style={styles.foodInteraction}> 
           <View style={styles.foodInfo}>
             <Text style={styles.foodName} numberOfLines={2}>
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
   },
   images: {
     width: "100%",
-    height: '90%',
+    height: '85%',
     resizeMode: 'cover',
   },
 
