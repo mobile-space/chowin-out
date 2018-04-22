@@ -5,8 +5,17 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  ScrollView,
+  Platform,
+  WebView,
 } from 'react-native';
-import { Button, Input, Header } from 'react-native-elements'
+import { Button, Input, Header, Rating, Tile } from 'react-native-elements'
+import { MapView, LinearGradient } from 'expo';
+const { width } = Dimensions.get('window');
+import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 
 export default class RestaurantScreen extends React.Component {
@@ -32,7 +41,7 @@ export default class RestaurantScreen extends React.Component {
       restaurant: null,
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     //When the component is loaded
     this._fetchRestaurant()
   }
@@ -58,9 +67,8 @@ export default class RestaurantScreen extends React.Component {
 
         this.setState({
           isLoading: false,
-          restaurant: responseJSON.businesses,
+          restaurant: responseJSON,
         })
-        // console.log('should be', this.state.restaurants)
 
       } else {
         responseJSON = await response.json();
@@ -74,9 +82,69 @@ export default class RestaurantScreen extends React.Component {
       Alert.alert('Unable to get the feed. Please try again later')
     }
   }
-  render() {
+  loadingView = () => {
+    return (
+      <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
+        <View style={styles.activityIndicatorAndButtonContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      </LinearGradient>
+    )
+  }
+  regionFrom(lat, lon, distance) {
+    distance = distance / 2
+    const circumference = 40075
+    const oneDegreeOfLatitudeInMeters = 111.32 * 1000
+    const angularDistance = distance / circumference
+
+    const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
+    const longitudeDelta = Math.abs(Math.atan2(
+      Math.sin(angularDistance) * Math.cos(lat),
+      Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
+
+    return result = {
+      latitude: lat,
+      longitude: lon,
+      latitudeDelta,
+      longitudeDelta,
+    }
+  }
+  // categories() {
+  //   const { restaurant } = this.state
+  //   var types = null;
+  //   tags = new Array();
+
+  //   return(
+  //     types = restaurant.categories.join()
+  //   )
+  // }
+  todayHours() {
+    const { restaurant } = this.state
+
+    var today = new Date();
+    var day = today.getDay();
+    var start = restaurant.hours[0].open[day].start
+    var end = restaurant.hours[0].open[day].end
+    // console.log(day)
+    return (
+      <View style={styles.hoursContainer}>
+        <Text style={styles.hoursLabel}>Today: {start.slice(0, 2)}:{start.slice(2, 4)} - {end.slice(0, 2)}:{end.slice(2, 4)}</Text>
+      </View>
+    )
+  }
+  moreInfoYelp() {
+    console.log("called webview")
+    return(
+      <WebView
+      source={{uri: 'https://github.com/facebook/react-native'}}
+      style={{marginTop: 20}}
+    />
+    )
+  }
+  restaurantRender() {
     const { navigate } = this.props.navigation
-    const {restaurantID} = this.state
+    const { restaurant } = this.state
+
     return (
       <View style={styles.container}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -87,7 +155,7 @@ export default class RestaurantScreen extends React.Component {
               </TouchableOpacity>
             }
             centerComponent={{
-              text: 'Restaurants',
+              text: 'Restaurant',
               style: {
                 color: 'white', fontSize: 20,
                 fontWeight: 'bold',
@@ -101,8 +169,134 @@ export default class RestaurantScreen extends React.Component {
             outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
-        <View style={{ alignSelf: 'center' }}><Text>Restaurant ID: {restaurantID}</Text></View>
+        <ScrollView>
+          <View style={styles.mapViewContainer}>
+            <Tile
+              imageSrc={{ uri: restaurant.image_url }}
+              title={restaurant.name}
+              titleStyle={styles.nameLabel}
+              featured
+              activeOpacity={1}
+              caption={'Your food is served here'}
+              captionStyle={styles.foodCaptionStyle}
+            >
+            </Tile>
+            <View style={styles.restaurantInfoContainer}>
+              <View style={styles.ratingContainer}>
+                <Rating
+                  type="custom"
+                  ratingColor='#FD9427'
+                  startingValue={restaurant.rating}
+                  fractions={1}
+                  imageSize={20}
+                  style={{ paddingVertical: 10 }}
+                />
+                <Text style={styles.ratingLabel}>{restaurant.review_count} Reviews</Text>
+              </View>
+              <View style={styles.openHoursContainer}>
+                <Feather
+                  name='clock'
+                  color={'#aaa'}
+                  size={Platform.OS === 'ios' ? 22 : 18}
+                />
+                {this.todayHours()}
+                {restaurant.hours[0].is_open_now ?
+                  <Text style={styles.openLabel}>Open now</Text> :
+                  <Text style={styles.closedLabel}>Closed now</Text>
+                }
+              </View>
+
+
+            </View>
+            <MapView
+              style={styles.mapContainer}
+              region={
+                this.regionFrom(restaurant.coordinates.latitude, restaurant.coordinates.longitude, 5000)
+              }
+              showsUserLocation
+            >
+              <MapView.Marker
+                coordinate={this.regionFrom(restaurant.coordinates.latitude, restaurant.coordinates.longitude, 5000)}
+                title={restaurant.name}
+              />
+            </MapView>
+            <View style={styles.additionalInfoContainer}>
+              <TouchableOpacity>
+                <View style={styles.restaurantAddressContainer}>
+                  <View>
+                    <MaterialIcons
+                      name='location-on'
+                      color={'#0CBAE8'}
+                      size={Platform.OS === 'ios' ? 26 : 25}
+                    />
+                  </View>
+                  <View style={styles.locationTextContainer}>
+                    <Text style={styles.hoursLabel}>Directions To:</Text>
+                    <Text style={styles.locationLabel}>{restaurant.location.display_address[0]},</Text>
+                    <Text style={styles.locationLabel}>{restaurant.location.display_address[1]}</Text>
+                  </View>
+                  <View style={styles.linkArrowContainer}>
+                    <Entypo
+                      name='chevron-right'
+                      color={'#0CBAE8'}
+                      size={Platform.OS === 'ios' ? 26 : 25}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+              <View style={styles.callContainer}>
+                <View>
+                  <MaterialIcons
+                    name='call'
+                    color={'#0CBAE8'}
+                    size={Platform.OS === 'ios' ? 26 : 25}
+                  />
+                </View>
+                <View style={styles.callText}>
+                  <Text>{restaurant.display_phone}</Text>
+                </View>
+                <View style={styles.linkArrowContainer}>
+                    <Entypo
+                      name='chevron-right'
+                      color={'#0CBAE8'}
+                      size={Platform.OS === 'ios' ? 26 : 25}
+                    />
+                  </View>
+              </View>
+              <TouchableOpacity onPress={() => this.moreInfoYelp()}>
+              <View style={styles.moreInfoContainer}>
+                <View>
+                  <MaterialCommunityIcons
+                    name='dots-horizontal'
+                    color={'#0CBAE8'}
+                    size={Platform.OS === 'ios' ? 26 : 25}
+                  />
+                </View>
+                <View style={styles.callText}>
+                    <Text>More Info</Text>
+                </View>
+                <View style={styles.linkArrowContainer}>
+                    <Entypo
+                      name='chevron-right'
+                      color={'#0CBAE8'}
+                      size={Platform.OS === 'ios' ? 26 : 25}
+                    />
+                  </View>
+              </View>
+              </TouchableOpacity>
+
+            </View>
+          </View>
+        </ScrollView>
       </View>
+    )
+  }
+  render() {
+    const { isLoading } = this.state
+
+    return (
+      (isLoading ? this.loadingView() : this.restaurantRender())
+
     );
   }
 }
@@ -114,7 +308,123 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
   },
+  loadingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   navBar: {
     color: 'white'
+  },
+  mapViewContainer: {
+    flex: 1,
+
+  },
+  mapContainer: {
+    // flex: 1,
+    height: (width) / 2,
+    width: '100%',
+  },
+  nameLabel: {
+    fontSize: 30,
+    color: 'white',
+    textShadowColor: 'black',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
+    fontWeight: 'bold'
+  },
+  foodCaptionStyle: {
+    fontSize: 18,
+    color: 'white',
+    textShadowColor: 'black',
+    textShadowOffset: { width: -2, height: 1 },
+    textShadowRadius: 5,
+  },
+
+  restaurantImage: {
+    height: (width) / 2,
+    width: '100%',
+  },
+  openHoursContainer: {
+    flex: 1,
+    marginVertical: 15,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    height: (width) / 8,
+    width: '90%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: 'rgb(240,240,240)',
+    marginBottom: 20,
+
+  },
+  hoursContainer: {
+    // marginRight: 15,
+    paddingRight: 15,
+  },
+  hoursLabel: {
+    fontSize: 16,
+    color: '#aaa',
+  },
+  openLabel: {
+    fontSize: 16,
+    color: '#0CE89C',
+  },
+  closedLabel: {
+    fontSize: 16,
+    color: 'red',
+  },
+  restaurantInfoContainer: {
+    flex: 1,
+  },
+  ratingContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  ratingLabel: {
+    textAlign: 'center',
+    paddingHorizontal: 10,
+  },
+  additionalInfoContainer: {
+  },
+  restaurantAddressContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
+    paddingLeft: 16,
+    height: 80,
+  },
+  locationTextContainer: {
+    paddingHorizontal: 10,
+  },
+  callContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
+    height: 50,
+    paddingLeft: 16,
+  },
+  callText: {
+    paddingHorizontal: 10,
+  },
+  moreInfoContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+    paddingLeft: 16,
+  },
+  linkArrowContainer: {
+    position: 'absolute',
+    right: 0,
+    paddingRight: 10,
   }
 });

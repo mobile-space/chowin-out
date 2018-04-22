@@ -128,7 +128,8 @@ export default class RestaurantsListScreen extends React.Component {
               </View>
               <View style={styles.locationInfoContainer}>
                 <View style={styles.locationContainer}>
-                  <Text style={styles.locationLabel}>{restaurant.location.display_address}</Text>
+                  <Text style={styles.locationLabel}>{restaurant.location.display_address[0]}</Text>
+                  <Text style={styles.locationLabel}>{restaurant.location.display_address[1]}</Text>
                 </View>
 
               </View>
@@ -209,8 +210,8 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-around',
     // alignContent: 'center',
     // alignItems: 'center',
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 0.5,
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
 
   },
   restaurantImageContainer: {

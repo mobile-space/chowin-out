@@ -15,6 +15,9 @@ const FoodNavigator = StackNavigator({
     initialRouteName: 'FoodChooseStack',
     mode: 'modal',
     headerMode: 'none',
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
   }
 );
 
