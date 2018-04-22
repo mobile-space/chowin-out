@@ -39,7 +39,8 @@ export default class RestaurantsListScreen extends React.Component {
       isLoading: false,
       locationUS: true,
       loadedOnce: false,
-
+      latitude: '37.7219',
+      longitude: '-122.4782',
     };
   }
   // componentDidMount() {
@@ -47,11 +48,11 @@ export default class RestaurantsListScreen extends React.Component {
   //   this._fetchRestaurants()
   // }
   async _fetchRestaurants(context) {
-    const { API_KEY, RES_SEARCH_URL, API_URL, term, radius, } = this.state
+    const { API_KEY, RES_SEARCH_URL, API_URL, term, radius, latitude, longitude } = this.state
 
     this.setState({ isLoading: true, loadedOnce: true, })
     try {
-      let response = await fetch(`${API_URL}${RES_SEARCH_URL}?term=${term}&latitude=${context.state.latitude}&longitude=${context.state.longitude}&radius=${radius}`, {
+      let response = await fetch(`${API_URL}${RES_SEARCH_URL}?term=${term}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${API_KEY}`,
@@ -127,7 +128,8 @@ export default class RestaurantsListScreen extends React.Component {
               </View>
               <View style={styles.locationInfoContainer}>
                 <View style={styles.locationContainer}>
-                  <Text style={styles.locationLabel}>{restaurant.location.display_address}</Text>
+                  <Text style={styles.locationLabel}>{restaurant.location.display_address[0]}</Text>
+                  <Text style={styles.locationLabel}>{restaurant.location.display_address[1]}</Text>
                 </View>
 
               </View>
@@ -208,8 +210,8 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-around',
     // alignContent: 'center',
     // alignItems: 'center',
-    borderBottomColor: '#aaa',
-    borderBottomWidth: 0.5,
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
 
   },
   restaurantImageContainer: {

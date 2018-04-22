@@ -10,6 +10,7 @@ import {
   Platform,
   Dimensions,
   DeviceEventEmitter,
+  Alert,
 } from 'react-native';
 import { Icon, Header, Button } from 'react-native-elements';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
@@ -42,11 +43,70 @@ export default class FoodChooseScreen extends React.Component {
     super(props);
 
     this.state = {
-      loadedOnce: false
+      loadedOnce: false,
+      imagesLoaded: false,
+      foodImages: null,
+      API_URL: 'http://api.yummly.com',
+      RES_SEARCH_URL: '/v1/api/recipes?_app_id=',
+      APP_ID: 'eb4e23c7',
+      RES_SEARCH_URL1: '&_app_key=',
+      API_KEY: '851038fb4920d6b523e47c79320c858e',
+      search: '&q=Roasted Root Vegetables with Tomatoes and Kale',
+      picture: '&requirePictures=true'
+
+    };
+  }
+  componentDidMount() {
+    //When the component is loaded
+    this._getYummlyImages()
+
+  }
+  async _getYummlyImages() {
+    const { search, picture } = this.state;
+    this.setState({ imagesLoaded: true });
+
+
+    try {
+      let response = await fetch(`http://api.yummly.com/v1/api/recipes?_app_id=eb4e23c7&_app_key=851038fb4920d6b523e47c79320c858e&${search}${picture}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+        });
+
+      let responseJSON = null
+
+      if (response.status === 200) {
+
+        responseJSON = await response.json();
+        console.log("Preloaded", responseJSON)
+
+        this.setState({
+          imagesLoaded: false,
+          foodImages: responseJSON.matches,
+        })
+        // console.log(imagesLoaded)
+        // console.log("not loaded food",foodImages)
+      } else {
+        responseJSON = await response.json();
+        const error = responseJSON.message
+
+        console.log(responseJSON)
+        console.log(imagesLoaded)
+        this.setState({ errors: responseJSON.errors })
+        // Alert.alert('Unable to get your feed', `Reason.. ${error}!`)
+      }
+    } catch (error) {
+      this.setState({ imagesLoaded: false, response: error })
+
+      console.log(error)
+
+      // Alert.alert('Unable to get the feed. Please try again later')
     }
   }
 
-  _renderItem ({ item, index }) {
+  _renderItem({ item, index }) {
     return (
       <FavSlide
         item={item}
@@ -57,14 +117,15 @@ export default class FoodChooseScreen extends React.Component {
 
   getCurrentLocation(context) {
     navigator.geolocation.getCurrentPosition(
-      (position) => {        
-        if(position.coords.latitude && position.coords.longitude){
+      (position) => {
+        if (position.coords.latitude && position.coords.longitude) {
           context.setLatitude(position.coords.latitude);
           context.setLongitude(position.coords.longitude);
           context.setIsLoading(false);
           context.setError(null);
         }
         this.setState({ loadedOnce: true });
+        // this._getYummlyImages()
       },
       (error) => {
         context.setIsLoading(true);
@@ -86,15 +147,27 @@ export default class FoodChooseScreen extends React.Component {
               title='Get Location'
               buttonStyle={styles.getLocationButton}
               onPress={this.getCurrentLocation.bind(this, context)}
-              // onPress={console.log('current location pressed')}
+            // onPress={console.log('current location pressed')}
             />
           </View>
         </View>
       </LinearGradient>
     )
   }
+  loadingImages = () => {
+    return (
+      <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
+        <View style={styles.activityIndicatorAndButtonContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      </LinearGradient>
+    )
+  }
 
-  contentView = (context) => {    
+  contentView = () => {
+    const { foodImages, imagesLoaded } = this.state
+    // console.log("loaded food",foodImages)
+    // console.log("LOOP is working")
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
@@ -131,14 +204,17 @@ export default class FoodChooseScreen extends React.Component {
         </SafeAreaView>
         <LinearGradient colors={['#536976', '#292E49']} style={styles.mainContainer}>
           <View style={styles.imageContainer}>
-            <Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={ENTRIES1}
-              renderItem={this._renderItem.bind(this)}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-              style={styles.carouselContainer}
-            />
+            {foodImages === null ?
+              this.loadingImages() :
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                data={foodImages}
+                // data = {ENTRIES1}
+                renderItem={this._renderItem.bind(this)}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                style={styles.carouselContainer}
+              />}
           </View>
         </LinearGradient>
 
@@ -148,24 +224,30 @@ export default class FoodChooseScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { loadedOnce } = this.state;
-
+    const { loadedOnce, foodImages } = this.state;
     return (
-      <AppContext.Consumer>
-        {
-          (context) => {
-            if(!loadedOnce){
-              this.getCurrentLocation(context);
-            }
+      // <AppContext.Consumer>
+      //   {
+      //     (context) => {
+      //       if (!loadedOnce) {
+      //         this.getCurrentLocation(context);
+      //       }
 
-            if(context.state.isLoading){
-              return this.loadingView(context) 
-            }else {
-              return this.contentView(context)
-            }
-          }
-        }
-      </AppContext.Consumer>
+      //       if (context.state.isLoading) {
+      //         return this.loadingView(context)
+
+      //       } else {
+      //         return this.contentView()
+
+      //       }
+      //     }
+      //   }
+      // </AppContext.Consumer>
+        <View style={styles.mainContainer}>
+        { loadedOnce  ? this.loadingView() : this.contentView() }
+        {/* {this.contentView()} */}
+      </View>
+
     )
   }
 }
@@ -200,7 +282,7 @@ const styles = StyleSheet.create({
   getLocationbuttonContainer: {
     marginTop: 200,
   },
-  getLocationButton:{
+  getLocationButton: {
     backgroundColor: "#c84343",
     width: 300,
     height: 45,
