@@ -10,12 +10,14 @@ import {
   Image,
   ScrollView,
   Platform,
-  WebView,
+  Share,
 } from 'react-native';
 import { Button, Input, Header, Rating, Tile } from 'react-native-elements'
 import { MapView, LinearGradient } from 'expo';
-const { width } = Dimensions.get('window');
 import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import Autolink from 'react-native-autolink';
+
+const { width } = Dimensions.get('window');
 
 
 export default class RestaurantScreen extends React.Component {
@@ -134,16 +136,35 @@ export default class RestaurantScreen extends React.Component {
   }
   moreInfoYelp() {
     console.log("called webview")
-    return(
+    return (
       <WebView
-      source={{uri: 'https://github.com/facebook/react-native'}}
-      style={{marginTop: 20}}
-    />
+        source={{ uri: 'https://github.com/facebook/react-native' }}
+        style={{ marginTop: 20 }}
+      />
     )
   }
+  // autoLink(dataToLink) {
+  //   const { restaurant } = this.state
+  //   console.log()
+  //   // var lat = restaurant.coordinates.latitude;
+  //   // var lng = restaurant.coordinates.longitude;
+  //   var textString = ' ' + dataToLink.toString()
+  //   console.log(textString)
+  //   return (
+  //     <Autolink
+  //       text={textString}
+  //       hashtag="instagram"
+  //       mention="twitter"
+  //       latlng={true}
+  //       url={true}
+  //     />
+
+  //   )
+  // }
   restaurantRender() {
     const { navigate } = this.props.navigation
     const { restaurant } = this.state
+    console.ignoredYellowBox = ['Possible Unhandled Promise Rejection (id:'];
 
     return (
       <View style={styles.container}>
@@ -162,8 +183,17 @@ export default class RestaurantScreen extends React.Component {
               }
             }}
             rightComponent={
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Text style={styles.navBar}>Done</Text>
+              <TouchableOpacity onPress={() => {
+                Share.share(
+                  {
+                    message: "I've found this restaurant through ChowinOut! " + restaurant.name,
+                    url: restaurant.url,
+                    title: restaurant.name
+                  })
+                .then(result => console.log(result))
+                .catch(err => console.log(err));
+              }}>
+                <Text style={styles.navBar}>Share</Text>
               </TouchableOpacity>
             }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
@@ -253,42 +283,47 @@ export default class RestaurantScreen extends React.Component {
                   />
                 </View>
                 <View style={styles.callText}>
-                  <Text>{restaurant.display_phone}</Text>
+                  <Autolink
+                    text={restaurant.display_phone}
+                    phone={true}
+                  />
+                  {/* <Text>{restaurant.display_phone}</Text> */}
                 </View>
                 <View style={styles.linkArrowContainer}>
-                    <Entypo
-                      name='chevron-right'
-                      color={'#0CBAE8'}
-                      size={Platform.OS === 'ios' ? 26 : 25}
-                    />
-                  </View>
-              </View>
-              <TouchableOpacity onPress={() => this.moreInfoYelp()}>
-              <View style={styles.moreInfoContainer}>
-                <View>
-                  <MaterialCommunityIcons
-                    name='dots-horizontal'
+                  <Entypo
+                    name='chevron-right'
                     color={'#0CBAE8'}
                     size={Platform.OS === 'ios' ? 26 : 25}
                   />
                 </View>
-                <View style={styles.callText}>
+              </View>
+              <TouchableOpacity onPress={() => navigate('Yelp', { restaurantURL: restaurant.url })} >
+                <View style={styles.moreInfoContainer}>
+                  <View>
+                    <MaterialCommunityIcons
+                      name='dots-horizontal'
+                      color={'#0CBAE8'}
+                      size={Platform.OS === 'ios' ? 26 : 25}
+                    />
+                  </View>
+                  <View style={styles.callText}>
+
                     <Text>More Info</Text>
-                </View>
-                <View style={styles.linkArrowContainer}>
+                  </View>
+                  <View style={styles.linkArrowContainer}>
                     <Entypo
                       name='chevron-right'
                       color={'#0CBAE8'}
                       size={Platform.OS === 'ios' ? 26 : 25}
                     />
                   </View>
-              </View>
-              </TouchableOpacity>
 
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
-      </View>
+      </View >
     )
   }
   render() {

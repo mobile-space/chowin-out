@@ -2,6 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import FoodChooseStack from './FoodStack';
 import RestaurantScreen from '../screens/RestaurantScreen';
 import IntroSlider from '../components/IntroSlider';
+import YelpWebView from '../screens/YelpWebView';
 
 const FoodNavigator = StackNavigator({
   FoodChooseStack: {
@@ -9,6 +10,9 @@ const FoodNavigator = StackNavigator({
   },
   Restaurant: {
     screen: RestaurantScreen,
+  },
+  Yelp: {
+    screen: YelpWebView
   }
 
 }, {
