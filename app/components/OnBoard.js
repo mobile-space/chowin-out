@@ -12,10 +12,13 @@ import GIF from '../../assets/food.gif'
 
 import {GeoLocation} from '../components/GeoLocation';
 
+
+
+
 const OnBoard = ({navigation}) => (
     <Onboarding
       onSkip={() =>navigation.navigate('HomeTabs') }
-      onDone={() =>navigation.navigate('HomeTabs') }
+      onDone={()  => navigation.navigate('HomeTabs') }
       pages={[
         {
           backgroundColor: '#03A9F4',

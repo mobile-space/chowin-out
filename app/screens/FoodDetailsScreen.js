@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, Platform, Image, ScrollView, flex } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions, Platform, ScrollView, flex } from 'react-native';
 import {
   RkText,
   RkCard, RkStyleSheet
 } from 'react-native-ui-kitten';
+
+import ProgressBar from 'react-native-progress/Bar';
+import Image from 'react-native-image-progress';
 
 
 export default class FoodDetailsScreen extends React.Component {
@@ -39,7 +42,24 @@ export default class FoodDetailsScreen extends React.Component {
       
   <ScrollView style={styles.root}>
         <RkCard  rkType='backImg'>
-          <Image style={styles.Image} rkCardImg source={{uri: food.image}}/>     
+          {/* <Image style={styles.Image} rkCardImg source={{uri: food.image}}/>   */}
+          <Image
+              style={styles.image}
+              source={{ uri: food.image }}
+              indicator={ProgressBar} 
+              indicatorProps={{
+                size: 98,
+                borderWidth: 1,
+                color: 'rgb(200,67,67)',
+                unfilledColor: 'rgba(200, 200, 200, 0.2)'
+              }}
+              style={{
+                width: 390, 
+                height: 240, 
+                
+              }}
+            />
+
           <View rkCardHeader>
             <View>
               <RkText style={styles.title} rkType='xxlarge'>{food.name}</RkText>

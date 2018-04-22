@@ -1,62 +1,138 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
+import { Button, Input, Header } from 'react-native-elements'
 
-export default class FetchRestaurants extends Component {
+import { AppContext } from '../../app/components/AppProvider'
+import EatStreetRestaurantsList from '../../server/eatstreet/fetchRestaurants'
 
-  constructor() {
-    super()
+export default class RestaurantsListScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Restaurants',
+    headerTintColor: 'white',
+    headerTitleStyle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    headerStyle: { backgroundColor: '#c84343', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa', },
+  });
+
+  constructor(props) {
+    super(props);
+
     this.state = {
       API_URL: 'https://api.eatstreet.com',
       RES_SEARCH_URL: '/publicapi/v1/restaurant/search',
+      RES_URL: '/publicapi/v1/restaurant/',
       API_KEY: 'ba2d3e545f0d2bd1',
       method: 'both',
       search: 'vegan',
       latitude: '37.785834',
       longitude: '-122.406417',
       streetAddress: 'san francisco',
-      pickupRadius: '5'
+      pickupRadius: '5',
+      restaurantsList: null,
+      menuItemsList: null,
+      fetched_api_data: false
     }
   }
 
-  async _fetchRestaurants() {
+  _fetchRestaurants = async () => {
     const { API_KEY, RES_SEARCH_URL, API_URL, method, search, streetAddress, longitude, latitude, pickupRadius } = this.state
 
     this.setState({ isLoading: true })
-    try {
-      const response = await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, {
+    
+    await fetch(`${API_URL}${RES_SEARCH_URL}?method=${method}&search=${search}&longitude=${longitude}&latitude=${latitude}&pickup-radius=${pickupRadius}`, {
+      method: 'GET',
+      headers: {
+        'X-Access-Token': `${API_KEY}`,
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const { restaurants } = { ...data }
+        let restApiKeyList = []
+        for (let { apiKey: restApiKey } of restaurants) {
+          restApiKeyList.push(restApiKey)
+        }
+        console.log('RES-JSON-restApiKeyList:', restApiKeyList)
+
+        this.setState({ restaurantsList: restApiKeyList })
+      })
+      .catch(error => {
+        console.log("Server is down " + error);
+      })
+  }
+
+  _fetchMenuItems = () => {
+    const { API_KEY, RES_URL, API_URL, restaurantsList, menuItemsList } = this.state
+
+    this.setState({ isLoading: true })
+
+    let restMenuItemsList = []
+    for (let resApiKey of restaurantsList) {
+      fetch(`${API_URL}${RES_URL}${resApiKey}/menu`, {
         method: 'GET',
         headers: {
           'X-Access-Token': `${API_KEY}`,
         }
-      });
-      const responseJSON = await response.json();
-      if (response.status === 200) {
-        const { restaurants } = responseJSON
-        console.log("Restaurants length:", restaurants.length)
-        console.log("Restaurants", restaurants)
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          restMenuItemsList.push(data)
+          this.setState({ menuItemsList: restMenuItemsList, finalDataFetched: true })
+        })
+        .catch(error => {
+          console.log("Server request failed " + error);
+        })
+    }
+  }
 
-        // console.log(responseJSON)
-      } else {
-        const error = responseJSON.details
-        // console.log("Server request failed " + error);
-      }
-    } catch (error) {
-      console.log("Server is down " + error);
+  async makeAPICall() {
+    this.setState({ fetched_api_data: true })
+
+    await this._fetchRestaurants()
+    await this._fetchMenuItems()
+  }
+
+  handleData(context) {
+    const { fetched_api_data, menuItemsList, finalDataFetched } = this.state
+
+    if (!fetched_api_data) {
+      this.makeAPICall()
+    } else if (finalDataFetched) {
+      context.setMenuList(menuItemsList)
+      this.setState({ finalDataFetched: false })
+    } else {
+      return null
     }
   }
 
   render() {
+    const { navigate } = this.props.navigation
+
     return (
-      <View style={styles.container}>
-        <Button
-          title='SEARCH'
-          buttonStyle={{
-            paddingHorizontal: 5
-          }}
-          onPress={() => this._fetchRestaurants()}
-        />
-      </View>
+      <AppContext.Consumer>
+        {context => { 
+          <React.Fragment>
+            <View style={styles.container}>
+              <View style={{ alignSelf: 'center' }}><Text>This is RestaurantsScreen, here will be list of restaurants that offer clicked food</Text></View>
+              <TouchableOpacity onPress={() => navigate('Restaurant')}>
+                <Text style={{ color: 'red' }}>Restaurant click</Text>
+              </TouchableOpacity>
+            </View>
+            {this.handleData(context)}
+            {console.log(context.state.menuList)}
+          </React.Fragment>
+        }}
+      </AppContext.Consumer>
     );
   }
 }
@@ -64,10 +140,11 @@ export default class FetchRestaurants extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
+  navBar: {
+    color: 'white'
+  }
 });
-
-
