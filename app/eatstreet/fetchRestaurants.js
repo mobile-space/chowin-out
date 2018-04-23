@@ -11,13 +11,6 @@ this.apiInfo = {
 
 
 export default _fetchRestaurants = async (latitude, longitude) => {
-  console.log("ApiInfo:", this.apiInfo)
-
-  console.log('gotem bellow')
-
-  console.log(latitude)
-  console.log(longitude)
-
   let return_this_data = null
 
   const { API_KEY, RES_SEARCH_URL, API_URL, method, search, streetAddress, pickupRadius } = this.apiInfo
@@ -34,18 +27,15 @@ export default _fetchRestaurants = async (latitude, longitude) => {
       
       let restApiKeyList = []
 
-      console.log('are yo9u here?')
-      console.log(restaurants)
-
       for (let { apiKey: restApiKey } of restaurants) {
         restApiKeyList.push(restApiKey)
       }
 
-      console.log('RES-JSON-restApiKeyList:', restApiKeyList)
+      // console.log('RES-JSON-restApiKeyList:', restApiKeyList)
 
       return restApiKeyList
     }).then(list => {
-      console.log('REST-LIST:', list)
+      // console.log('REST-LIST:', list)
 
       return this._fetchMenuItems(list)
         .then( data => {
@@ -84,7 +74,7 @@ _fetchMenuItems = async (restaurantsList) => {
         console.log("Server request failed " + error);
       })
   }
-  console.log("restMenuItemsList", restMenuItemsList)
+  // console.log("restMenuItemsList", restMenuItemsList)
   const food_name_list = this._parseMenuList(restMenuItemsList)
 
   return food_name_list
@@ -96,7 +86,7 @@ _parseMenuList = (restMenuItemsList) => {
   let list = []
 
   for (let i = 0; i < restMenuItemsList.length; i++) {
-    console.log("ARRAY-LENGTH", restMenuItemsList[i].length)
+    // console.log("ARRAY-LENGTH", restMenuItemsList[i].length)
     for (let j = 0; j < restMenuItemsList[i].length; j++) {
 
       let itemList = restMenuItemsList[i][j].items

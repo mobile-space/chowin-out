@@ -56,23 +56,31 @@ export default class FoodChooseScreen extends React.Component {
       lat: null,
       long: null,
       isLoading: true,
-      fetchedData: false
+      fetchedData: false,
+      foodNameList: null
     };
   }
 
- async componentDidMount() {
+  componentDidMount() {
     //When the component is loaded
     this.getCurrentLocation()
     // this._renderYummlyApiForFoodImage()
   }
 
-  _renderYummlyApiForFoodImage = (foodNameList) => {
+  _renderYummlyApiForFoodImage = async (foodNameList) => {
+    const fetched_data = []
     for (let i = 0; i < 10; i++) {
-      this._getYummlyImages(foodNameList[i])
+      await this._getYummlyImages(foodNameList[i])
+      .then(yummlyImage => {
+        if(yummlyImage) {
+          fetched_data.push(yummlyImage)
+        }
+      })
     }
 
     this.setState({
-      fetchedData: true
+      fetchedData: true,
+      foodImages: fetched_data
     })
   }
   
@@ -80,7 +88,7 @@ export default class FoodChooseScreen extends React.Component {
     const {API_URL, RES_SEARCH_URL, APP_ID, API_KEY, picture } = this.state;
     this.setState({ imagesLoaded: true });
 
-    const fetched_data = []
+    let food_image = null
 
     try {
       let response = await fetch(`${API_URL}${RES_SEARCH_URL}_app_id=${APP_ID}&_app_key=${API_KEY}&q=${search}${picture}`,
@@ -91,15 +99,17 @@ export default class FoodChooseScreen extends React.Component {
           },
         });
 
-      let responseJSON = null
+      var responseJSON = null
 
       if (response.status === 200) {
 
         responseJSON = await response.json();
         console.log("Preloaded", responseJSON)
+        // console.log("MATCHES-LENGTH", responseJSON.matches.length)
+        
 
-        if (responseJSON.matches.length > 0) {
-          fetched_data.push(...responseJSON.matches)
+        if (typeof responseJSON.matches != 'undefined' && responseJSON.matches.length > 0) {
+          food_image = responseJSON.matches[0]
         }
         // console.log(imagesLoaded)
         // console.log("not loaded food",foodImages)
@@ -120,21 +130,24 @@ export default class FoodChooseScreen extends React.Component {
       // Alert.alert('Unable to get the feed. Please try again later')
     }
 
-    console.log(fetched_data)
-
+    // console.log("food_image:", food_image)
+    return food_image;
     this.setState({
       imagesLoaded: false,
-      foodImages: fetched_data
+      // foodImages: fetched_data
     })
   }
 
   _renderItem({ item, index }) {
-    return (
-      <FavSlide
-        item={item}
-        navigation={this.props.navigation}
-      />
-    );
+    
+    if(item){
+      return (
+        <FavSlide
+          item={item}
+          navigation={this.props.navigation}
+        />
+      );
+    }
   }
 
   getCurrentLocation() {
@@ -147,13 +160,9 @@ export default class FoodChooseScreen extends React.Component {
           // context.setError(null);
           this.setState({ lat: position.coords.latitude, long: position.coords.longitude })
         }
-        console.log(position.coords.latitude)
-        console.log(position.coords.longitude)
-
-        console.log("TEST COORDINATES")
-        
         _fetchRestaurants(position.coords.latitude, position.coords.longitude)
           .then( data => {
+            // console.log("DATA", data)
             this._renderYummlyApiForFoodImage(data)
             // this.setState({foodNameList: data})
           })
@@ -207,7 +216,7 @@ export default class FoodChooseScreen extends React.Component {
 
   contentView = () => {
     const { foodImages, imagesLoaded } = this.state
-    // console.log("loaded food",foodImages)
+    console.log("loaded food",foodImages)
     // console.log("LOOP is working")
     return (
       <View style={styles.mainContainer}>
@@ -267,37 +276,8 @@ export default class FoodChooseScreen extends React.Component {
     const { navigate } = this.props.navigation;
     const { loadedOnce, foodImages, isLoading, fetchedData } = this.state;
     return (
-      // <AppContext.Consumer>
-      //   {
-      //     (context) => {
-      //       if (!loadedOnce) {
-      //         this.getCurrentLocation(context);
-      //       }
-
-      //       if (context.state.isLoading) {
-      //         return this.loadingView(context)
-
-      //       } else {
-      //         return this.contentView()
-
-      //       }
-      //     }
-      //   }
-      // </AppContext.Consumer>
         <View style={styles.mainContainer}>
-
-        {/* if (!loadedOnce) {
-          this.getCurrentLocation()
-        }
-
-        if (isLoading) {
-          this.loadingView()
-        } else {
-          this.contentView()
-        } */}
-        
         { isLoading ? this.loadingView() : this.contentView() }
-        {/* {this.contentView()} */}
       </View>
 
     )
