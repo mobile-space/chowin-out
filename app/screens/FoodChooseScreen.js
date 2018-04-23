@@ -44,44 +44,46 @@ export default class FoodChooseScreen extends React.Component {
     super(props);
 
     this.state = {
-      loadedOnce: false,
       imagesLoaded: false,
       foodImages: null,
       API_URL: 'http://api.yummly.com',
-      RES_SEARCH_URL: '/v1/api/recipes?_app_id=',
+      RES_SEARCH_URL: '/v1/api/recipes?',
       APP_ID: 'eb4e23c7',
       RES_SEARCH_URL1: '&_app_key=',
       API_KEY: '851038fb4920d6b523e47c79320c858e',
-      search: '&q=Roasted Root Vegetables with Tomatoes and Kale',
+      search: 'Roasted Root Vegetables with Tomatoes and Kale',
       picture: '&requirePictures=true',
       lat: null,
       long: null,
+      isLoading: true,
+      fetchedData: false
     };
   }
 
  async componentDidMount() {
     //When the component is loaded
     this.getCurrentLocation()
-    this._getYummlyImages()
-    await this._renderYummlyApiForFoodImage()
+    // this._renderYummlyApiForFoodImage()
   }
 
   _renderYummlyApiForFoodImage = (foodNameList) => {
     for (let i = 0; i < 10; i++) {
-      console.log('------------------------------------');
-      console.log(foodNameList[i]);
-      console.log('------------------------------------');
-      // _getYummlyImages(this.state.foodNameList[i])
+      this._getYummlyImages(foodNameList[i])
     }
+
+    this.setState({
+      fetchedData: true
+    })
   }
   
-  async _getYummlyImages() {
-    const { search, picture } = this.state;
+  async _getYummlyImages(search) {
+    const {API_URL, RES_SEARCH_URL, APP_ID, API_KEY, picture } = this.state;
     this.setState({ imagesLoaded: true });
 
+    const fetched_data = []
 
     try {
-      let response = await fetch(`http://api.yummly.com/v1/api/recipes?_app_id=eb4e23c7&_app_key=851038fb4920d6b523e47c79320c858e&${search}${picture}`,
+      let response = await fetch(`${API_URL}${RES_SEARCH_URL}_app_id=${APP_ID}&_app_key=${API_KEY}&q=${search}${picture}`,
         {
           method: 'GET',
           headers: {
@@ -96,10 +98,9 @@ export default class FoodChooseScreen extends React.Component {
         responseJSON = await response.json();
         console.log("Preloaded", responseJSON)
 
-        this.setState({
-          imagesLoaded: false,
-          foodImages: responseJSON.matches,
-        })
+        if (responseJSON.matches.length > 0) {
+          fetched_data.push(...responseJSON.matches)
+        }
         // console.log(imagesLoaded)
         // console.log("not loaded food",foodImages)
       } else {
@@ -118,6 +119,13 @@ export default class FoodChooseScreen extends React.Component {
 
       // Alert.alert('Unable to get the feed. Please try again later')
     }
+
+    console.log(fetched_data)
+
+    this.setState({
+      imagesLoaded: false,
+      foodImages: fetched_data
+    })
   }
 
   _renderItem({ item, index }) {
@@ -129,7 +137,7 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  getCurrentLocation(context) {
+  getCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         if (position.coords.latitude && position.coords.longitude) {
@@ -156,7 +164,7 @@ export default class FoodChooseScreen extends React.Component {
         // fetchEatStreetApiData(this.state.lat, this.state.long).then( data => console.log(data))
         // console.log("BigFoodList:", bigMenuList)
 
-        this.setState({ loadedOnce: true });
+        this.setState({ isLoading: false });
         // this._getYummlyImages()
       },
       (error) => {
@@ -168,7 +176,7 @@ export default class FoodChooseScreen extends React.Component {
     );
   }
 
-  loadingView = (context) => {
+  loadingView = () => {
     return (
       <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
         <View style={styles.activityIndicatorAndButtonContainer}>
@@ -179,7 +187,7 @@ export default class FoodChooseScreen extends React.Component {
               icon={{ name: 'my-location' }}
               title='Get Location'
               buttonStyle={styles.getLocationButton}
-              onPress={this.getCurrentLocation.bind(this, context)}
+              onPress={this.getCurrentLocation.bind(this)}
             // onPress={console.log('current location pressed')}
             />
           </View>
@@ -257,13 +265,7 @@ export default class FoodChooseScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { loadedOnce, foodImages } = this.state;
-    console.log('FINAL LIST START HERE')
-    console.log('------------------------------------');
-    // this._renderYummlyApiForFoodImage()
-    // console.log(this.state.foodNameList);
-    console.log('------------------------------------');
-    console.log('FINAL LIST END HERE')
+    const { loadedOnce, foodImages, isLoading, fetchedData } = this.state;
     return (
       // <AppContext.Consumer>
       //   {
@@ -283,7 +285,18 @@ export default class FoodChooseScreen extends React.Component {
       //   }
       // </AppContext.Consumer>
         <View style={styles.mainContainer}>
-        { loadedOnce  ? this.loadingView() : this.contentView() }
+
+        {/* if (!loadedOnce) {
+          this.getCurrentLocation()
+        }
+
+        if (isLoading) {
+          this.loadingView()
+        } else {
+          this.contentView()
+        } */}
+        
+        { isLoading ? this.loadingView() : this.contentView() }
         {/* {this.contentView()} */}
       </View>
 
