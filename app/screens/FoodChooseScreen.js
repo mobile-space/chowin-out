@@ -20,6 +20,7 @@ import FavSlide from '../components/FavSlide';
 
 import { ENTRIES1 } from '../utils/food';
 import AppProvider, { AppContext } from '../components/AppProvider';
+import _fetchRestaurants from '../eatstreet/fetchRestaurants'
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -52,15 +53,28 @@ export default class FoodChooseScreen extends React.Component {
       RES_SEARCH_URL1: '&_app_key=',
       API_KEY: '851038fb4920d6b523e47c79320c858e',
       search: '&q=Roasted Root Vegetables with Tomatoes and Kale',
-      picture: '&requirePictures=true'
-
+      picture: '&requirePictures=true',
+      lat: null,
+      long: null,
     };
   }
-  componentDidMount() {
-    //When the component is loaded
-    this._getYummlyImages()
 
+ async componentDidMount() {
+    //When the component is loaded
+    this.getCurrentLocation()
+    this._getYummlyImages()
+    await this._renderYummlyApiForFoodImage()
   }
+
+  _renderYummlyApiForFoodImage = (foodNameList) => {
+    for (let i = 0; i < 10; i++) {
+      console.log('------------------------------------');
+      console.log(foodNameList[i]);
+      console.log('------------------------------------');
+      // _getYummlyImages(this.state.foodNameList[i])
+    }
+  }
+  
   async _getYummlyImages() {
     const { search, picture } = this.state;
     this.setState({ imagesLoaded: true });
@@ -119,17 +133,36 @@ export default class FoodChooseScreen extends React.Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         if (position.coords.latitude && position.coords.longitude) {
-          context.setLatitude(position.coords.latitude);
-          context.setLongitude(position.coords.longitude);
-          context.setIsLoading(false);
-          context.setError(null);
+          // context.setLatitude(position.coords.latitude);
+          // context.setLongitude(position.coords.longitude);
+          // context.setIsLoading(false);
+          // context.setError(null);
+          this.setState({ lat: position.coords.latitude, long: position.coords.longitude })
         }
+        console.log(position.coords.latitude)
+        console.log(position.coords.longitude)
+
+        console.log("TEST COORDINATES")
+        
+        _fetchRestaurants(position.coords.latitude, position.coords.longitude)
+          .then( data => {
+            this._renderYummlyApiForFoodImage(data)
+            // this.setState({foodNameList: data})
+          })
+          .catch(error => {
+            console.log(error)
+          })
+          
+        // fetchEatStreetApiData(this.state.lat, this.state.long).then( data => console.log(data))
+        // console.log("BigFoodList:", bigMenuList)
+
         this.setState({ loadedOnce: true });
         // this._getYummlyImages()
       },
       (error) => {
-        context.setIsLoading(true);
-        context.setError(error.message);
+        console.log(error)
+        // context.setIsLoading(true);
+        // context.setError(error.message);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
@@ -225,6 +258,12 @@ export default class FoodChooseScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const { loadedOnce, foodImages } = this.state;
+    console.log('FINAL LIST START HERE')
+    console.log('------------------------------------');
+    // this._renderYummlyApiForFoodImage()
+    // console.log(this.state.foodNameList);
+    console.log('------------------------------------');
+    console.log('FINAL LIST END HERE')
     return (
       // <AppContext.Consumer>
       //   {
