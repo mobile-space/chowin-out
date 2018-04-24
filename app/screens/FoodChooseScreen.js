@@ -139,12 +139,14 @@ export default class FoodChooseScreen extends React.Component {
   }
 
   _renderItem({ item, index }) {
-    
+    const { lat, long } = this.state
     if(item){
       return (
         <FavSlide
           item={item}
           navigation={this.props.navigation}
+          lat = {lat}
+          long={long}
         />
       );
     }

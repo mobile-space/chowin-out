@@ -20,7 +20,7 @@ export default class FavSlide extends React.Component{
   constructor(props) {
     super(props);
 
-    const { item } = props;
+    const { item, lat, long } = props;
 
     this.state = {
       isFavorited: false,
@@ -57,16 +57,15 @@ export default class FavSlide extends React.Component{
     )
   }
   render = () => {
-    const { item } = this.props;
+    const { item, lat, long } = this.props;
     const { image, name, description } = item;
-    const { navigate } = this.props.navigation
-
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.slide}>
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            this.props.navigation.navigate('RestaurantsList', { foodName: item.recipeName })
+            this.props.navigation.navigate('RestaurantsList', { foodName: item.recipeName, latitude: lat, longitude: long })
           }
         >
           {this.renderImage(item.imageUrlsBySize[90])}
