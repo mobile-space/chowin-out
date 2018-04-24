@@ -14,8 +14,10 @@ import {
 } from 'react-native';
 import { Button, Input, Header, Rating, Tile } from 'react-native-elements'
 import { MapView, LinearGradient } from 'expo';
-import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import Autolink from 'react-native-autolink';
+import { createOpenLink } from 'react-native-open-maps';
+
 
 const { width } = Dimensions.get('window');
 
@@ -143,24 +145,12 @@ export default class RestaurantScreen extends React.Component {
       />
     )
   }
-  // autoLink(dataToLink) {
-  //   const { restaurant } = this.state
-  //   console.log()
-  //   // var lat = restaurant.coordinates.latitude;
-  //   // var lng = restaurant.coordinates.longitude;
-  //   var textString = ' ' + dataToLink.toString()
-  //   console.log(textString)
-  //   return (
-  //     <Autolink
-  //       text={textString}
-  //       hashtag="instagram"
-  //       mention="twitter"
-  //       latlng={true}
-  //       url={true}
-  //     />
 
-  //   )
-  // }
+  gotoRestaurant(latitudeRes, longitudeRes, nameRes) {
+    return (
+      createOpenLink({ latitude: latitudeRes, longitude: longitudeRes, name: nameRes })
+    );
+  }
   restaurantRender() {
     const { navigate } = this.props.navigation
     const { restaurant } = this.state
@@ -172,7 +162,11 @@ export default class RestaurantScreen extends React.Component {
           <Header
             leftComponent={
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Text style={styles.navBar}>Go Back</Text>
+                <Ionicons
+                  name={Platform.OS === 'ios' ? 'ios-arrow-back-outline' : 'md-arrow-back'}
+                  color={'white'}
+                  size={Platform.OS === 'ios' ? 28 : 20}
+                />
               </TouchableOpacity>
             }
             centerComponent={{
@@ -186,14 +180,18 @@ export default class RestaurantScreen extends React.Component {
               <TouchableOpacity onPress={() => {
                 Share.share(
                   {
-                    message: "I've found this restaurant through ChowinOut! " + restaurant.name,
+                    message: "I've found this restaurant through Pick & Eat! " + (Platform.OS === 'ios' ? restaurant.name : restaurant.url),
                     url: restaurant.url,
                     title: restaurant.name
                   })
-                .then(result => console.log(result))
-                .catch(err => console.log(err));
+                  .then(result => console.log(result))
+                  .catch(err => console.log(err));
               }}>
-                <Text style={styles.navBar}>Share</Text>
+                <Ionicons
+                  name={Platform.OS === 'ios' ? 'ios-share-outline' : 'md-share'}
+                  color={'white'}
+                  size={Platform.OS === 'ios' ? 28 : 20}
+                />
               </TouchableOpacity>
             }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
@@ -215,6 +213,7 @@ export default class RestaurantScreen extends React.Component {
               <View style={styles.ratingContainer}>
                 <Rating
                   type="custom"
+                  readonly
                   ratingColor='#FD9427'
                   startingValue={restaurant.rating}
                   fractions={1}
@@ -251,7 +250,7 @@ export default class RestaurantScreen extends React.Component {
               />
             </MapView>
             <View style={styles.additionalInfoContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.gotoRestaurant(restaurant.coordinates.latitude, restaurant.coordinates.longitude, restaurant.name)}>
                 <View style={styles.restaurantAddressContainer}>
                   <View>
                     <MaterialIcons

@@ -97,7 +97,10 @@ export default class RestaurantsListScreen extends React.Component {
 
     return (
       <View style={styles.restaurantsRowContainer} key={restaurant}>
-        <TouchableOpacity onPress={() => navigate('Restaurant', { restaurantID: restaurant.id })}>
+        <TouchableOpacity 
+        onPress={() => navigate('Restaurant', { restaurantID: restaurant.id })}
+        activeOpacity={0.6}
+        >
           <View style={styles.nameContainer}>
             <Text style={styles.nameLabel}>{restaurant.name}</Text>
             <View styles={styles.distanceContainer}>
@@ -116,7 +119,7 @@ export default class RestaurantsListScreen extends React.Component {
                 <Rating
                   type="custom"
                   ratingColor='#FD9427'
-
+                  readonly
                   startingValue={restaurant.rating}
                   fractions={1}
                   // onFinishRating={restaurant.rating}              

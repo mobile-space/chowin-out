@@ -222,33 +222,33 @@ export default class FoodChooseScreen extends React.Component {
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
           <Header
-            leftComponent={
-              <TouchableOpacity>
-                <Icon
-                  name='filter-variant'
-                  type='material-community'
-                  size={25}
-                  iconStyle={styles.navbarIcon}
-                />
-              </TouchableOpacity>
-            }
+            // leftComponent={
+            //   <TouchableOpacity>
+            //     <Icon
+            //       name='filter-variant'
+            //       type='material-community'
+            //       size={25}
+            //       iconStyle={styles.navbarIcon}
+            //     />
+            //   </TouchableOpacity>
+            // }
             centerComponent={{
-              text: 'Food',
+              text: 'Pick & Eat',
               style: {
                 color: 'white', fontSize: 20,
                 fontWeight: 'bold',
               }
             }}
-            rightComponent={
-              <TouchableOpacity>
-                <Icon
-                  name='search'
-                  type='feather'
-                  size={25}
-                  iconStyle={styles.navbarIcon}
-                />
-              </TouchableOpacity>
-            }
+            // rightComponent={
+            //   <TouchableOpacity>
+            //     <Icon
+            //       name='search'
+            //       type='feather'
+            //       size={25}
+            //       iconStyle={styles.navbarIcon}
+            //     />
+            //   </TouchableOpacity>
+            // }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
