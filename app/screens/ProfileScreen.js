@@ -9,7 +9,7 @@ const DATA = require('../../assets/data.json');
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Profile',
+    title: 'Cook & Eat',
     headerTintColor: 'white',
     headerTitleStyle: {
       fontSize: 20,

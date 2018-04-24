@@ -40,7 +40,7 @@ const HomeTabs = TabNavigator({
   initialRouteName: 'FoodTab',
   tabBarPosition: 'bottom',
   animationEnabled: Platform.OS === 'ios' ? false : true,
-  swipeEnabled: Platform.OS === 'ios' ? false : true,
+  swipeEnabled: Platform.OS === 'ios' ? false : false,
   tabBarOptions: {
     showIcon: true,
     showLabel: true,
