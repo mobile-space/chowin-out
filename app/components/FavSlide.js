@@ -65,7 +65,7 @@ export default class FavSlide extends React.Component{
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            this.props.navigation.navigate('RestaurantsList', { foodName: item.recipeName, latitude: lat, longitude: long })
+            this.props.navigation.navigate('RestaurantsList', { foodName: item.foodName, latitude: lat, longitude: long })
           }
         >
           {this.renderImage(item.imageUrlsBySize[90])}
@@ -73,7 +73,7 @@ export default class FavSlide extends React.Component{
           <View style={styles.foodInteraction}> 
           <View style={styles.foodInfo}>
             <Text style={styles.foodName} numberOfLines={2}>
-              {item.recipeName}
+              {item.foodName}
             </Text>
           </View>
           <View style={styles.buttonContainer}>
