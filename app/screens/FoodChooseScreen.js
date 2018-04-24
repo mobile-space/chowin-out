@@ -73,6 +73,7 @@ export default class FoodChooseScreen extends React.Component {
       await this._getYummlyImages(foodNameList[i])
       .then(yummlyImage => {
         if(yummlyImage) {
+          yummlyImage["foodName"]=foodNameList[i]
           fetched_data.push(yummlyImage)
         }
       })
