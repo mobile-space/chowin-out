@@ -1,161 +1,120 @@
-import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Platform, View, Text, ActivityIndicator,TouchableWithoutFeedback, TouchableOpacity,AsyncStorage, DeviceEventEmitter } from 'react-native';
-import Image from 'react-native-image-progress';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+  DeviceEventEmitter,
+} from 'react-native';
+import { Icon, Header, Button } from 'react-native-elements';
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 
-// import Progress from 'react-native-progress';
-
-import ProgressBar from 'react-native-progress/Bar';
-
-class FavCard extends Component {
+export default class FavCard extends React.Component{
   constructor(props) {
     super(props);
 
-    const { food } = props;
+    const { item } = props;
 
     this.state = {
-      isFavorited: food.isFavorited,
-      isLoading: true,
-
-     
+      isFavorited: false,
     };
   }
+  
+
+  
+  // renderImage(item) {
+  //   var urlImage = item.replace(/=s90-c/i, "=s1080")
  
-  onFoodClick = () => {
-    const { navigation, food } = this.props;
-    const { navigate } = navigation;
-
-    if (food.transaction) {
-     
-        navigate('FoodDetails', { food });
-      
-    } else {
-      navigate('FoodDetails', { food });
-    }
-  }
-
- 
-
-  renderFavoriteButton = () => {
-    const { food } = this.props;
-    
-      return (
-        <TouchableOpacity onPress={this.onFavoriteButtonPress}>
-        
-            <Ionicons
-             name={this.state.isFavorited ? "ios-heart" : "md-heart-outline"}
-             color={this.state.isFavorited ? 'red' : 'white'} size={35}/>
-          
-        </TouchableOpacity>
-      );
-    
-  }
-
-  loadingView() {
-    return (
-      <View style={styles.loadingView}>
-        <ActivityIndicator size="large" />
-      </View>
-    )
-  }
-
-
+  //   // console.log(urlImage)
+  //   return (
+  //     <Image style={styles.images} source={ {uri: urlImage}} />
+  //   )
+  // }
   render = () => {
-    const { food } = this.props;
-    const { image, name, description } = food;
+    const { item } = this.props;
     const { navigate } = this.props.navigation
-
+    // console.log(item.id)
+    console.log("name should be here"+item )
     return (
-      <View style={styles.container}>
-        <TouchableWithoutFeedback
-        style={styles.imageContainer}
-        onPress={this.onFoodClick}
-        
-       >
-          <View>
-            <Image
-              style={styles.image}
-              source={{ uri: image }}
-              indicator={ProgressBar} 
-              indicatorProps={{
-                size: 98,
-                borderWidth: 1,
-                color: 'rgba(0,255,0,0.3)',
-                unfilledColor: 'rgba(200, 200, 200, 0.2)'
-              }}
-              style={{
-                width: '100%', 
-                height: 240, 
-                
-              }}
-            />
-           <View style={styles.foodInfo}>
-              <Text style={styles.foodName}>{name}</Text>
-            </View>
+      <View style={styles.slide}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() =>
+            this.props.navigation.navigate('FoodDetails', 
+           )
+          }
+        >
+          {/* {this.renderImage(item.images[0].hostedLargeUrl)} */}
+          
 
-           
+          <View style={styles.foodInfo}>
+            <Text style={styles.foodName} numberOfLines={2}>
+              {item.name}
+              {conole.log("in favCard: " + item.name)}
+            </Text>
           </View>
-        </TouchableWithoutFeedback>
-    
+
+
+        </TouchableOpacity>
       </View>
     );
   };
+
 }
 
-
-const padding = 0;
-const { width } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
-  container: {
+  loadingView: {
     flex: 1,
-    padding,
-
   },
-  imageContainer: {
 
-  },
-  image: {
-    height: (width - 2 * padding) / 2,
+  images: {
+    width: "100%",
+    height: 240,
     resizeMode: 'cover',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 72,
-    height: 56,
-    paddingRight: 0,
-    position: 'absolute',
-    bottom: Platform.OS === 'ios' ? -1 : 11,
-    right: padding,
-  },
-  
-  foodText: {
-    flexDirection: 'row',
-    marginTop: Platform.OS === 'ios' ? 32 : 16,
-    height: 56,
-  },
 
- 
+
+
   foodInfo: {
-    marginRight : '55%',
-    position: 'absolute',
-    bottom: Platform.OS === 'ios' ? -1 : 1,
-
+  
+    // marginRight: '55%',
+    // position: 'absolute',
+    // bottom: Platform.OS === 'ios' ? -1 : 1,
+    // alignSelf: 'center',
   },
   foodName: {
     fontSize: 20,
     color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
 
   },
+  buttonContainer: {
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 45,
+    height: 56,
+    paddingRight: 0,
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? 55 : 30,
+    right: 0,
 
-  foodDescription: {
-    color: 'white',
-    fontSize: 14,
   },
-
-
 });
 
-export default FavCard;
+
+
+
+/**
+ * 
+ *  const itemId = item.id;
+   AsyncStorage.setItem('foodId', itemId);
+ */
