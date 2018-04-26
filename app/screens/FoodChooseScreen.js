@@ -20,6 +20,7 @@ import FavSlide from '../components/FavSlide';
 
 import { ENTRIES1 } from '../utils/food';
 import AppProvider, { AppContext } from '../components/AppProvider';
+import _fetchRestaurants from '../eatstreet/fetchRestaurants'
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -43,31 +44,55 @@ export default class FoodChooseScreen extends React.Component {
     super(props);
 
     this.state = {
-      loadedOnce: false,
       imagesLoaded: false,
       foodImages: null,
       API_URL: 'http://api.yummly.com',
-      RES_SEARCH_URL: '/v1/api/recipes?_app_id=',
+      RES_SEARCH_URL: '/v1/api/recipes?',
       APP_ID: 'eb4e23c7',
       RES_SEARCH_URL1: '&_app_key=',
       API_KEY: '851038fb4920d6b523e47c79320c858e',
-      search: '&q=Roasted Root Vegetables with Tomatoes and Kale',
-      picture: '&requirePictures=true'
-
+      search: 'Roasted Root Vegetables with Tomatoes and Kale',
+      picture: '&requirePictures=true',
+      lat: null,
+      long: null,
+      isLoading: true,
+      fetchedData: false,
+      foodNameList: null
     };
   }
+
   componentDidMount() {
     //When the component is loaded
-    this._getYummlyImages()
-
+    this.getCurrentLocation()
+    // this._renderYummlyApiForFoodImage()
   }
-  async _getYummlyImages() {
-    const { search, picture } = this.state;
+
+  _renderYummlyApiForFoodImage = async (foodNameList) => {
+    const fetched_data = []
+    for (let i = 0; i < 10; i++) {
+      await this._getYummlyImages(foodNameList[i])
+      .then(yummlyImage => {
+        if(yummlyImage) {
+          yummlyImage["foodName"]=foodNameList[i]
+          fetched_data.push(yummlyImage)
+        }
+      })
+    }
+
+    this.setState({
+      fetchedData: true,
+      foodImages: fetched_data
+    })
+  }
+  
+  async _getYummlyImages(search) {
+    const {API_URL, RES_SEARCH_URL, APP_ID, API_KEY, picture } = this.state;
     this.setState({ imagesLoaded: true });
 
+    let food_image = null
 
     try {
-      let response = await fetch(`http://api.yummly.com/v1/api/recipes?_app_id=eb4e23c7&_app_key=851038fb4920d6b523e47c79320c858e&${search}${picture}`,
+      let response = await fetch(`${API_URL}${RES_SEARCH_URL}_app_id=${APP_ID}&_app_key=${API_KEY}&q=${search}${picture}`,
         {
           method: 'GET',
           headers: {
@@ -75,17 +100,18 @@ export default class FoodChooseScreen extends React.Component {
           },
         });
 
-      let responseJSON = null
+      var responseJSON = null
 
       if (response.status === 200) {
 
         responseJSON = await response.json();
         console.log("Preloaded", responseJSON)
+        // console.log("MATCHES-LENGTH", responseJSON.matches.length)
+        
 
-        this.setState({
-          imagesLoaded: false,
-          foodImages: responseJSON.matches,
-        })
+        if (typeof responseJSON.matches != 'undefined' && responseJSON.matches.length > 0) {
+          food_image = responseJSON.matches[0]
+        }
         // console.log(imagesLoaded)
         // console.log("not loaded food",foodImages)
       } else {
@@ -104,38 +130,65 @@ export default class FoodChooseScreen extends React.Component {
 
       // Alert.alert('Unable to get the feed. Please try again later')
     }
+
+    // console.log("food_image:", food_image)
+    return food_image;
+    this.setState({
+      imagesLoaded: false,
+      // foodImages: fetched_data
+    })
   }
 
   _renderItem({ item, index }) {
-    return (
-      <FavSlide
-        item={item}
-        navigation={this.props.navigation}
-      />
-    );
+    const { lat, long } = this.state
+    if(item){
+      return (
+        <FavSlide
+          item={item}
+          navigation={this.props.navigation}
+          lat = {lat}
+          long={long}
+        />
+      );
+    }
   }
 
-  getCurrentLocation(context) {
+  getCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         if (position.coords.latitude && position.coords.longitude) {
-          context.setLatitude(position.coords.latitude);
-          context.setLongitude(position.coords.longitude);
-          context.setIsLoading(false);
-          context.setError(null);
+          // context.setLatitude(position.coords.latitude);
+          // context.setLongitude(position.coords.longitude);
+          // context.setIsLoading(false);
+          // context.setError(null);
+          this.setState({ lat: position.coords.latitude, long: position.coords.longitude })
         }
-        this.setState({ loadedOnce: true });
+        _fetchRestaurants(position.coords.latitude, position.coords.longitude)
+          .then( data => {
+            // console.log("DATA", data)
+            this._renderYummlyApiForFoodImage(data)
+            // this.setState({foodNameList: data})
+          })
+          .catch(error => {
+            console.log(error)
+          })
+          
+        // fetchEatStreetApiData(this.state.lat, this.state.long).then( data => console.log(data))
+        // console.log("BigFoodList:", bigMenuList)
+
+        this.setState({ isLoading: false });
         // this._getYummlyImages()
       },
       (error) => {
-        context.setIsLoading(true);
-        context.setError(error.message);
+        console.log(error)
+        // context.setIsLoading(true);
+        // context.setError(error.message);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
 
-  loadingView = (context) => {
+  loadingView = () => {
     return (
       <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
         <View style={styles.activityIndicatorAndButtonContainer}>
@@ -146,7 +199,7 @@ export default class FoodChooseScreen extends React.Component {
               icon={{ name: 'my-location' }}
               title='Get Location'
               buttonStyle={styles.getLocationButton}
-              onPress={this.getCurrentLocation.bind(this, context)}
+              onPress={this.getCurrentLocation.bind(this)}
             // onPress={console.log('current location pressed')}
             />
           </View>
@@ -166,39 +219,39 @@ export default class FoodChooseScreen extends React.Component {
 
   contentView = () => {
     const { foodImages, imagesLoaded } = this.state
-    // console.log("loaded food",foodImages)
+    console.log("loaded food",foodImages)
     // console.log("LOOP is working")
     return (
       <View style={styles.mainContainer}>
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
           <Header
-            leftComponent={
-              <TouchableOpacity>
-                <Icon
-                  name='filter-variant'
-                  type='material-community'
-                  size={25}
-                  iconStyle={styles.navbarIcon}
-                />
-              </TouchableOpacity>
-            }
+            // leftComponent={
+            //   <TouchableOpacity>
+            //     <Icon
+            //       name='filter-variant'
+            //       type='material-community'
+            //       size={25}
+            //       iconStyle={styles.navbarIcon}
+            //     />
+            //   </TouchableOpacity>
+            // }
             centerComponent={{
-              text: 'Food',
+              text: 'Pick & Eat',
               style: {
                 color: 'white', fontSize: 20,
                 fontWeight: 'bold',
               }
             }}
-            rightComponent={
-              <TouchableOpacity>
-                <Icon
-                  name='search'
-                  type='feather'
-                  size={25}
-                  iconStyle={styles.navbarIcon}
-                />
-              </TouchableOpacity>
-            }
+            // rightComponent={
+            //   <TouchableOpacity>
+            //     <Icon
+            //       name='search'
+            //       type='feather'
+            //       size={25}
+            //       iconStyle={styles.navbarIcon}
+            //     />
+            //   </TouchableOpacity>
+            // }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
           />
         </SafeAreaView>
@@ -224,28 +277,10 @@ export default class FoodChooseScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { loadedOnce, foodImages } = this.state;
+    const { loadedOnce, foodImages, isLoading, fetchedData } = this.state;
     return (
-      // <AppContext.Consumer>
-      //   {
-      //     (context) => {
-      //       if (!loadedOnce) {
-      //         this.getCurrentLocation(context);
-      //       }
-
-      //       if (context.state.isLoading) {
-      //         return this.loadingView(context)
-
-      //       } else {
-      //         return this.contentView()
-
-      //       }
-      //     }
-      //   }
-      // </AppContext.Consumer>
         <View style={styles.mainContainer}>
-        { loadedOnce  ? this.loadingView() : this.contentView() }
-        {/* {this.contentView()} */}
+        { isLoading ? this.loadingView() : this.contentView() }
       </View>
 
     )

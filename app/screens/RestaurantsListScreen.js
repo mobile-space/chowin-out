@@ -28,6 +28,8 @@ export default class RestaurantsListScreen extends React.Component {
   constructor(props) {
     super(props)
     const foodName = props.navigation.state.params && props.navigation.state.params.foodName
+    const latitude = props.navigation.state.params && props.navigation.state.params.latitude
+    const longitude = props.navigation.state.params && props.navigation.state.params.longitude
     console.log("Correct food name: " + foodName)
     this.state = {
       API_URL: 'https://api.yelp.com',
@@ -39,8 +41,8 @@ export default class RestaurantsListScreen extends React.Component {
       isLoading: false,
       locationUS: true,
       loadedOnce: false,
-      latitude: '37.7219',
-      longitude: '-122.4782',
+      latitude: latitude || null,
+      longitude: longitude || null,
     };
   }
   // componentDidMount() {
@@ -97,7 +99,10 @@ export default class RestaurantsListScreen extends React.Component {
 
     return (
       <View style={styles.restaurantsRowContainer} key={restaurant}>
-        <TouchableOpacity onPress={() => navigate('Restaurant', { restaurantID: restaurant.id })}>
+        <TouchableOpacity 
+        onPress={() => navigate('Restaurant', { restaurantID: restaurant.id })}
+        activeOpacity={0.6}
+        >
           <View style={styles.nameContainer}>
             <Text style={styles.nameLabel}>{restaurant.name}</Text>
             <View styles={styles.distanceContainer}>
@@ -116,7 +121,7 @@ export default class RestaurantsListScreen extends React.Component {
                 <Rating
                   type="custom"
                   ratingColor='#FD9427'
-
+                  readonly
                   startingValue={restaurant.rating}
                   fractions={1}
                   // onFinishRating={restaurant.rating}              

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Platform,
   Dimensions,
+  AsyncStorage,
   DeviceEventEmitter,
 } from 'react-native';
 import { Icon, Header, Button } from 'react-native-elements';
@@ -20,18 +21,21 @@ export default class FavSlide extends React.Component{
   constructor(props) {
     super(props);
 
-    const { item } = props;
+    const { item, lat, long } = props;
 
     this.state = {
       isFavorited: false,
     };
   }
   onFavoriteButtonPress = async () => {
+    const { item } = this.props;
     const { isFavorited } = this.state;
     const { onFavoriteButtonPressEmit } = this.props;
 
     // DeviceEventEmitter.emit('setMyFoodUpdated');
     this.setState({ isFavorited: !isFavorited });
+    const itemId = item.id;
+    AsyncStorage.setItem('foodId', itemId);
 
   }
 
@@ -57,16 +61,15 @@ export default class FavSlide extends React.Component{
     )
   }
   render = () => {
-    const { item } = this.props;
+    const { item, lat, long } = this.props;
     const { image, name, description } = item;
-    const { navigate } = this.props.navigation
-
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.slide}>
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            this.props.navigation.navigate('RestaurantsList', { foodName: item.recipeName })
+            this.props.navigation.navigate('RestaurantsList', { foodName: item.foodName, latitude: lat, longitude: long })
           }
         >
           {this.renderImage(item.imageUrlsBySize[90])}
@@ -74,7 +77,7 @@ export default class FavSlide extends React.Component{
           <View style={styles.foodInteraction}> 
           <View style={styles.foodInfo}>
             <Text style={styles.foodName} numberOfLines={2}>
-              {item.recipeName}
+              {item.foodName}
             </Text>
           </View>
           <View style={styles.buttonContainer}>
@@ -140,8 +143,15 @@ const styles = StyleSheet.create({
     height: 56,
     paddingRight: 0,
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 55 : 30,
+    bottom: Platform.OS === 'ios' ? 55 : 35,
     right: 0,
 
   },
 });
+
+
+/**
+ *   { food.ingredientLines.map((item, key)=>(
+         <Text key={key} style={styles.textNameContainer}> { item } </Text>)
+         )}
+ */
