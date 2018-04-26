@@ -4,7 +4,7 @@ this.apiInfo = {
   RES_URL: '/publicapi/v1/restaurant/',
   API_KEY: 'ba2d3e545f0d2bd1',
   method: 'both',
-  search: 'vegan',
+  search: 'meat',
   streetAddress: 'san francisco',
   pickupRadius: '5',
 }

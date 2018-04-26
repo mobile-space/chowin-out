@@ -69,7 +69,9 @@ export default class FoodChooseScreen extends React.Component {
 
   _renderYummlyApiForFoodImage = async (foodNameList) => {
     const fetched_data = []
-    for (let i = 0; i < 10; i++) {
+
+
+    for (let i = 0; i < 12; i++) {
       await this._getYummlyImages(foodNameList[i])
       .then(yummlyImage => {
         if(yummlyImage) {
@@ -84,6 +86,14 @@ export default class FoodChooseScreen extends React.Component {
       foodImages: fetched_data
     })
   }
+
+  shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
   
   async _getYummlyImages(search) {
     const {API_URL, RES_SEARCH_URL, APP_ID, API_KEY, picture } = this.state;
@@ -165,8 +175,9 @@ export default class FoodChooseScreen extends React.Component {
         }
         _fetchRestaurants(position.coords.latitude, position.coords.longitude)
           .then( data => {
-            // console.log("DATA", data)
-            this._renderYummlyApiForFoodImage(data)
+            this._renderYummlyApiForFoodImage(this.shuffle(data))
+            //console.log("DATA", data)
+
             // this.setState({foodNameList: data})
           })
           .catch(error => {
