@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Platform,
   Dimensions,
+  AsyncStorage,
   DeviceEventEmitter,
 } from 'react-native';
 import { Icon, Header, Button } from 'react-native-elements';
@@ -27,11 +28,14 @@ export default class FavSlide extends React.Component{
     };
   }
   onFavoriteButtonPress = async () => {
+    const { item } = this.props;
     const { isFavorited } = this.state;
     const { onFavoriteButtonPressEmit } = this.props;
 
     // DeviceEventEmitter.emit('setMyFoodUpdated');
     this.setState({ isFavorited: !isFavorited });
+    const itemId = item.id;
+    AsyncStorage.setItem('foodId', itemId);
 
   }
 
@@ -144,3 +148,10 @@ const styles = StyleSheet.create({
 
   },
 });
+
+
+/**
+ *   { food.ingredientLines.map((item, key)=>(
+         <Text key={key} style={styles.textNameContainer}> { item } </Text>)
+         )}
+ */
