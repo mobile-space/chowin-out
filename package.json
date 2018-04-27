@@ -10,8 +10,11 @@
     "react-native-image-progress": "^1.1.0",
     "react-native-onboarding-swiper": "^0.6.0",
     "react-native-open-maps": "^0.1.4",
+    "react-native-pie-chart": "^1.0.13",
     "react-native-progress": "^3.4.0",
     "react-native-snap-carousel": "^3.7.0",
+    "react-native-star-rating": "^1.0.9",
+    "react-native-svg-charts": "^5.0.0",
     "react-native-ui-kitten": "^3.0.0",
     "react-navigation": "^1.5.9"
   }
