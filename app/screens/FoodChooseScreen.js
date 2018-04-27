@@ -79,12 +79,11 @@ export default class FoodChooseScreen extends React.Component {
           fetched_data.push(yummlyImage)
         }
       })
-    }
-
-    this.setState({
-      fetchedData: true,
-      foodImages: fetched_data
-    })
+      this.setState({
+        fetchedData: true,
+        foodImages: fetched_data
+      })
+    } 
   }
 
   shuffle(a) {
@@ -110,14 +109,11 @@ export default class FoodChooseScreen extends React.Component {
           },
         });
 
-      var responseJSON = null
+      let responseJSON = await response.json();
 
       if (response.status === 200) {
-
-        responseJSON = await response.json();
         console.log("Preloaded", responseJSON)
         // console.log("MATCHES-LENGTH", responseJSON.matches.length)
-        
 
         if (typeof responseJSON.matches != 'undefined' && responseJSON.matches.length > 0) {
           food_image = responseJSON.matches[0]
@@ -125,7 +121,6 @@ export default class FoodChooseScreen extends React.Component {
         // console.log(imagesLoaded)
         // console.log("not loaded food",foodImages)
       } else {
-        responseJSON = await response.json();
         const error = responseJSON.message
 
         console.log(responseJSON)

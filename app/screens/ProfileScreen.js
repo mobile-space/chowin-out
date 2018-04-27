@@ -12,12 +12,18 @@ import {
   DeviceEventEmitter,
   Alert,
   FlatList,
+  ScrollView,
   AsyncStorage
 } from 'react-native';
+import {
+  RkText,
+  RkCard, RkStyleSheet
+} from 'react-native-ui-kitten';
 import { Icon, Header, Button } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import FavCard from '../components/FavCard';
+import StarRating from 'react-native-star-rating';
 
 
 import AppProvider, { AppContext } from '../components/AppProvider';
@@ -43,8 +49,12 @@ export default class ProfileScreen extends React.Component {
 
     };
 
+
+
     // const {foodID} = this.props;
   }
+
+  
   componentDidMount() {
     //When the component is loaded
     this._getYummlyImages()
@@ -93,21 +103,16 @@ export default class ProfileScreen extends React.Component {
           },
         });
 
-      let responseJSON = null
+      let responseJSON = await response.json();
 
       if (response.status === 200) {
-
-        responseJSON = await response.json();
         console.log("Loaded food", responseJSON)
 
         this.setState({
           imagesLoaded: false,
           foodImages: responseJSON,
         })
-        // console.log(imagesLoaded)
-        console.log("not loaded food",foodImages)
       } else {
-        responseJSON = await response.json();
         const error = responseJSON.message
 
         console.log(responseJSON)
@@ -144,7 +149,7 @@ export default class ProfileScreen extends React.Component {
     // console.log(foodImages )
     return (
       <View style={styles.mainContainer}>
-        <LinearGradient colors={['#000000', '#434343']} style={{ height: headerHeight }}>
+        <LinearGradient colors={['#000000', '#292E49']} style={{ height: headerHeight }}>
        
        <View style={styles.foodInfo1}>
        
@@ -155,8 +160,10 @@ export default class ProfileScreen extends React.Component {
  
       </LinearGradient>
 
+
         {foodImages === null ?
               this.loadingImages() :
+              <LinearGradient colors={['#000000', '#292E49']} style={styles.mainContainer}>
           <View style={styles.imageContainer}>
           {/* { console.log("in content view: " + foodImages)} */}
 
@@ -174,13 +181,32 @@ export default class ProfileScreen extends React.Component {
             this.props.navigation.navigate('FoodDetails',{food: foodImages }
            )
           }
-          > 
-             <Image style={styles.images} 
-             source={{uri: foodImages.images[0].hostedLargeUrl}} 
-             />
-             <View style={styles.foodInfo}>
-              <Text style={styles.foodName}>{foodImages.name}</Text>
-            </View>
+          >       
+          <ScrollView style={styles.root}>
+              <RkCard  rkType='backImg'>
+          <Image
+              style={styles.image}
+              source={{ uri: foodImages.images[0].hostedLargeUrl }}
+              style={{
+                width: '100%', 
+                height: 295, 
+                
+              }}
+              
+            />
+              <View rkCardImgOverlay rkCardContent style={styles.overlay}>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={foodImages.rating}
+                starSize={22}
+                fullStarColor={'#FDD835'}
+      />
+              <RkText style={styles.foodTitle} rkType='large'>{foodImages.name}</RkText>
+               
+               </View>
+              </RkCard>
+              </ScrollView>
 
              
             </TouchableOpacity>  
@@ -188,6 +214,7 @@ export default class ProfileScreen extends React.Component {
 
         
           </View>
+ </LinearGradient>
         }
 
 
@@ -198,6 +225,7 @@ export default class ProfileScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const { imagesLoaded } = this.state
+
 
     return (
       
@@ -212,6 +240,9 @@ const padding = 4;
 const headerHeight = 50;
 
 const styles = StyleSheet.create({
+  root: {
+
+  },
   mainContainer: {
     flex: 1,
     backgroundColor: '#fff',
@@ -247,8 +278,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
   ,foodInfo: {
-    flexDirection: 'column',
-    marginRight : '65%',
+
+    marginRight : '25%',
     position: 'absolute',
     bottom: Platform.OS === 'ios' ? -2 : 1,
 
@@ -261,9 +292,10 @@ const styles = StyleSheet.create({
   },
 
   foodTitle: {
+    marginTop: 10,
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 28,
+    fontSize: 20,
    
 
   },
@@ -281,6 +313,10 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     height: 45,
+  },
+  overlay: {
+    justifyContent: 'flex-end',
+
   },
 
  
