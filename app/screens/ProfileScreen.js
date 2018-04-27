@@ -103,21 +103,16 @@ export default class ProfileScreen extends React.Component {
           },
         });
 
-      let responseJSON = null
+      let responseJSON = await response.json();
 
       if (response.status === 200) {
-
-        responseJSON = await response.json();
         console.log("Loaded food", responseJSON)
 
         this.setState({
           imagesLoaded: false,
           foodImages: responseJSON,
         })
-        // console.log(imagesLoaded)
-        console.log("not loaded food",foodImages)
       } else {
-        responseJSON = await response.json();
         const error = responseJSON.message
 
         console.log(responseJSON)
