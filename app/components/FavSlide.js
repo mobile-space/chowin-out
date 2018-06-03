@@ -91,6 +91,9 @@ export default class FavSlide extends React.Component{
 
 }
 
+const { width } = Dimensions.get('window');
+
+
 const styles = StyleSheet.create({
   photoPostIcon: {
     color: 'pink',
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
     height: 56,
     paddingRight: 0,
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 55 : 57,
+    bottom: Platform.OS === 'ios' ? width/6.5 : width/6,
     right: 0,
 
   },
