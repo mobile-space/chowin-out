@@ -22,6 +22,7 @@ import { ENTRIES1 } from '../utils/food';
 import AppProvider, { AppContext } from '../components/AppProvider';
 import _fetchRestaurants from '../eatstreet/fetchRestaurants'
 
+
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 function wp(percentage) {

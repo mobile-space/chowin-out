@@ -4,7 +4,7 @@ import { Button, Header, Icon, } from 'react-native-elements'
 
 class RecipeWebView extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Recipie',
+    title: 'Recipe',
     headerTintColor: 'white',
     headerTitleStyle: { 
       fontSize: 20,
