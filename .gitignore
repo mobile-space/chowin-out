@@ -4,3 +4,6 @@ npm-debug.*
 
 # misc
 .DS_Store
+
+# keys
+config_keys.js

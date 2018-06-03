@@ -12,6 +12,7 @@ import {
 import { Rating } from 'react-native-elements'
 import { ENTRIES1 } from '../utils/food';
 import AppProvider, { AppContext } from '../components/AppProvider';
+import API_KEYS from '../utils/config_keys';
 
 
 
@@ -34,7 +35,7 @@ export default class RestaurantsListScreen extends React.Component {
     this.state = {
       API_URL: 'https://api.yelp.com',
       RES_SEARCH_URL: '/v3/businesses/search',
-      API_KEY: 'slBJejlSuGFSOUx8vRNNN2hdBtC18Gy1zEpPR6hBrw2W4FzA6PxAdkRPvlXn46vXCWZi2z2MQph46PYaVKnDKp8MdYAWQeht42ZBzSpdEUSsaZ6gS9L4XL-hbnrKWnYx',
+      API_KEY: API_KEYS[2].key,
       term: foodName || null,
       radius: '9000',
       restaurants: null,
