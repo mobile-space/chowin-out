@@ -87,36 +87,90 @@ export default class FoodRecipeScreen extends React.Component {
     const food = foodRecipe
     const { navigate } = this.props.navigation
     console.log("RecipeLoaded", food)
-    const data = [
-      {
-        key: 1,
-        amount: 108,
-        svg: { fill: '#FFCA28' },
-      },
-      {
-        key: 2,
-        amount: 70,
-        svg: { fill: '#304FFE' }
-      },
-      {
-        key: 3,
-        amount: 7,
-        svg: { fill: '#03A9F4' }
-      },
-      {
-        key: 4,
-        amount: 400,
-        svg: { fill: '#50EBC6' }
-      },
-      {
-        key: 5,
-        amount: food.numberOfServings,
-        svg: { fill: '#000000' }
-      },
+    const data = []
+    const Extracting = () => {
+      return food.nutritionEstimates.map((nutrition, index) => {
+        return (
+          <View key={index}>
+            {nutrition.attribute === "FAT" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 1,
+                      amount: (nutrition.value / 0.65).toPrecision(2),
+                      svg: { fill: '#50EBC6' }
+                    },
+                  )}
+                <Text>
+                  {nutrition.attribute}
+                </Text>
+                {nutrition.value}
+              </View>
+            }
+            {nutrition.attribute === "CHOLE" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 2,
+                      amount: (nutrition.value / 0.003).toPrecision(2),
+                      svg: { fill: '#FFCA28' },
+                    },
+                  )
+                }
+              </View>
+            }
+            {nutrition.attribute === "NA" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 3,
+                      amount: (nutrition.value / 0.024).toPrecision(2),
+                      svg: { fill: '#304FFE' },
+                    },
+                  )
+                }
+              </View>
+            }
+            {nutrition.attribute === "K" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 4,
+                      amount: (nutrition.value / 0.047).toPrecision(2),
+                      svg: { fill: '#000000' },
+                    },
+                  )
+                }
+                <RkText style={styles.foodText} rkType='info'> {'•  Protein: 7 '}</RkText>
 
+              </View>
+            }
+            {nutrition.attribute === "CHOCDF" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 5,
+                      amount: (nutrition.value / 3).toPrecision(2),
+                      svg: { fill: '#03A9F4' },
+                    },
+                  )
+                }
+                <RkText style={styles.ingText} rkType='medium'> {'•  Total Carbohydrate: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 3).toPrecision(2) +"%)"}</RkText>
+              </View>
+            }
+            {nutrition.attribute === "PROCNT" &&
+              <RkText style={styles.ingText} rkType='medium'> {'•  Protein: ' + nutrition.value + nutrition.unit.abbreviation}</RkText>
+            }
 
-
-    ]
+          </View>
+        )
+      })
+    }
     const Labels = ({ slices, height, width }) => {
       return slices.map((slice, index) => {
         const { labelCentroid, pieCentroid, data } = slice;
@@ -167,6 +221,7 @@ export default class FoodRecipeScreen extends React.Component {
                   fractions={1}
                   imageSize={20}
                   style={{ marginVertical: 10 }}
+
                 />
               </View>
               <TouchableOpacity onPress={() => {
@@ -206,12 +261,32 @@ export default class FoodRecipeScreen extends React.Component {
               <View style={styles.foodFact} >
                 <RkText style={styles.title} rkType='xlarge'>{" Nutrition Facts:"}</RkText>
                 <RkText style={styles.ingText} rkType='medium'> {'•  Number Of Servings: ' + food.numberOfServings}</RkText>
-                <RkText style={styles.title1} > {'•  Calories/Serving: 400'}</RkText>
-                <RkText style={styles.foodText} rkType='info'> {'•  Protein: 7 '}</RkText>
-                <RkText style={styles.foodText} rkType='warning'> {'•  Carbs: 108'}</RkText>
-                <RkText style={styles.foodLastText} > {'•  Fat: 70'}</RkText>
+
+                {/* {
+                  food.nutritionEstimates.map((nutrition, index) => {
+                    return (
+                      <View key={index}>
+                        {nutrition.attribute === "FAT" &&
 
 
+                        }
+
+                      </View>
+                    )
+
+                  })
+
+                } */}
+                {/* <RkText style={styles.title1} > {'•  Calories/Serving: 400'}</RkText>
+                        <RkText style={styles.foodText} rkType='warning'> {'•  Carbs: 108'}</RkText>
+                        <RkText style={styles.foodLastText} > {'•  Fat: 70'}</RkText> */}
+
+                <Extracting />
+
+
+
+
+                <RkText style={styles.title} rkType='xlarge'>{"% Daily Value:"}</RkText>
                 <PieChart
                   style={{ height: 225 }}
                   valueAccessor={({ item }) => item.amount}
