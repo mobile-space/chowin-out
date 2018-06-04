@@ -32,10 +32,49 @@ export default class FavSlide extends React.Component{
     const { isFavorited } = this.state;
     const { onFavoriteButtonPressEmit } = this.props;
 
-    // DeviceEventEmitter.emit('setMyFoodUpdated');
     this.setState({ isFavorited: !isFavorited });
-    const itemId = item.id;
-    AsyncStorage.setItem('foodId', itemId);
+
+
+    try {
+      let con = {
+        foodId: item.id,
+      }
+
+      function containsObject(obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+          if (list[i].foodId === obj) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      AsyncStorage.getItem('foodIds')
+        .then((foodIds) => {
+          const c = foodIds ? JSON.parse(foodIds) : [];
+          // console.log("Display the list", c)
+          // console.log("item id", item.id)
+          if (containsObject(item.id, c)) {
+            console.log("in the list", true);
+            Alert.alert(
+              "It's there",
+              "You've already addded this food to your list before"
+            )
+
+          }
+          else {
+            c.push(con);
+
+          }
+          AsyncStorage.setItem('foodIds', JSON.stringify(c));
+          DeviceEventEmitter.emit('new_food_liked', {})
+        });
+
+    } catch (error) {
+      alert(error)
+    }
 
   }
 
@@ -151,10 +190,3 @@ const styles = StyleSheet.create({
 
   },
 });
-
-
-/**
- *   { food.ingredientLines.map((item, key)=>(
-         <Text key={key} style={styles.textNameContainer}> { item } </Text>)
-         )}
- */
