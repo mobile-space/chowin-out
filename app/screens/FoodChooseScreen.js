@@ -21,6 +21,7 @@ import FavSlide from '../components/FavSlide';
 import { ENTRIES1 } from '../utils/food';
 import AppProvider, { AppContext } from '../components/AppProvider';
 import _fetchRestaurants from '../eatstreet/fetchRestaurants'
+import API_KEYS from '../utils/config_keys';
 
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -49,9 +50,9 @@ export default class FoodChooseScreen extends React.Component {
       foodImages: null,
       API_URL: 'http://api.yummly.com',
       RES_SEARCH_URL: '/v1/api/recipes?',
-      APP_ID: 'eb4e23c7',
+      APP_ID: API_KEYS[1].app_id,
       RES_SEARCH_URL1: '&_app_key=',
-      API_KEY: '851038fb4920d6b523e47c79320c858e',
+      API_KEY: API_KEYS[1].key,
       search: 'Roasted Root Vegetables with Tomatoes and Kale',
       picture: '&requirePictures=true',
       lat: null,

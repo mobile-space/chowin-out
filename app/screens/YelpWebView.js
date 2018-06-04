@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   navBar: {
-    color: 'white'
+    color: 'white',
+    fontSize: 16,
   },
 });

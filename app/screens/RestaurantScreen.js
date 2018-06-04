@@ -17,6 +17,7 @@ import { MapView, LinearGradient } from 'expo';
 import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import Autolink from 'react-native-autolink';
 import { createOpenLink } from 'react-native-open-maps';
+import API_KEYS from '../utils/config_keys';
 
 
 const { width } = Dimensions.get('window');
@@ -39,7 +40,7 @@ export default class RestaurantScreen extends React.Component {
     this.state = {
       API_URL: 'https://api.yelp.com',
       RES_SEARCH_URL: '/v3/businesses/',
-      API_KEY: 'slBJejlSuGFSOUx8vRNNN2hdBtC18Gy1zEpPR6hBrw2W4FzA6PxAdkRPvlXn46vXCWZi2z2MQph46PYaVKnDKp8MdYAWQeht42ZBzSpdEUSsaZ6gS9L4XL-hbnrKWnYx',
+      API_KEY: API_KEYS[2].key,
       restaurantID: restaurantID || null,
       isLoading: false,
       restaurant: null,
@@ -165,7 +166,7 @@ export default class RestaurantScreen extends React.Component {
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-arrow-back-outline' : 'md-arrow-back'}
                   color={'white'}
-                  size={Platform.OS === 'ios' ? 28 : 20}
+                  size={Platform.OS === 'ios' ? 32 : 22}
                 />
               </TouchableOpacity>
             }
@@ -190,11 +191,13 @@ export default class RestaurantScreen extends React.Component {
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-share-outline' : 'md-share'}
                   color={'white'}
-                  size={Platform.OS === 'ios' ? 28 : 20}
+                  size={Platform.OS === 'ios' ? 31 : 22}
                 />
               </TouchableOpacity>
             }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
+            innerContainerStyles={{ alignItems: 'flex-end', paddingTop: 10 }}
+
           />
         </SafeAreaView>
         <ScrollView>

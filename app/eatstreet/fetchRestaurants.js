@@ -1,8 +1,11 @@
+import API_KEYS from '../utils/config_keys';
+
+
 this.apiInfo = {
   API_URL: 'https://api.eatstreet.com',
   RES_SEARCH_URL: '/publicapi/v1/restaurant/search',
   RES_URL: '/publicapi/v1/restaurant/',
-  API_KEY: 'ba2d3e545f0d2bd1',
+  API_KEY: API_KEYS[3].key,
   method: 'both',
   search: 'meat',
   streetAddress: 'san francisco',
