@@ -11,6 +11,7 @@ import {
   Dimensions,
   AsyncStorage,
   DeviceEventEmitter,
+  Alert,
 } from 'react-native';
 import { Icon, Header, Button } from 'react-native-elements';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
@@ -21,7 +22,7 @@ export default class FavSlide extends React.Component{
   constructor(props) {
     super(props);
 
-    const { item, lat, long } = props;
+    const { item, lat, long, screen } = props;
 
     this.state = {
       isFavorited: false,
@@ -100,7 +101,7 @@ export default class FavSlide extends React.Component{
     )
   }
   render = () => {
-    const { item, lat, long } = this.props;
+    const { item, lat, long, screen } = this.props;
     const { image, name, description } = item;
     const { navigate } = this.props.navigation;
     return (
@@ -108,7 +109,9 @@ export default class FavSlide extends React.Component{
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
-            this.props.navigation.navigate('RestaurantsList', { foodName: item.foodName, latitude: lat, longitude: long })
+            screen === "Restaurant" ? 
+            this.props.navigation.navigate('RestaurantsList', { foodName: item.foodName, latitude: lat, longitude: long }):
+            this.props.navigation.navigate('FoodRecipe', { foodID: item.id })
           }
         >
           {this.renderImage(item.imageUrlsBySize[90])}
@@ -116,7 +119,7 @@ export default class FavSlide extends React.Component{
           <View style={styles.foodInteraction}> 
           <View style={styles.foodInfo}>
             <Text style={styles.foodName} numberOfLines={2}>
-              {item.foodName}
+              {screen === "Restaurant" ? item.foodName : item.recipeName}
             </Text>
           </View>
           <View style={styles.buttonContainer}>

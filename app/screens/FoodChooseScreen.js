@@ -155,6 +155,7 @@ export default class FoodChooseScreen extends React.Component {
           navigation={this.props.navigation}
           lat = {lat}
           long={long}
+          screen = "Restaurant"
         />
       );
     }

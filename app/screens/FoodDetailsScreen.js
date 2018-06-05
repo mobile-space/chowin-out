@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import API_KEYS from '../utils/config_keys';
 
-export default class FoodRecipeScreen extends React.Component {
+export default class FoodDetailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Recipe',
     headerTintColor: 'white',
