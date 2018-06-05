@@ -162,7 +162,7 @@ export default class RestaurantScreen extends React.Component {
         <SafeAreaView style={{ backgroundColor: '#c84343', }}>
           <Header
             leftComponent={
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={styles.navButton}>
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-arrow-back-outline' : 'md-arrow-back'}
                   color={'white'}
@@ -187,16 +187,18 @@ export default class RestaurantScreen extends React.Component {
                   })
                   .then(result => console.log(result))
                   .catch(err => console.log(err));
-              }}>
+              }}
+              style={styles.navButton}
+              >
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-share-outline' : 'md-share'}
                   color={'white'}
-                  size={Platform.OS === 'ios' ? 31 : 22}
+                  size={Platform.OS === 'ios' ? 30 : 22}
                 />
               </TouchableOpacity>
             }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
-            innerContainerStyles={{ alignItems: 'flex-end', paddingTop: 10 }}
+            innerContainerStyles={{ alignItems: 'center',}}
 
           />
         </SafeAreaView>
@@ -463,5 +465,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     paddingRight: 10,
+  },
+  navButton: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    padding: 6,
+
   }
 });
