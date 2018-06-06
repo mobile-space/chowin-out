@@ -282,7 +282,7 @@ export default class FoodDetailsScreen extends React.Component {
 
                 </PieChart>
                 <RkText style={{paddingVertical: 10, color: '#aaa'}}>Note: Percent Daily Values are based on a 2,000 calorie diet. Your Daily Values may be higher or lower depending on your calorie needs.</RkText>
-                <RkText style={{color: '#aaa'}}>We don't guarantee the accuracy of this information.</RkText>
+                <RkText style={{color: '#aaa'}}>We don't guarantee the accuracy of that information.</RkText>
               </View>
             </View>
           </View>
