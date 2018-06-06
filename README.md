@@ -17,7 +17,7 @@
 <div style={{display: flex; flex-direction: row}}>
 
 <div class="" style="width:300px">
-<a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' max-width="100%" height="auto"/></a>
+<a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' max-width="100%" height="auto" style="margin:6%;width:88%"/></a>
 </div>
 
 <div class="" style="width:300px">
