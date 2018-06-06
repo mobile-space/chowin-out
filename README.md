@@ -1,14 +1,40 @@
-# Chowin.. out
+# Chowin-Out
 
+<p align="center">
+  <a href="https://github.com/mobile-space/chowin-out">
+    <img alt="daug" src="assets/icon.png" width="250">
+  </a>
+</p>
 
+<h3 align="center">
+  Chowin-Out mobile app
+</h3>
+
+<p align="center">
+  Chowin-Out is a your best friend to find food
+</p>
+
+<div style={{display: flex; flex-direction: row}}>
+
+<div class="" style="width:300px">
+<a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' max-width="100%" height="auto"/></a>
+</div>
+
+<div class="" style="width:300px">
+
+<a href=''><img alt='Get it on App Store' src='project-plan-files/AppStore.png' max-width="100%" height="auto" style="margin:6%;width:88%"/></a>
+</div>
+</div>
 
 **Demo Expo**:
 https://expo.io/@jkhusanov/chowin-out
 
+![Demo gif]()
+
 ## Milestone #1
 
 ### Screenshots of UI Prototype 
-![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/onboardingScreen.gif)
+
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/Screenshots/Splash.png" width="270" />
@@ -45,8 +71,8 @@ https://expo.io/@jkhusanov/chowin-out
   - [x] Empty Screens
   - [x] Navigation
   - [ ] :star: **Bonus:** Redux for screens and navigation 
-- [ ] Start building prototype
-  - [ ] Get feedback
+- [x] Start building prototype
+  - [x] Get feedback
 
 
 ### WireFrames 
@@ -59,6 +85,8 @@ https://expo.io/@jkhusanov/chowin-out
 ### Overview of Api calls 
 
 ![Screenshot](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Api%20calls%20and%20main_frame.jpg)
+
+## Milestone #2
 
 ### Week 1 (Prakash's weekly progress)
 - [x] display static image in a flatlist 
@@ -76,20 +104,36 @@ https://expo.io/@jkhusanov/chowin-out
 ### Week 1 (Nick's weekly progress)
 - [x] Geolocation and connected with IntroScreen and FoodScreen
 
+## Milestone #3
+
 ## Week 2 General TODO
 
-- [ ] Polish the food display screen (Jahon)
-- [ ] Restaurants list screen (Jahon)
-- [ ] Restaurant screen (Jahon)
+- [x] Polish the food display screen (Jahon)
+- [x] Restaurants list screen (Jahon)
+- [x] Restaurant screen (Jahon)
 
-- [ ] Activity indicator for screens (Jahon) (Prakash)
-- [ ] Polish food detail screen (Prakash)
-- [ ] Async storage for intro, load once (Prakash)
-- [ ] New icon (Prakash)
+- [x] Activity indicator for screens (Jahon) (Prakash)
+- [x] Polish food detail screen (Prakash)
+- [x] Async storage for intro, load once (Prakash)
+- [x] New icon (Prakash)
 
-- [ ] Context API (Moni)
-- [ ] EatStreet and Yummly API (Moni)
+- [x] Context API (Moni)
+- [x] EatStreet and Yummly API (Moni)
 
+- [x] Geolocation talk to EatStreet API (Nick)
+- [x] Yelp API getting restaurants from EatStreet API (Nick)
 
-- [ ] Geolocation talk to EatStreet API (Nick)
-- [ ] Yelp API getting restaurants from EatStreet API (Nick)
+## Milestone #4
+
+## Publish the app on mobile app stores
+
+- [x] Publish on [Google Play](https://play.google.com/store/apps/details?id=com.makkhay.chowinout)
+- [ ] Publish on App Store (coming soon)
+
+## Milestone #5
+
+## General improvements and new features
+
+- [x] Fix the bugs and improve the app
+- [x] Add magic camera for image recognition using [Clarifai](https://clarifai.com/)
+
