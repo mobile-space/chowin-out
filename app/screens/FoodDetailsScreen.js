@@ -234,7 +234,7 @@ export default class FoodDetailsScreen extends React.Component {
               <TouchableOpacity onPress={() => {
                 Share.share(
                   {
-                    message: "I've found this recipe through HealthyEats! " + (Platform.OS === 'ios' ? food.name : food.source.sourceRecipeUrl),
+                    message: "I've found this recipe through Chowin-Out! " + (Platform.OS === 'ios' ? food.name : food.source.sourceRecipeUrl),
                     url: food.source.sourceRecipeUrl,
                     title: food.name
                   })

@@ -21,15 +21,62 @@
 </div>
 
 <div class="" style="width:300px">
-
-<a href=''><img alt='Get it on App Store' src='project-plan-files/AppStore.png' max-width="100%" height="auto"/></a>
+<a href=''>
+<img alt='Get it on App Store' src='project-plan-files/AppStore.png' max-width="100%" height="auto" style="margin:6%;width:88%"/></a>
 </div>
 </div>
 
-**Demo Expo**:
-https://expo.io/@jkhusanov/chowin-out
+### [Demo - Try it on Expo](https://expo.io/@jkhusanov/chowin-out)
 
-![Demo gif]()
+## What's Chowin-Out?
+
+**Chowin-Out is a your best friend to find food**
+
+- Users can  **discover new food around** and find a restaurant information that serves that food.
+- In addition, they can **find food based on a photo** (like Shazam, powered by Machine Learning) and **get the recipe** for that food and cook it yourself. 
+- They can also **save food** on their favorite list and **share** restaurant info or food recipe with their friends and family
+
+
+### Demo and some screenshots
+
+![Demo gif](https://github.com/mobile-space/chowin-out/blob/jahon_new_features/project-plan-files/Demo-iOS.gif)
+
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/1.png" width="270" />
+  <img src="project-plan-files/final-screenshots/2.png" width="270" />
+  <img src="project-plan-files/final-screenshots/3.png" width="270" />
+</div>
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/4.png" width="270" />
+  <img src="project-plan-files/final-screenshots/5.png" width="270" />
+  <img src="project-plan-files/final-screenshots/6.png" width="270" />
+</div>
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/7.png" width="270" />
+  <img src="project-plan-files/final-screenshots/8.png" width="270" />
+  <img src="project-plan-files/final-screenshots/9.png" width="270" />
+</div>
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/10.png" width="270" />
+  <img src="project-plan-files/final-screenshots/11.png" width="270" />
+  <img src="project-plan-files/final-screenshots/12.png" width="270" />
+  <img src="project-plan-files/final-screenshots/13.png" width="270" />
+</div>
+
+## Functionality
+- Daug is a fully functioning food discovery app
+- Users can get food local food based on location
+- Users can find food recipes based on photo
+- Users can like and save foods
+- Users can share information with their friends and family
+
+
+Would like to implement dynamic seasonal tab to the app to offer users to find food based on season, and overall make the app more UI friendly and functional.
+
+## Milestones
+
+Below you can see our milestones and how we achieved them
+
 
 ## Milestone #1
 

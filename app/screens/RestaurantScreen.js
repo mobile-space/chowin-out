@@ -181,7 +181,7 @@ export default class RestaurantScreen extends React.Component {
               <TouchableOpacity onPress={() => {
                 Share.share(
                   {
-                    message: "I've found this restaurant through Pick & Eat! " + (Platform.OS === 'ios' ? restaurant.name : restaurant.url),
+                    message: "I've found this restaurant through Chowin-Out! " + (Platform.OS === 'ios' ? restaurant.name : restaurant.url),
                     url: restaurant.url,
                     title: restaurant.name
                   })
