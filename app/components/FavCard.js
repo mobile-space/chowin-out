@@ -114,7 +114,7 @@ export default class FavCard extends React.Component {
 
 }
 const padding = 0;
-const { width } = Dimensions.get('window');
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   loadingView: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     height: 56,
     paddingRight: 0,
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? width/15 : width/14,
+    bottom: Platform.OS === 'ios' ? viewportHeight/15 : viewportHeight/14,
     right: padding,
   },
 });

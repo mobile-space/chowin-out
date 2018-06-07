@@ -1,14 +1,89 @@
-# Chowin.. out
+# Chowin-Out
+
+<p align="center">
+  <a href="https://github.com/mobile-space/chowin-out">
+    <img alt="chowin-out" src="assets/icon.png" width="250">
+  </a>
+</p>
+
+<h3 align="center">
+  Chowin-Out mobile app
+</h3>
+
+<p align="center">
+  Chowin-Out is a your best friend to find food
+</p>
+
+<div style={{display: flex; flex-direction: row}}>
+
+<a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+  <img alt='Get it on Google Play' src='project-plan-files/google-play-store-icon.png'/>
+</a>
+<a href='https://github.com/mobile-space/chowin-out'>
+  <img alt='Get it on App Store' src='project-plan-files/apple-app-store-icon.png'/>
+</a>
+</div>
+
+### [Demo - Try it on Expo](https://expo.io/@jkhusanov/chowin-out)
+
+## What's Chowin-Out?
+
+**Chowin-Out is a your best friend to find food**
+
+- Users can  **discover new food around** and find a restaurant information that serves that food.
+- In addition, they can **find food based on a photo** (like Shazam, powered by Machine Learning) and **get the recipe** for that food and cook it yourself. 
+- They can also **save food** on their favorite list and **share** restaurant info or food recipe with their friends and family
 
 
+### Demo and some screenshots
 
-**Demo Expo**:
-https://expo.io/@jkhusanov/chowin-out
+![Demo gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Demo_iOS.gif)
+
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/1.png" width="270" />
+  <img src="project-plan-files/final-screenshots/2.png" width="270" />
+  <img src="project-plan-files/final-screenshots/3.png" width="270" />
+</div>
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/4.png" width="270" />
+  <img src="project-plan-files/final-screenshots/5.png" width="270" />
+  <img src="project-plan-files/final-screenshots/6.png" width="270" />
+</div>
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/7.png" width="270" />
+  <img src="project-plan-files/final-screenshots/8.png" width="270" />
+  <img src="project-plan-files/final-screenshots/9.png" width="270" />
+</div>
+<div style={{display: flex; flex-direction: row}}>
+  <img src="project-plan-files/final-screenshots/10.png" width="270" />
+  <img src="project-plan-files/final-screenshots/11.png" width="270" />
+  <img src="project-plan-files/final-screenshots/12.png" width="270" />
+  <img src="project-plan-files/final-screenshots/13.png" width="270" />
+</div>
+
+## Functionality
+- Chowin-Out is a fully functioning food discovery app
+- Users can get food local food based on location
+- Users can find food recipes based on photo
+- Users can like and save foods
+- Users can share information with their friends and family
+
+
+Would like to implement dynamic seasonal tab to offer users to find food based on seasonal vegetables and fruits, and overall make the app more UI friendly and functional.
+
+## Feedback
+
+In case you have any feedback or questions, feel free to open a new issues on this repo or reach out to us [**@jkhusanov**](https://github.com/jkhusanov),[**@makkhay**](https://github.com/makkhay), [**@sukhjitsingh**](https://github.com/sukhjitsingh), and [**@niszeto**](https://github.com/niszeto) on Github.
+
+## Milestones
+
+Below you can see our milestones and how we achieved them
+
 
 ## Milestone #1
 
 ### Screenshots of UI Prototype 
-![Screenshot gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/onboardingScreen.gif)
+
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/Screenshots/Splash.png" width="270" />
@@ -45,8 +120,8 @@ https://expo.io/@jkhusanov/chowin-out
   - [x] Empty Screens
   - [x] Navigation
   - [ ] :star: **Bonus:** Redux for screens and navigation 
-- [ ] Start building prototype
-  - [ ] Get feedback
+- [x] Start building prototype
+  - [x] Get feedback
 
 
 ### WireFrames 
@@ -59,6 +134,8 @@ https://expo.io/@jkhusanov/chowin-out
 ### Overview of Api calls 
 
 ![Screenshot](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Api%20calls%20and%20main_frame.jpg)
+
+## Milestone #2
 
 ### Week 1 (Prakash's weekly progress)
 - [x] display static image in a flatlist 
@@ -76,20 +153,36 @@ https://expo.io/@jkhusanov/chowin-out
 ### Week 1 (Nick's weekly progress)
 - [x] Geolocation and connected with IntroScreen and FoodScreen
 
+## Milestone #3
+
 ## Week 2 General TODO
 
-- [ ] Polish the food display screen (Jahon)
-- [ ] Restaurants list screen (Jahon)
-- [ ] Restaurant screen (Jahon)
+- [x] Polish the food display screen (Jahon)
+- [x] Restaurants list screen (Jahon)
+- [x] Restaurant screen (Jahon)
 
-- [ ] Activity indicator for screens (Jahon) (Prakash)
-- [ ] Polish food detail screen (Prakash)
-- [ ] Async storage for intro, load once (Prakash)
-- [ ] New icon (Prakash)
+- [x] Activity indicator for screens (Jahon) (Prakash)
+- [x] Polish food detail screen (Prakash)
+- [x] Async storage for intro, load once (Prakash)
+- [x] New icon (Prakash)
 
-- [ ] Context API (Moni)
-- [ ] EatStreet and Yummly API (Moni)
+- [x] Context API (Moni)
+- [x] EatStreet and Yummly API (Moni)
 
+- [x] Geolocation talk to EatStreet API (Nick)
+- [x] Yelp API getting restaurants from EatStreet API (Nick)
 
-- [ ] Geolocation talk to EatStreet API (Nick)
-- [ ] Yelp API getting restaurants from EatStreet API (Nick)
+## Milestone #4
+
+## Publish the app on mobile app stores
+
+- [x] Publish on [Google Play](https://play.google.com/store/apps/details?id=com.makkhay.chowinout)
+- [ ] Publish on App Store (coming soon)
+
+## Milestone #5
+
+## General improvements and new features
+
+- [x] Fix the bugs and improve the app
+- [x] Add magic camera for image recognition using [Clarifai](https://clarifai.com/)
+

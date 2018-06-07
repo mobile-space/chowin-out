@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import API_KEYS from '../utils/config_keys';
 
-export default class FoodRecipeScreen extends React.Component {
+export default class FoodDetailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Recipe',
     headerTintColor: 'white',
@@ -87,36 +87,97 @@ export default class FoodRecipeScreen extends React.Component {
     const food = foodRecipe
     const { navigate } = this.props.navigation
     console.log("RecipeLoaded", food)
-    const data = [
-      {
-        key: 1,
-        amount: 108,
-        svg: { fill: '#FFCA28' },
-      },
-      {
-        key: 2,
-        amount: 70,
-        svg: { fill: '#304FFE' }
-      },
-      {
-        key: 3,
-        amount: 7,
-        svg: { fill: '#03A9F4' }
-      },
-      {
-        key: 4,
-        amount: 400,
-        svg: { fill: '#50EBC6' }
-      },
-      {
-        key: 5,
-        amount: food.numberOfServings,
-        svg: { fill: '#000000' }
-      },
+    const data = []
+    const Extracting = () => {
+      return food.nutritionEstimates.map((nutrition, index) => {
+        return (
+          <View key={index}>
+            {nutrition.attribute === "ENERC_KCAL" &&
+              <View>
+              <RkText style={styles.ingText} rkType='medium'> {'•  Calories: '+ nutrition.value + " " + nutrition.unit.abbreviation}</RkText>
+              </View>
+            }
+            {nutrition.attribute === "PROCNT" &&
+              <RkText style={styles.ingText} rkType='medium'> {'•  Protein: ' + nutrition.value + nutrition.unit.abbreviation}</RkText>
+            }
+            {nutrition.attribute === "FAT" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 1,
+                      amount: (nutrition.value / 0.65).toPrecision(2),
+                      svg: { fill: '#50EBC6' }
+                    },
+                  )
+                }
+              <RkText style={styles.foodTextOne} rkType='info'> {'•  Total Fat: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.65).toPrecision(2) +"% DV)"}</RkText>
+              </View>
+            }
+            {nutrition.attribute === "CHOLE" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 2,
+                      amount: (nutrition.value / 0.003).toPrecision(2),
+                      svg: { fill: '#FFCA28' },
+                    },
+                  )
+                }
+            <RkText style={styles.foodTextTwo} rkType='info'> {'•  Cholesterol: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.003).toPrecision(2) +"% DV)"}</RkText>
+              </View>
+            }
+            {nutrition.attribute === "NA" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 3,
+                      amount: (nutrition.value / 0.024).toPrecision(2),
+                      svg: { fill: '#304FFE' },
+                    },
+                  )
+                }
+              <RkText style={styles.foodTextThree} rkType='info'> {'•  Sodium: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.024).toPrecision(2) +"% DV)"}</RkText>
+
+              </View>
+            }
+            {nutrition.attribute === "K" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 4,
+                      amount: (nutrition.value / 0.047).toPrecision(2),
+                      svg: { fill: '#F57A82' },
+                    },
+                  )
+                }
+                <RkText style={styles.foodTextFour} rkType='info'> {'•  Potassium: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.047).toPrecision(2) +"% DV)"}</RkText>
+
+              </View>
+            }
+            {nutrition.attribute === "CHOCDF" &&
+              <View>
+                {
+                  data.push(
+                    {
+                      key: 5,
+                      amount: (nutrition.value / 3).toPrecision(2),
+                      svg: { fill: '#03A9F4' },
+                    },
+                  )
+                }
+                <RkText style={styles.foodTextFive} rkType='info'> {'•  Total Carbohydrate: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 3).toPrecision(2) +"% DV)"}</RkText>
+              </View>
+            }
 
 
-
-    ]
+          </View>
+        )
+      })
+    }
     const Labels = ({ slices, height, width }) => {
       return slices.map((slice, index) => {
         const { labelCentroid, pieCentroid, data } = slice;
@@ -167,12 +228,13 @@ export default class FoodRecipeScreen extends React.Component {
                   fractions={1}
                   imageSize={20}
                   style={{ marginVertical: 10 }}
+
                 />
               </View>
               <TouchableOpacity onPress={() => {
                 Share.share(
                   {
-                    message: "I've found this recipe through HealthyEats! " + (Platform.OS === 'ios' ? food.name : food.source.sourceRecipeUrl),
+                    message: "I've found this recipe through Chowin-Out! " + (Platform.OS === 'ios' ? food.name : food.source.sourceRecipeUrl),
                     url: food.source.sourceRecipeUrl,
                     title: food.name
                   })
@@ -206,12 +268,9 @@ export default class FoodRecipeScreen extends React.Component {
               <View style={styles.foodFact} >
                 <RkText style={styles.title} rkType='xlarge'>{" Nutrition Facts:"}</RkText>
                 <RkText style={styles.ingText} rkType='medium'> {'•  Number Of Servings: ' + food.numberOfServings}</RkText>
-                <RkText style={styles.title1} > {'•  Calories/Serving: 400'}</RkText>
-                <RkText style={styles.foodText} rkType='info'> {'•  Protein: 7 '}</RkText>
-                <RkText style={styles.foodText} rkType='warning'> {'•  Carbs: 108'}</RkText>
-                <RkText style={styles.foodLastText} > {'•  Fat: 70'}</RkText>
+                <Extracting />
 
-
+                <RkText style={styles.title} rkType='xlarge'>{"% Daily Value Chart:"}</RkText>
                 <PieChart
                   style={{ height: 225 }}
                   valueAccessor={({ item }) => item.amount}
@@ -222,20 +281,12 @@ export default class FoodRecipeScreen extends React.Component {
                   <Labels />
 
                 </PieChart>
-
-
-
-
+                <RkText style={{paddingVertical: 10, color: '#aaa'}}>Note: Percent Daily Values are based on a 2,000 calorie diet. Your Daily Values may be higher or lower depending on your calorie needs.</RkText>
+                <RkText style={{color: '#aaa'}}>We don't guarantee the accuracy of that information.</RkText>
               </View>
-
-
             </View>
           </View>
-
-
         </RkCard>
-
-
 
         <TouchableOpacity style={styles.recipieButton}
           onPress={() => navigate('Recipe', { restaurantURL: food.source.sourceRecipeUrl })}>
@@ -243,15 +294,7 @@ export default class FoodRecipeScreen extends React.Component {
             <RkText style={styles.recipieText} rkType='medium'> View Recipe </RkText>
           </View>
         </TouchableOpacity>
-
-
-
-
-
       </ScrollView>
-
-
-
     );
   }
   loadingView = () => {
@@ -368,10 +411,35 @@ const styles = RkStyleSheet.create(theme => ({
     justifyContent: 'flex-end',
 
   },
-  foodText: {
+  foodTextOne: {
     borderBottomColor: '#f0f0f0',
     borderBottomWidth: 1.5,
     marginBottom: 5,
+    color: '#50EBC6',
+  },
+  foodTextTwo: {
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
+    marginBottom: 5,
+    color: '#FFCA28',
+  },
+  foodTextThree: {
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
+    marginBottom: 5,
+    color: '#304FFE',
+  },
+  foodTextFour: {
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
+    marginBottom: 5,
+    color: '#F57A82',
+  },
+  foodTextFive: {
+    borderBottomColor: '#f0f0f0',
+    borderBottomWidth: 1.5,
+    marginBottom: 5,
+    color: '#03A9F4',
   },
   chartBlock: {
     marginBottom: 15,

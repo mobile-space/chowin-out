@@ -7,6 +7,7 @@ import Onboarding from 'react-native-onboarding-swiper';
 import DISCOVER from '../../assets/discover.png'
 import LOCATE from '../../assets/locate.png'
 import FAV from '../../assets/favorite.png'
+import CAMERA from '../../assets/camera1.png'
 import RECIPIE from '../../assets/recipe.png'
 import GIF from '../../assets/food.gif'
 
@@ -30,25 +31,32 @@ const OnBoard = ({navigation}) => (
         
         {
           title: 'Locate Resturant',
-          backgroundColor: '#00796B',
+          backgroundColor: '#2DCCE3',
           image: <Image source={LOCATE} style={styles.logo}/>,
           subtitle: 'We will help you find the nearest resturant',
         
-        }
-        ,
-        {
-          title: 'Get Recipe',
-          backgroundColor: '#8BC34A',
-          image: <Image source={RECIPIE}  style={styles.logo}/>,
-          subtitle: 'Learn new recipe and cook yourself',
         },
-  
+
         {
           title: 'Favorite It',
-          backgroundColor: '#D32F2F',
+          backgroundColor: '#33CCB1',
           image: <Image source={FAV} style={styles.logo}/>,
           subtitle: 'Save food to your favorite',
         },
+        {
+          title: 'Discover what is in your food',
+          backgroundColor: '#50E3C1',
+          image: <Image source={CAMERA}  style={styles.logo}/>,
+          subtitle: 'Our smart camera analyzes the ingredients! :)',
+        },
+
+        {
+          title: 'Get Recipe',
+          backgroundColor: '#2DE394',
+          image: <Image source={RECIPIE}  style={styles.logo}/>,
+          subtitle: 'Learn new recipe and cook yourself',
+        },
+
         {
           title: "Ready to Eat ?",
           subtitle: (
@@ -62,7 +70,7 @@ const OnBoard = ({navigation}) => (
   
             />
           ),
-          backgroundColor: 'white',
+          backgroundColor: '#50E3C1',
           image: (
             <Image source={GIF} style={styles.logo}/>
           ),

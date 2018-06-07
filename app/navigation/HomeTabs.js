@@ -7,6 +7,7 @@ import { SimpleLineIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vect
 import FoodNavigator from './FoodNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import FoodChooseStack from './FoodStack';
+import CameraNavigator from './CameraNavigator';
 
 
 const HomeTabs = TabNavigator({
@@ -21,6 +22,19 @@ const HomeTabs = TabNavigator({
           size={Platform.OS === 'ios' ? 22 : 25}
         />
       )
+    }
+  },
+  CameraTab: {
+    screen: CameraNavigator,
+    navigationOptions: {
+      tabBarLabel: 'MAGIC CAMERA',
+      tabBarIcon: ({ tintColor }) => (
+        <MaterialCommunityIcons
+          name='camera'
+          color={tintColor}
+          size={Platform.OS === 'ios' ? 22 : 25}
+        />
+      ),
     }
   },
   ProfileTab: {
