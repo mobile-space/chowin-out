@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/mobile-space/chowin-out">
-    <img alt="daug" src="assets/icon.png" width="250">
+    <img alt="chowin-out" src="assets/icon.png" width="250">
   </a>
 </p>
 
@@ -16,14 +16,12 @@
 
 <div style={{display: flex; flex-direction: row}}>
 
-<div class="" style="width:300px">
-<a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' max-width="100%" height="auto"/></a>
-</div>
-
-<div class="" style="width:300px">
-<a href=''>
-<img alt='Get it on App Store' src='project-plan-files/AppStore.png' max-width="100%" height="auto" style="margin:6%;width:88%"/></a>
-</div>
+<a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+  <img alt='Get it on Google Play' src='project-plan-files/google-play-store-icon.png'/>
+</a>
+<a href='https://github.com/mobile-space/chowin-out'>
+  <img alt='Get it on App Store' src='project-plan-files/apple-app-store-icon.png'/>
+</a>
 </div>
 
 ### [Demo - Try it on Expo](https://expo.io/@jkhusanov/chowin-out)
@@ -39,7 +37,7 @@
 
 ### Demo and some screenshots
 
-![Demo gif](https://github.com/mobile-space/chowin-out/blob/jahon_new_features/project-plan-files/Demo-iOS.gif)
+![Demo gif](https://github.com/mobile-space/chowin-out/blob/master/project-plan-files/Demo_iOS.gif)
 
 <div style={{display: flex; flex-direction: row}}>
   <img src="project-plan-files/final-screenshots/1.png" width="270" />
@@ -64,14 +62,14 @@
 </div>
 
 ## Functionality
-- Daug is a fully functioning food discovery app
+- Chowin-Out is a fully functioning food discovery app
 - Users can get food local food based on location
 - Users can find food recipes based on photo
 - Users can like and save foods
 - Users can share information with their friends and family
 
 
-Would like to implement dynamic seasonal tab to the app to offer users to find food based on season, and overall make the app more UI friendly and functional.
+Would like to implement dynamic seasonal tab to offer users to find food based on seasonal vegetables and fruits, and overall make the app more UI friendly and functional.
 
 ## Milestones
 
