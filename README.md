@@ -71,6 +71,10 @@
 
 Would like to implement dynamic seasonal tab to offer users to find food based on seasonal vegetables and fruits, and overall make the app more UI friendly and functional.
 
+## Feedback
+
+In case you have any feedback or questions, feel free to open a new issues on this repo or reach out to us [**@jkhusanov**](https://github.com/jkhusanov),[**@makkhay**](https://github.com/makkhay), [**@sukhjitsingh**](https://github.com/sukhjitsingh), and [**@niszeto**](https://github.com/niszeto) on Github.
+
 ## Milestones
 
 Below you can see our milestones and how we achieved them
