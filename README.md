@@ -11,7 +11,7 @@
 </h3>
 
 <p align="center">
-  Chowin-Out is a your best friend to find food
+  Chowin-Out is your best friend to find food
 </p>
 
 <div style={{display: flex; flex-direction: row}}>
@@ -28,7 +28,7 @@
 
 ## What's Chowin-Out?
 
-**Chowin-Out is a your best friend to find food**
+**Chowin-Out is your best friend to find food**
 
 - Users can  **discover new food around** and find a restaurant information that serves that food.
 - In addition, they can **find food based on a photo** (like Shazam, powered by Machine Learning) and **get the recipe** for that food and cook it yourself. 
@@ -64,7 +64,7 @@
 ## Functionality
 - Chowin-Out is a fully functioning food discovery app
 - Users can get food local food based on location
-- Users can find food recipes based on photo
+- Users can find food recipes based on a photo
 - Users can like and save foods
 - Users can share information with their friends and family
 
@@ -73,7 +73,7 @@ Would like to implement dynamic seasonal tab to offer users to find food based o
 
 ## Feedback
 
-In case you have any feedback or questions, feel free to open a new issues on this repo or reach out to us [**@jkhusanov**](https://github.com/jkhusanov),[**@makkhay**](https://github.com/makkhay), [**@sukhjitsingh**](https://github.com/sukhjitsingh), and [**@niszeto**](https://github.com/niszeto) on Github.
+In case you have any feedback or questions, feel free to open a new issue on this repo or reach out to us [**@jkhusanov**](https://github.com/jkhusanov),[**@makkhay**](https://github.com/makkhay), [**@sukhjitsingh**](https://github.com/sukhjitsingh), and [**@niszeto**](https://github.com/niszeto) on Github.
 
 ## Milestones
 
