@@ -166,7 +166,7 @@ export default class RestaurantScreen extends React.Component {
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-arrow-back-outline' : 'md-arrow-back'}
                   color={'white'}
-                  size={Platform.OS === 'ios' ? 32 : 22}
+                  size={Platform.OS === 'ios' ? 32 : 25}
                 />
               </TouchableOpacity>
             }
@@ -193,12 +193,12 @@ export default class RestaurantScreen extends React.Component {
                 <Ionicons
                   name={Platform.OS === 'ios' ? 'ios-share-outline' : 'md-share'}
                   color={'white'}
-                  size={Platform.OS === 'ios' ? 30 : 22}
+                  size={Platform.OS === 'ios' ? 30 : 25}
                 />
               </TouchableOpacity>
             }
             outerContainerStyles={{ backgroundColor: '#c84343' }}
-            innerContainerStyles={{ alignItems: 'center',}}
+            innerContainerStyles={{ alignItems: 'center', marginTop: Platform.OS === 'ios' ? 0 : 15}}
 
           />
         </SafeAreaView>

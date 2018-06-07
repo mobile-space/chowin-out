@@ -88,96 +88,48 @@ export default class FoodDetailsScreen extends React.Component {
     const { navigate } = this.props.navigation
     console.log("RecipeLoaded", food)
     const data = []
-    const Extracting = () => {
-      return food.nutritionEstimates.map((nutrition, index) => {
-        return (
-          <View key={index}>
-            {nutrition.attribute === "ENERC_KCAL" &&
-              <View>
-              <RkText style={styles.ingText} rkType='medium'> {'•  Calories: '+ nutrition.value + " " + nutrition.unit.abbreviation}</RkText>
-              </View>
-            }
-            {nutrition.attribute === "PROCNT" &&
-              <RkText style={styles.ingText} rkType='medium'> {'•  Protein: ' + nutrition.value + nutrition.unit.abbreviation}</RkText>
-            }
-            {nutrition.attribute === "FAT" &&
-              <View>
-                {
-                  data.push(
-                    {
-                      key: 1,
-                      amount: (nutrition.value / 0.65).toPrecision(2),
-                      svg: { fill: '#50EBC6' }
-                    },
-                  )
-                }
-              <RkText style={styles.foodTextOne} rkType='info'> {'•  Total Fat: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.65).toPrecision(2) +"% DV)"}</RkText>
-              </View>
-            }
-            {nutrition.attribute === "CHOLE" &&
-              <View>
-                {
-                  data.push(
-                    {
-                      key: 2,
-                      amount: (nutrition.value / 0.003).toPrecision(2),
-                      svg: { fill: '#FFCA28' },
-                    },
-                  )
-                }
-            <RkText style={styles.foodTextTwo} rkType='info'> {'•  Cholesterol: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.003).toPrecision(2) +"% DV)"}</RkText>
-              </View>
-            }
-            {nutrition.attribute === "NA" &&
-              <View>
-                {
-                  data.push(
-                    {
-                      key: 3,
-                      amount: (nutrition.value / 0.024).toPrecision(2),
-                      svg: { fill: '#304FFE' },
-                    },
-                  )
-                }
-              <RkText style={styles.foodTextThree} rkType='info'> {'•  Sodium: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.024).toPrecision(2) +"% DV)"}</RkText>
-
-              </View>
-            }
-            {nutrition.attribute === "K" &&
-              <View>
-                {
-                  data.push(
-                    {
-                      key: 4,
-                      amount: (nutrition.value / 0.047).toPrecision(2),
-                      svg: { fill: '#F57A82' },
-                    },
-                  )
-                }
-                <RkText style={styles.foodTextFour} rkType='info'> {'•  Potassium: '+ nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.047).toPrecision(2) +"% DV)"}</RkText>
-
-              </View>
-            }
-            {nutrition.attribute === "CHOCDF" &&
-              <View>
-                {
-                  data.push(
-                    {
-                      key: 5,
-                      amount: (nutrition.value / 3).toPrecision(2),
-                      svg: { fill: '#03A9F4' },
-                    },
-                  )
-                }
-                <RkText style={styles.foodTextFive} rkType='info'> {'•  Total Carbohydrate: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 3).toPrecision(2) +"% DV)"}</RkText>
-              </View>
-            }
-
-
-          </View>
+    food.nutritionEstimates.map((nutrition, index) => {
+      nutrition.attribute === "FAT" &&
+        data.push(
+          {
+            key: 1,
+            amount: (nutrition.value / 0.65).toPrecision(2),
+            svg: { fill: '#50EBC6' }
+          }
         )
-      })
-    }
+      nutrition.attribute === "CHOLE" &&
+        data.push(
+          {
+            key: 2,
+            amount: (nutrition.value / 0.003).toPrecision(2),
+            svg: { fill: '#FFCA28' },
+          },
+        )
+      nutrition.attribute === "NA" &&
+        data.push(
+          {
+            key: 3,
+            amount: (nutrition.value / 0.024).toPrecision(2),
+            svg: { fill: '#304FFE' },
+          },
+        )
+      nutrition.attribute === "K" &&
+        data.push(
+          {
+            key: 4,
+            amount: (nutrition.value / 0.047).toPrecision(2),
+            svg: { fill: '#F57A82' },
+          },
+        )
+      nutrition.attribute === "CHOCDF" &&
+        data.push(
+          {
+            key: 5,
+            amount: (nutrition.value / 3).toPrecision(2),
+            svg: { fill: '#03A9F4' },
+          },
+        )
+    })
     const Labels = ({ slices, height, width }) => {
       return slices.map((slice, index) => {
         const { labelCentroid, pieCentroid, data } = slice;
@@ -268,7 +220,7 @@ export default class FoodDetailsScreen extends React.Component {
               <View style={styles.foodFact} >
                 <RkText style={styles.title} rkType='xlarge'>{" Nutrition Facts:"}</RkText>
                 <RkText style={styles.ingText} rkType='medium'> {'•  Number Of Servings: ' + food.numberOfServings}</RkText>
-                <Extracting />
+                {/* <Extracting /> */}
 
                 <RkText style={styles.title} rkType='xlarge'>{"% Daily Value Chart:"}</RkText>
                 <PieChart
@@ -281,8 +233,8 @@ export default class FoodDetailsScreen extends React.Component {
                   <Labels />
 
                 </PieChart>
-                <RkText style={{paddingVertical: 10, color: '#aaa'}}>Note: Percent Daily Values are based on a 2,000 calorie diet. Your Daily Values may be higher or lower depending on your calorie needs.</RkText>
-                <RkText style={{color: '#aaa'}}>We don't guarantee the accuracy of that information.</RkText>
+                <RkText style={{ paddingVertical: 10, color: '#aaa' }}>Note: Percent Daily Values are based on a 2,000 calorie diet. Your Daily Values may be higher or lower depending on your calorie needs.</RkText>
+                <RkText style={{ color: '#aaa' }}>We don't guarantee the accuracy of that information.</RkText>
               </View>
             </View>
           </View>
