@@ -220,8 +220,65 @@ export default class FoodDetailsScreen extends React.Component {
               <View style={styles.foodFact} >
                 <RkText style={styles.title} rkType='xlarge'>{" Nutrition Facts:"}</RkText>
                 <RkText style={styles.ingText} rkType='medium'> {'•  Number Of Servings: ' + food.numberOfServings}</RkText>
-                {/* <Extracting /> */}
+                {food.nutritionEstimates.map((nutrition, index) => (
+                  <View key={index}>
+                    <View>
+                      {nutrition.attribute === "ENERC_KCAL" &&
+                        <View>
+                          <RkText style={styles.ingText} rkType='medium'> {'•  Calories: ' + nutrition.value + " " + nutrition.unit.abbreviation}</RkText>
+                        </View>
+                      }
+                    </View>
+                    <View>
+                      {
+                        nutrition.attribute === "PROCNT" &&
+                        <View>
+                          <RkText style={styles.ingText} rkType='medium'> {'•  Protein: ' + nutrition.value + nutrition.unit.abbreviation}</RkText>
+                        </View>
+                      }
+                    </View>
+                    <View>
 
+                      {
+                        nutrition.attribute === "FAT" &&
+                        <View>
+                          <RkText style={styles.foodTextOne} rkType='info'> {'•  Total Fat: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.65).toPrecision(2) + "% DV)"}</RkText>
+                        </View>
+                      }
+                    </View>
+                    <View>
+
+                      {nutrition.attribute === "CHOLE" &&
+                        <View>
+                          <RkText style={styles.foodTextTwo} rkType='info'> {'•  Cholesterol: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.003).toPrecision(2) + "% DV)"}</RkText>
+                        </View>
+                      }
+                    </View>
+                    <View>
+                      {nutrition.attribute === "NA" &&
+                        <View>
+                          <RkText style={styles.foodTextThree} rkType='info'> {'•  Sodium: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.024).toPrecision(2) + "% DV)"}</RkText>
+
+                        </View>
+                      }
+                    </View>
+                    <View>
+                      {nutrition.attribute === "K" &&
+                        <View>
+                          <RkText style={styles.foodTextFour} rkType='info'> {'•  Potassium: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 0.047).toPrecision(2) + "% DV)"}</RkText>
+
+                        </View>
+                      }
+                    </View>
+                    <View>
+                      {nutrition.attribute === "CHOCDF" &&
+                        <View>
+                          <RkText style={styles.foodTextFive} rkType='info'> {'•  Total Carbohydrate: ' + nutrition.value + nutrition.unit.abbreviation + ", " + "(" + (nutrition.value / 3).toPrecision(2) + "% DV)"}</RkText>
+                        </View>
+                      }
+                    </View>
+                  </View>
+                ))}
                 <RkText style={styles.title} rkType='xlarge'>{"% Daily Value Chart:"}</RkText>
                 <PieChart
                   style={{ height: 225 }}
