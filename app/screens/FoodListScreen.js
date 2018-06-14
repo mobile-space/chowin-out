@@ -97,7 +97,7 @@ export default class FoodListScreen extends React.Component {
 
         this.setState({
           imagesLoaded: false,
-          foodImages: responseJSON.matches,
+          foodImages: responseJSON,
         })
         // console.log(foodImages)
       } else {
@@ -137,7 +137,7 @@ export default class FoodListScreen extends React.Component {
 
         this.setState({
           imagesLoaded: false,
-          foodImages: responseJSON.matches,
+          foodImages: responseJSON,
         })
         // console.log(foodImages)
       } else {
@@ -170,7 +170,7 @@ export default class FoodListScreen extends React.Component {
     return (
       <FavSlide
         item={item}
-        screen= "Camera"
+        screen="Camera"
         navigation={this.props.navigation}
       />
     );
@@ -184,41 +184,43 @@ export default class FoodListScreen extends React.Component {
   }
   contentView() {
     const { foodImages, imagesLoaded } = this.state
+    const { navigate } = this.props.navigation
+
     // console.log("loaded food", foodImages)
-    if (foodImages != null && foodImages.length === 0) {
+    if (foodImages.matches != null && foodImages.matches.length === 0) {
       Alert.alert(
         "Can't find",
         "Please try to search manually in the above search bar",
         [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
         ],
         { cancelable: false }
       )
       return (
-        <View style={{flex: 1,}}>
+        <View style={{ flex: 1, }}>
 
           <SearchBar
             lightTheme
             onChangeText={(text) => this.searchYourself(text)}
             // onClear={someMethod}
             placeholder='Type Here...' />
-            <Button
-              onPress={() => this._getYummlySearch(search)}
-              title="Search"
-              buttonStyle={{
-                backgroundColor: "#1ABC9C",
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 5,
-                width: 200,
-                height: 45,
+          <Button
+            onPress={() => this._getYummlySearch(search)}
+            title="Search"
+            buttonStyle={{
+              backgroundColor: "#1ABC9C",
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 5,
+              width: 200,
+              height: 45,
 
-              }}
-              containerViewStyle={{ marginVertical: 10, alignItems: 'center' }}
+            }}
+            containerViewStyle={{ marginVertical: 10, alignItems: 'center' }}
 
-            /> 
+          />
 
-            
+
         </View>
 
       )
@@ -228,16 +230,25 @@ export default class FoodListScreen extends React.Component {
         <View style={styles.mainContainer}>
           <LinearGradient colors={['#536976', '#292E49']} style={styles.mainContainer}>
             <View style={styles.imageContainer}>
-              {foodImages === null ?
+              {foodImages.matches === null ?
                 this.loadingView() :
-                <Carousel
-                  ref={(c) => { this._carousel = c; }}
-                  data={foodImages}
-                  renderItem={this._renderItem.bind(this)}
-                  sliderWidth={sliderWidth}
-                  itemWidth={itemWidth}
-                  style={styles.carouselContainer}
-                />}
+                <View>
+                  <TouchableOpacity style={{paddingHorizontal: 10}} onPress={() => navigate('Recipe', { restaurantURL: foodImages.attribution.url })}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text style={{color: 'black'}}>{foodImages.attribution.text}</Text>
+                    <Image style={{height: 20, width: 60, resizeMode: 'contain'}}source={{uri: foodImages.attribution.logo}}/>
+                    </View>
+                  </TouchableOpacity>
+                  <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    data={foodImages.matches}
+                    renderItem={this._renderItem.bind(this)}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    style={styles.carouselContainer}
+                  />
+                  </View>
+              }
             </View>
           </LinearGradient>
 

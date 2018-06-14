@@ -8,6 +8,7 @@ import API_KEYS from '../utils/config_keys';
 
 const { width } = Dimensions.get('window');
 console.ignoredYellowBox = ["Warning: Can't call setState",];
+import CLARIFAI_LOGO from '../../assets/clarifai_logo2.png';
 
 
 export default class RecognitionResultScreen extends React.Component {
@@ -127,11 +128,13 @@ export default class RecognitionResultScreen extends React.Component {
     let { foodImage } = this.state;
     return (
       <ScrollView style={styles.container}>
-       
         {foodImage &&
           <View style={styles.imageContainer}><Image source={{ uri: foodImage.uri }} style={styles.imageStyle} /></View>}
         <View style={styles.predictionContainer}>
           {this.renderPrediction()}
+        </View>
+        <View style={styles.clarifaiLogoContainer}>
+              <Image style={styles.clarifaiLogo} source={CLARIFAI_LOGO}></Image>
         </View>
         <Button
           title={'Find a Recipe!'}
@@ -209,4 +212,13 @@ const styles = StyleSheet.create({
     width: width/ 1.2, 
     borderRadius: 25,
   },
+  clarifaiLogoContainer: {
+    alignItems: 'center',
+
+  },
+  clarifaiLogo: {
+    height: 60,
+    width: 100,
+    resizeMode: 'contain',
+  }
 });

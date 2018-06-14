@@ -185,4 +185,6 @@ Below you can see our milestones and how we achieved them
 
 - [x] Fix the bugs and improve the app
 - [x] Add magic camera for image recognition using [Clarifai](https://clarifai.com/)
+- [x] Add attributions to API calling screens
+
 

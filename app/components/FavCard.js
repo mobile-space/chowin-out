@@ -108,6 +108,9 @@ export default class FavCard extends React.Component {
         <View style={styles.buttonContainer}>
           {this.renderRemoveButton()}
         </View>
+        <View style={styles.foodSourceContainer}>
+            <Text style={styles.foodSource}> source: {item.source.sourceDisplayName}</Text>
+          </View>
       </View>
     );
   };
@@ -149,4 +152,17 @@ const styles = StyleSheet.create({
     bottom: Platform.OS === 'ios' ? viewportHeight/15 : viewportHeight/14,
     right: padding,
   },
+  foodSource: {
+    fontSize: 11,
+    color: 'black',
+    textAlign: 'justify',
+  },
+  foodSourceContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 0,
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? viewportWidth/6.5 : viewportWidth/6,
+    left: 0,
+  }
 });

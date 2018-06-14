@@ -119,11 +119,14 @@ export default class FavSlide extends React.Component{
           <View style={styles.foodInteraction}> 
           <View style={styles.foodInfo}>
             <Text style={styles.foodName} numberOfLines={2}>
-              {screen === "Restaurant" ? item.foodName : item.recipeName}
+            {screen === "Restaurant" ? item.foodName : item.recipeName}
             </Text>
           </View>
           <View style={styles.buttonContainer}>
               {this.renderFavoriteButton()}
+          </View>
+          <View style={styles.foodSourceContainer}>
+            <Text style={styles.foodSource}>image source: {item.sourceDisplayName}</Text>
           </View>
           </View>
         </TouchableOpacity>
@@ -190,6 +193,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: Platform.OS === 'ios' ? width/6.5 : width/6,
     right: 0,
-
   },
+  foodSource: {
+    fontSize: 11,
+    color: 'black',
+    textAlign: 'justify',
+  },
+  foodSourceContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 0,
+    position: 'absolute',
+    bottom: Platform.OS === 'ios' ? width/6.5 : width/6,
+    left: 0,
+  }
 });

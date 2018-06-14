@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "chowin-out",
-    "description": "This project is really great.",
+    "name": "Chowin-Out",
+    "description": "Chowin-Out is your best friend to find food.",
     "slug": "chowin-out",
     "privacy": "public",
     "sdkVersion": "26.0.0",
@@ -21,7 +21,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.reactmixer.chowinout",
+      "supportsTablet": true,
+      "icon": "./assets/icon_iOS.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses your current location to find food around you",
+        "NSPhotoLibraryUsageDescription": "Allow access to your photo library so you can upload food photos to analyze their ingredients and find similar food recipes",
+        "NSCameraUsageDescription": "This app uses the camera to take a picture of food to analyze its ingredients and find similar food recipes"
+      }
+    },
+    "android": {
+      "package": "com.reactmixer.chowinout",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBHLAzY7OWUtQK4llqI1o7rH6_JNhIiuJc"
+        }
+      }
     }
   }
 }

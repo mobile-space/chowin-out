@@ -89,7 +89,7 @@ export default class RestaurantsListScreen extends React.Component {
     const { locationUS } = this.state
     if (locationUS)
       return (
-        <Text style={styles.distanceLabel}>{(distance * 0.000621371192).toPrecision(2)} mi</Text>
+        <Text style={styles.distanceLabel}>{(distance * 0.000621371192).toPrecision(2)} mi </Text>
       )
     else {
       <Text style={styles.distanceLabel}>{distance.toPrecision(3)}meters</Text>
@@ -106,7 +106,7 @@ export default class RestaurantsListScreen extends React.Component {
         >
           <View style={styles.nameContainer}>
             <Text style={styles.nameLabel}>{restaurant.name}</Text>
-            <View styles={styles.distanceContainer}>
+            <View style={styles.distanceContainer}>
               {this._renderDistance(restaurant["distance"])}
             </View>
           </View>
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#003366',
     marginLeft: 10,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   locationInfoContainer: {
     flex: 1,
@@ -262,6 +262,9 @@ const styles = StyleSheet.create({
   ratingLabel: {
     textAlign: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  distanceContainer: {
     paddingHorizontal: 10,
   }
 });

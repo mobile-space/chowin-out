@@ -292,6 +292,10 @@ export default class FoodDetailsScreen extends React.Component {
                 </PieChart>
                 <RkText style={{ paddingVertical: 10, color: '#aaa' }}>Note: Percent Daily Values are based on a 2,000 calorie diet. Your Daily Values may be higher or lower depending on your calorie needs.</RkText>
                 <RkText style={{ color: '#aaa' }}>We don't guarantee the accuracy of that information.</RkText>
+                <TouchableOpacity style={{paddingVertical: 10}} onPress={() => navigate('Recipe', { restaurantURL: food.attribution.url })}>
+                    <RkText style={{color: 'black'}}>{food.attribution.text}</RkText>
+                    <Image style={{height: 20, width: 60, resizeMode: 'contain'}}source={{uri: food.attribution.logo}}/>
+                  </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -300,7 +304,7 @@ export default class FoodDetailsScreen extends React.Component {
         <TouchableOpacity style={styles.recipieButton}
           onPress={() => navigate('Recipe', { restaurantURL: food.source.sourceRecipeUrl })}>
           <View style={styles.recipieButtonView}>
-            <RkText style={styles.recipieText} rkType='medium'> View Recipe </RkText>
+            <RkText style={styles.recipieText} rkType='medium'> View Recipe on {food.source.sourceDisplayName} website</RkText>
           </View>
         </TouchableOpacity>
       </ScrollView>
@@ -479,6 +483,7 @@ const styles = RkStyleSheet.create(theme => ({
     color: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
   },
   recipieButtonView: {
     justifyContent: 'center',

@@ -18,7 +18,7 @@ import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons, Ionicons } from
 import Autolink from 'react-native-autolink';
 import { createOpenLink } from 'react-native-open-maps';
 import API_KEYS from '../utils/config_keys';
-
+import YELP_LOGO from '../../assets/Yelp_trademark_RGB_outline.png'
 
 const { width } = Dimensions.get('window');
 
@@ -226,6 +226,7 @@ export default class RestaurantScreen extends React.Component {
                   style={{ paddingVertical: 10 }}
                 />
                 <Text style={styles.ratingLabel}>{restaurant.review_count} Reviews</Text>
+                <Image style={styles.yelpLogo} source={YELP_LOGO}/>>
               </View>
               <View style={styles.openHoursContainer}>
                 <Feather
@@ -422,6 +423,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
   },
   ratingLabel: {
@@ -471,5 +473,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     padding: 6,
 
+  },
+  yelpLogo: {
+    height: 50,
+    width: 95,
+    resizeMode: 'contain',
   }
 });
