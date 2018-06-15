@@ -226,7 +226,7 @@ export default class RestaurantScreen extends React.Component {
                   style={{ paddingVertical: 10 }}
                 />
                 <Text style={styles.ratingLabel}>{restaurant.review_count} Reviews</Text>
-                <Image style={styles.yelpLogo} source={YELP_LOGO}/>>
+                <Image style={styles.yelpLogo} source={YELP_LOGO}/>
               </View>
               <View style={styles.openHoursContainer}>
                 <Feather

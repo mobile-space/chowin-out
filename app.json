@@ -32,9 +32,9 @@
     },
     "android": {
       "package": "com.reactmixer.chowinout",
-      "config": {
+      "config": { 
         "googleMaps": {
-          "apiKey": "AIzaSyBHLAzY7OWUtQK4llqI1o7rH6_JNhIiuJc"
+          "apiKey": "REPLACE THIS, see: https://docs.expo.io/versions/latest/sdk/map-view#if-you-already-have-not-configured-google"
         }
       }
     }
