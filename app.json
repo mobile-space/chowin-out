@@ -22,6 +22,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.reactmixer.chowinout",
+      "buildNumber": "1.0.1",
       "supportsTablet": true,
       "icon": "./assets/icon_iOS.png",
       "infoPlist": {

@@ -41,7 +41,6 @@ export default class ProfileScreen extends React.Component {
     super(props);
 
     this.state = {
-      foodRecipe: null,
       foodId: '',
       isLoading: false,
       foodRecipe: null,
@@ -50,7 +49,6 @@ export default class ProfileScreen extends React.Component {
       APP_ID: API_KEYS[1].app_id,
       RES_SEARCH_URL1: '&_app_key=',
       API_KEY: API_KEYS[1].key,
-      parsedIds: null,
 
     };
     // const {foodID} = this.props;
@@ -69,9 +67,7 @@ export default class ProfileScreen extends React.Component {
     const foodId = await AsyncStorage.getItem('foodIds');
     const parsed = JSON.parse(foodId)
     console.log("ids should be", parsed)
-    this.setState({
-      parsedIds: parsed,
-    })
+
     const fetched_data = []
     if (parsed != null) {
       for (let i = 0; i < parsed.length; i++) {
@@ -163,6 +159,17 @@ export default class ProfileScreen extends React.Component {
       </LinearGradient>
     )
   }
+  likeFoodMessage() {
+    return (
+      <LinearGradient colors={['#536976', '#292E49']} style={styles.loadingView}>
+        <View style={styles.emptyListMessageView}>
+          <Text style={styles.emptyListMessage}>Currently, your favorite food list is empty.</Text>
+          <Text style={styles.emptyListMessage}>Just press ❤️ on any food image to save it here!</Text>
+        </View>
+      </LinearGradient>
+
+    )
+  }
   contentView() {
     const { foodRecipe, isLoading, foodID } = this.state
     const { navigate } = this.props.navigation
@@ -182,7 +189,7 @@ export default class ProfileScreen extends React.Component {
 
 
         {foodRecipe === null ?
-          this.loadingImages() :
+          this.likeFoodMessage() :
           <LinearGradient colors={['#000000', '#292E49']} style={styles.mainContainer}>
             <View style={styles.imageContainer}>
               {/* { console.log("in content view: " + foodRecipe)} */}
@@ -290,6 +297,11 @@ const styles = StyleSheet.create({
   },
   overlay: {
     justifyContent: 'flex-end',
-
+  },
+  emptyListMessage: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
+    padding: 5,
   },
 });
