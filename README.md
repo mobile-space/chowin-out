@@ -19,7 +19,7 @@
 <a href='https://play.google.com/store/apps/details?id=com.makkhay.chowinout&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
   <img alt='Get it on Google Play' src='project-plan-files/google-play-store-icon.png'/>
 </a>
-<a href='https://github.com/mobile-space/chowin-out'>
+<a href='https://itunes.apple.com/us/app/chowin-out/id1399716122?mt=8'>
   <img alt='Get it on App Store' src='project-plan-files/apple-app-store-icon.png'/>
 </a>
 </div>
@@ -177,7 +177,7 @@ Below you can see our milestones and how we achieved them
 ## Publish the app on mobile app stores
 
 - [x] Publish on [Google Play](https://play.google.com/store/apps/details?id=com.makkhay.chowinout)
-- [ ] Publish on App Store (coming soon)
+- [x] Publish on [App Store] (https://itunes.apple.com/us/app/chowin-out/id1399716122?mt=8)
 
 ## Milestone #5
 
